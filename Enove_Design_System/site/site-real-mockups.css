@@ -1,0 +1,189 @@
+/* =========================================================================
+   MIV — REAL Enove marketing language
+   Reproduzido fielmente das artes reais (outdoor / placas / cartões).
+   ========================================================================= */
+
+/* -- Marketing headline pattern ----------------------------------------- */
+/* "Conectando pessoas a sonhos💛" — sentence case, regular + bold key word,
+   yellow underline under key word, heart emoji */
+.mkt-headline {
+  font-family: var(--font-body);
+  font-weight: 400; color: #fff;
+  font-size: clamp(28px, 4vw, 64px);
+  line-height: 1.08; letter-spacing: -.01em;
+}
+.mkt-headline b, .mkt-headline strong {
+  font-weight: 800;
+  border-bottom: .12em solid #FFFF00;
+  padding-bottom: .02em;
+}
+.mkt-headline .heart {
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', emoji;
+  display: inline-block; margin-left: .15em;
+  filter: drop-shadow(0 4px 8px rgba(255,255,0,.2));
+}
+
+/* fallback heart if emoji not rendered */
+.mkt-heart {
+  display: inline-block; width: 1em; height: 1em;
+  background-image: url("assets/coracao-amarelo.png");
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+  margin-left: .15em; vertical-align: -.05em;
+}
+
+/* tiny yellow dash above headlines (seen in sample 1) */
+.mkt-dash {
+  display: block; width: 3em; height: 4px; background: #FFFF00;
+  margin-bottom: 1em;
+}
+
+/* URL pill outline (seen in sample 2) */
+.mkt-url-pill {
+  display: inline-block;
+  padding: .55em 1.2em; border-radius: 999px;
+  border: 2px solid #FFFF00;
+  font-family: var(--font-body); font-weight: 600;
+  color: #fff; font-size: 1em;
+}
+
+/* huge "9" / e-mark watermark — symbol from the brand */
+.mark-watermark {
+  position: absolute; pointer-events: none; opacity: 1;
+}
+
+/* mini instagram action row */
+.ig-row {
+  display: inline-flex; gap: 16px; align-items: center;
+  color: #fff;
+}
+.ig-row svg { width: 1.4em; height: 1.4em; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+/* ============================ outdoor variants =========================== */
+/* All three samples are 16:9 or close. Use real CRECI 24775 in footer.       */
+
+.stage-outdoor-real {
+  background: #2a2a2a; padding: 20px;
+}
+
+.outdoor-real {
+  width: 96%; aspect-ratio: 2 / 1;
+  position: relative; overflow: hidden;
+  background: #000; color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 32px 64px -24px rgba(0,0,0,.7);
+}
+
+/* variant A — final outdoor: headline left, GIANT 9 right */
+.outdoor-real.var-a {
+  display: grid; grid-template-columns: 1fr 1fr;
+}
+.outdoor-real.var-a .left {
+  padding: clamp(18px, 3vw, 48px);
+  display: flex; flex-direction: column; justify-content: center; gap: 1em;
+  position: relative; z-index: 1;
+}
+.outdoor-real.var-a .right {
+  position: relative; overflow: hidden;
+}
+.outdoor-real.var-a .right .big9 {
+  position: absolute; right: -8%; top: 50%; transform: translateY(-50%);
+  height: 130%; width: auto;
+}
+.outdoor-real .creci {
+  position: absolute; bottom: 10px; right: 14px;
+  font-size: 10px; color: rgba(255,255,255,.5);
+  font-family: var(--font-body); font-weight: 500; letter-spacing: .04em;
+}
+.outdoor-real .wordmark {
+  display: flex; align-items: center; gap: .4em;
+}
+.outdoor-real .wordmark img { height: 1.1em; }
+
+/* variant B — IG-card on photo background */
+.outdoor-real.var-b {
+  position: relative;
+}
+.outdoor-real.var-b .ig-card {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  background: #fff; color: #000; border-radius: 20px;
+  padding: clamp(14px, 2vw, 28px) clamp(20px, 3vw, 40px);
+  text-align: center;
+  box-shadow: 0 24px 48px -16px rgba(0,0,0,.4);
+  max-width: 50%;
+}
+.outdoor-real.var-b .ig-card .heart-big {
+  font-size: clamp(20px, 3vw, 40px); line-height: 1; margin-bottom: .4em;
+}
+.outdoor-real.var-b .ig-card .h {
+  font-family: var(--font-body); font-weight: 400; color: #000;
+  font-size: clamp(14px, 1.8vw, 28px); line-height: 1.15; letter-spacing: -.01em;
+}
+.outdoor-real.var-b .ig-card .h b {
+  font-weight: 800;
+  border-bottom: .14em solid #FFFF00;
+  padding-bottom: .02em;
+}
+.outdoor-real.var-b .photo {
+  position: absolute; right: 0; top: 0; bottom: 0; width: 55%;
+  background: linear-gradient(135deg, #6b6b6b, #2a2a2a);
+  background-image:
+    radial-gradient(circle at 70% 30%, rgba(255,255,255,.12), transparent 50%),
+    linear-gradient(135deg, #6b6b6b, #2a2a2a);
+}
+.outdoor-real.var-b .photo::after {
+  content: "FAMÍLIA \A FOTO REAL AQUI";
+  white-space: pre;
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  color: rgba(255,255,255,.18);
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700;
+  text-align: center;
+}
+.outdoor-real.var-b .big9-bg {
+  position: absolute; left: -10%; top: -20%;
+  height: 140%; opacity: .9;
+}
+.outdoor-real.var-b .logo-bl {
+  position: absolute; bottom: clamp(14px, 2vw, 28px); right: clamp(14px, 2vw, 28px);
+  height: clamp(18px, 2.5vw, 36px); z-index: 2;
+}
+.outdoor-real.var-b .ig-actions {
+  position: absolute; left: clamp(14px, 2vw, 28px); bottom: clamp(14px, 2vw, 28px); z-index: 2;
+}
+
+/* variant C — url pill + headline + IG-frame on right */
+.outdoor-real.var-c {
+  display: grid; grid-template-columns: 1.1fr 1fr;
+}
+.outdoor-real.var-c .left {
+  padding: clamp(18px, 3vw, 44px);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 1em;
+  position: relative; z-index: 1;
+}
+.outdoor-real.var-c .right {
+  display: grid; place-items: center; padding: clamp(20px, 3vw, 36px);
+  position: relative; overflow: hidden;
+}
+.outdoor-real.var-c .ig-frame {
+  background: transparent; border: 2px solid rgba(255,255,255,.18); border-radius: 16px;
+  width: 86%; aspect-ratio: 1; position: relative; padding: 6%;
+  display: grid; grid-template-rows: 1fr auto; gap: 8px;
+}
+.outdoor-real.var-c .ig-frame .ph {
+  background: linear-gradient(135deg, #6b6b6b, #2a2a2a); border-radius: 8px;
+  display: grid; place-items: center;
+  color: rgba(255,255,255,.25);
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase; font-weight: 700;
+}
+.outdoor-real.var-c .big9-bg {
+  position: absolute; right: -30%; top: -20%;
+  height: 140%; opacity: .35;
+}
+
+/* ============================ HEART placement ============================ */
+/* using the brand heart png as decorative */
+.heart-png {
+  width: 1em; height: 1em; display: inline-block;
+  background: url("assets/coracao-amarelo.png") center/contain no-repeat;
+  vertical-align: -.08em;
+}

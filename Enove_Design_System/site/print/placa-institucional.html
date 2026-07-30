@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Placa Institucional · Enove</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  @page { size: A3 landscape; margin: 0; }
+  html, body { margin: 0; padding: 0; background: #2a2a2a; }
+  body { display: grid; place-items: center; min-height: 100vh; font-family: var(--font-body); }
+  @media print { body { background: #fff; } .print-hint { display: none !important; } }
+
+  .print-hint {
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+    background: #FFFF00; color: #000; padding: 10px 16px; border-radius: 999px;
+    font-family: var(--font-display); font-weight: 800; font-size: 12px;
+    letter-spacing: .12em; text-transform: uppercase;
+    box-shadow: 0 12px 28px -8px rgba(0,0,0,.4);
+    z-index: 10;
+  }
+
+  .sheet {
+    width: 420mm; height: 297mm;
+    background: #000; color: #fff;
+    display: grid; grid-template-columns: 1fr 1fr;
+    box-sizing: border-box;
+    position: relative; overflow: hidden;
+  }
+  .sheet::before {
+    content: ""; position: absolute; right: -80mm; top: -80mm;
+    width: 320mm; height: 320mm;
+    background: radial-gradient(circle, rgba(255,255,0,.16), transparent 60%);
+  }
+
+  .left {
+    padding: 28mm 24mm;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; z-index: 1;
+  }
+  .left .eyebrow {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: 11pt; letter-spacing: .26em; text-transform: uppercase;
+    color: #FFFF00;
+  }
+  .left h1 {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: 100pt; letter-spacing: -.03em; line-height: .96;
+    text-transform: lowercase; margin: 14mm 0 0;
+  }
+  .left h1 em { color: #FFFF00; font-style: italic; }
+  .left .meta {
+    display: flex; justify-content: space-between; align-items: end; gap: 14mm;
+    border-top: 1px solid rgba(255,255,255,.18);
+    padding-top: 10mm;
+  }
+  .left .meta .k { font-size: 9pt; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.55); font-weight: 700; }
+  .left .meta .v { font-family: var(--font-display); font-weight: 800; font-size: 18pt; letter-spacing: -.01em; margin-top: 4px; }
+  .left .meta .v.y { color: #FFFF00; }
+
+  .right {
+    background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
+    border-left: 6mm solid #FFFF00;
+    display: grid; place-items: center;
+    padding: 24mm;
+    position: relative; z-index: 1;
+  }
+  .right img { max-width: 80%; max-height: 60%; }
+</style>
+</head>
+<body>
+
+<div class="print-hint">Pressione ⌘ / Ctrl + P para salvar como PDF · A3 paisagem</div>
+
+<div class="sheet">
+  <div class="left">
+    <div>
+      <span class="eyebrow">Enove Imobiliária · Estância Velha</span>
+      <h1>conectamos voc&ecirc;<br>a um <em>novo lar</em>.</h1>
+    </div>
+    <div class="meta">
+      <div><div class="k">Site</div><div class="v">enove.com.br</div></div>
+      <div><div class="k">Telefone</div><div class="v y">(51) 3102-8999</div></div>
+      <div><div class="k">Endereço</div><div class="v">Avenida Brasil, 1213 · Centro</div></div>
+    </div>
+  </div>
+  <div class="right">
+    <img src="../assets/logos/enove-yellow-transparent.png" alt="Enove">
+  </div>
+</div>
+
+</body>
+</html>

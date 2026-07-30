@@ -1,0 +1,5 @@
+/* =========================================================================
+   ENOVE DESIGN SYSTEM — root entrypoint
+   Consumers link this single file; it pulls in every stylesheet in order.
+   ========================================================================= */
+@import url('colors_and_type.css');

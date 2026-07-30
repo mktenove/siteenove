@@ -1,0 +1,29 @@
+<!doctype html>
+<!-- @dsCard group="Brand" name="Logo — primary lockup" subtitle="Amarelo / preto (primary) · amarelo / grafite (secondary)" viewport="700x240" -->
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=700">
+<title>Brand — Logo</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FEFEFE; }
+  .wrap { display: grid; grid-template-columns: 1fr; height: 240px; }
+  .cell { display: grid; place-items: center; padding: 28px; position: relative; }
+  .cell.black { background: #000000; }
+  .cell img { max-height: 110px; max-width: 60%; object-fit: contain; display: block; }
+  .label {
+    position: absolute; bottom: 12px; left: 14px;
+    font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase; font-weight: 800;
+    font-family: var(--font-body);
+    color: rgba(255,255,255,.55);
+  }
+  .label b { color: #FFFF00; }
+</style>
+</head><body>
+<div class="wrap">
+  <div class="cell black">
+    <img src="../assets/logos/enove-yellow-transparent.png" alt="Enove yellow on black">
+    <span class="label"><b>amarelo / preto</b> · primary lockup</span>
+  </div>
+</div>
+</body></html>

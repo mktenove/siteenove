@@ -1,0 +1,35 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Buttons" subtitle="Primary · Dark · Ghost · Inline · sizes" viewport="700x220" -->
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=700">
+<title>Components — Buttons</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; background: var(--bg-1); padding: 26px 24px; font-family: var(--font-sans); }
+  .grid { display: grid; grid-template-columns: repeat(4, auto); gap: 14px 18px; align-items: center; justify-content: start; }
+  .btn { font-family: inherit; font-weight: 700; font-size: 14px; letter-spacing: .02em; border: 0; padding: 12px 22px; border-radius: 999px; cursor: pointer; }
+  .btn-primary { background: var(--enove-yellow); color: var(--enove-ink); box-shadow: 0 12px 28px -10px rgba(255,230,0,.55); }
+  .btn-primary:hover { background: var(--enove-yellow-dim); }
+  .btn-primary:active { background: var(--enove-yellow-hot); transform: translateY(1px); }
+  .btn-dark { background: var(--enove-graphite); color: #fff; }
+  .btn-ghost { background: transparent; color: var(--enove-ink); border: 1.5px solid var(--enove-ink); padding: 10.5px 20.5px; }
+  .btn-link { background: transparent; color: var(--enove-ink); padding: 8px 4px; border-radius: 0; border-bottom: 2px solid var(--enove-yellow); }
+  .lbl { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--fg-3); }
+</style>
+</head><body>
+  <div class="grid">
+    <button class="btn btn-primary">Falar com corretor</button>
+    <button class="btn btn-dark">Ver imóveis</button>
+    <button class="btn btn-ghost">Saiba mais</button>
+    <button class="btn btn-link">agendar visita →</button>
+    <span class="lbl">Primary</span>
+    <span class="lbl">Dark</span>
+    <span class="lbl">Ghost</span>
+    <span class="lbl">Inline</span>
+  </div>
+  <div style="margin-top:22px;display:flex;gap:10px;align-items:center">
+    <button class="btn btn-primary" style="padding:8px 14px;font-size:12px">Small</button>
+    <button class="btn btn-primary">Default</button>
+    <button class="btn btn-primary" style="padding:16px 30px;font-size:16px">Large</button>
+  </div>
+</body></html>

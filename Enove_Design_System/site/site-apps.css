@@ -1,0 +1,233 @@
+/* =========================================================================
+   MIV — sections: applications/mockups & downloads
+   ========================================================================= */
+
+/* ---------------- APPLICATIONS / MOCKUPS -------------------------------- */
+.apps-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+  margin-top: 48px;
+}
+.app-card {
+  border-radius: 20px; overflow: hidden;
+  border: 1px solid #E6E6E6; background: #fff;
+}
+.app-card .stage {
+  aspect-ratio: 4 / 3; position: relative; overflow: hidden;
+  display: grid; place-items: center;
+  padding: 32px;
+}
+.app-card .info {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  padding: 18px 22px 20px; border-top: 1px solid #E6E6E6;
+}
+.app-card .info .t {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 17px; letter-spacing: -.01em; text-transform: lowercase;
+}
+.app-card .info .k {
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase; font-weight: 800; color: #8C8A8B;
+}
+
+/* placa VENDE */
+.stage-placa { background: #FFFF00; }
+.placa {
+  width: 86%; aspect-ratio: 4 / 2;
+  background: #FFFF00; color: #000;
+  border: 3px solid #000;
+  display: grid; grid-template-rows: 1fr auto; padding: 16px;
+  position: relative;
+  font-family: var(--font-signage);
+  text-align: center;
+}
+.placa .v {
+  font-size: clamp(40px, 6vw, 80px); line-height: .9; letter-spacing: -.01em;
+  display: grid; place-items: center; font-weight: 400;
+}
+.placa .phone {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(18px, 2vw, 26px); letter-spacing: -.01em;
+  padding-top: 8px; border-top: 3px solid #000;
+}
+.placa .corner {
+  position: absolute; top: 10px; right: 14px;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 14px; letter-spacing: -.01em; text-transform: lowercase;
+}
+
+/* cartão de visita */
+.stage-bizcard { background: #F3F2EE; }
+.bizcard {
+  width: 78%; aspect-ratio: 1.7 / 1;
+  background: #000; color: #fff;
+  border-radius: 6px; padding: 22px;
+  display: grid; grid-template-rows: auto 1fr auto;
+  box-shadow: 0 24px 48px -16px rgba(0,0,0,.35), 0 4px 10px rgba(0,0,0,.1);
+  position: relative; overflow: hidden;
+}
+.bizcard::after {
+  content:""; position:absolute; right:-90px; top:-90px; width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(255,255,0,.2), transparent 60%);
+}
+.bizcard img.mark { height: 22px; align-self: start; filter: brightness(0) saturate(100%) invert(98%) sepia(95%) saturate(2466%) hue-rotate(358deg) brightness(105%) contrast(102%); }
+.bizcard .nm {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(16px, 1.6vw, 22px); letter-spacing: -.01em;
+  margin-top: 8px;
+}
+.bizcard .ro { font-size: 10.5px; color: rgba(255,255,255,.65); letter-spacing: .14em; text-transform: uppercase; font-weight: 700; margin-top: 4px; }
+.bizcard .ct {
+  display: flex; justify-content: space-between; align-items: end; gap: 10px;
+  font-size: 10.5px; color: rgba(255,255,255,.78); font-weight: 500;
+}
+.bizcard .ct .y { color: #FFFF00; font-weight: 800; }
+
+/* camisa do corretor */
+.stage-shirt { background: #FAFAFA; }
+.shirt {
+  width: 78%; aspect-ratio: 1 / 1.05; position: relative;
+}
+.shirt svg { width: 100%; height: 100%; }
+
+/* instagram post */
+.stage-ig { background: #F3F2EE; }
+.ig {
+  width: 70%; aspect-ratio: 1; background: #000; color: #fff;
+  position: relative; overflow: hidden; padding: 28px;
+  display: grid; grid-template-rows: auto 1fr auto;
+  border-radius: 10px;
+}
+.ig::after { content:""; position:absolute; right:-100px; bottom:-100px; width: 260px; height: 260px; background: radial-gradient(circle, rgba(255,255,0,.18), transparent 60%); }
+.ig .tag {
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase; font-weight: 800;
+  color: #FFFF00;
+}
+.ig h3 {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(26px, 3.2vw, 44px); letter-spacing: -.025em; line-height: .98;
+  text-transform: lowercase; margin: 14px 0 0;
+}
+.ig h3 em { color: #FFFF00; font-style: italic; }
+.ig .foot {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 10px; color: rgba(255,255,255,.55); letter-spacing: .12em; text-transform: uppercase; font-weight: 700;
+}
+.ig .foot .dot { width: 6px; height: 6px; border-radius: 999px; background: #FFFF00; }
+
+/* papel timbrado */
+.stage-letterhead { background: #F3F2EE; }
+.letterhead {
+  width: 62%; aspect-ratio: .707; background: #fff;
+  box-shadow: 0 24px 48px -16px rgba(0,0,0,.18);
+  display: grid; grid-template-rows: auto 1fr auto;
+  padding: 28px 26px;
+  font-size: 9px; color: #6b6b6b;
+}
+.letterhead .head { display: flex; justify-content: space-between; align-items: start; padding-bottom: 14px; border-bottom: 2px solid #FFFF00; }
+.letterhead .head .ml { font-family: var(--font-display); font-weight: 800; font-size: 16px; letter-spacing: -.01em; text-transform: lowercase; color: #000; }
+.letterhead .head .mr { font-size: 8px; letter-spacing: .14em; text-transform: uppercase; font-weight: 800; color: #000; text-align: right; }
+.letterhead .body { padding: 18px 0; line-height: 1.6; font-size: 8.5px; color: #2a2a2a; }
+.letterhead .body p { margin: 0 0 8px; }
+.letterhead .body p.title { font-family: var(--font-display); font-weight: 800; font-size: 11px; text-transform: lowercase; color: #000; margin-bottom: 10px; }
+.letterhead .foot { font-size: 8px; text-align: center; padding-top: 12px; border-top: 1px solid #E6E6E6; color: #8C8A8B; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; }
+
+/* placa de obra wider */
+.stage-fachada { background: #2a2a2a; }
+.fachada {
+  width: 80%; aspect-ratio: 1.6 / 1;
+  background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
+  color: #fff; position: relative; overflow: hidden;
+  display: grid; place-items: center; padding: 24px;
+  border-radius: 4px;
+  box-shadow: 0 24px 48px -16px rgba(0,0,0,.5);
+}
+.fachada img { max-height: 60%; max-width: 70%; }
+.fachada::before {
+  content:""; position:absolute; inset: 0;
+  background: radial-gradient(circle at 30% 40%, rgba(255,255,0,.15), transparent 50%);
+}
+.fachada .corner {
+  position: absolute; bottom: 12px; right: 14px;
+  font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(255,255,255,.5); font-weight: 700;
+}
+
+/* ---------------- DOWNLOADS --------------------------------------------- */
+.download-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+  margin-top: 48px;
+}
+.dl-card {
+  border-radius: 16px; padding: 20px;
+  background: #fff; border: 1px solid #E6E6E6;
+  display: grid; grid-template-columns: 56px 1fr auto; gap: 16px; align-items: center;
+  transition: transform 160ms, box-shadow 160ms;
+}
+.dl-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px -10px rgba(0,0,0,.15);
+}
+.dl-card .ic {
+  width: 56px; height: 56px; border-radius: 12px;
+  background: #000; color: #FFFF00;
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 800; font-size: 12px; letter-spacing: .04em;
+}
+.dl-card .ic.amarelo { background: #FFFF00; color: #000; }
+.dl-card .ic.grafite { background: #373435; color: #FFFF00; }
+.dl-card .t {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 14px; letter-spacing: -.005em; text-transform: lowercase;
+}
+.dl-card .s { font-size: 11.5px; color: #6b6b6b; margin-top: 3px; }
+.dl-card .btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  padding: 10px 14px; border-radius: 999px;
+  background: #000; color: #FFFF00;
+}
+.dl-card .btn:hover { background: #FFFF00; color: #000; box-shadow: 0 8px 18px -6px rgba(255,230,0,.55); }
+.dl-card .btn svg { width: 12px; height: 12px; }
+
+.dl-section { background: #F3F2EE; max-width: none; padding: 100px 40px; }
+.dl-section .inner { max-width: 1320px; margin: 0 auto; }
+
+/* ---------------- FOOTER ------------------------------------------------- */
+footer.site-footer {
+  background: #000; color: #fff; padding: 64px 40px 32px;
+}
+footer.site-footer .inner {
+  max-width: 1320px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 56px; align-items: start;
+}
+footer.site-footer img.mark { height: 32px; }
+footer.site-footer .tag {
+  font-family: var(--font-display); font-weight: 400; font-style: italic;
+  font-size: 18px; color: #FFFF00; margin-top: 18px; text-transform: lowercase;
+  letter-spacing: -.01em;
+}
+footer.site-footer .col h4 {
+  font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; font-weight: 800;
+  color: #FFFF00; margin: 6px 0 14px;
+}
+footer.site-footer .col a, footer.site-footer .col span {
+  display: block; font-size: 13px; color: rgba(255,255,255,.72); margin-bottom: 8px;
+}
+footer.site-footer .col a:hover { color: #FFFF00; }
+footer.site-footer .baseline {
+  max-width: 1320px; margin: 56px auto 0; padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  font-size: 11px; color: rgba(255,255,255,.5);
+}
+
+/* responsive */
+@media (max-width: 980px) {
+  .about-grid, .type-pair, .download-grid, .apps-grid, .logo-grid, .swatch-grid, .combos, .logo-rules { grid-template-columns: 1fr; }
+  .download-grid { grid-template-columns: 1fr 1fr; }
+  .topnav nav { display: none; }
+  .hero { padding: 80px 24px 100px; }
+  .section { padding: 80px 24px; }
+  .section-dark { padding: 80px 24px; }
+  footer.site-footer .inner { grid-template-columns: 1fr; gap: 32px; }
+}

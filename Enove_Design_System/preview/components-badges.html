@@ -1,0 +1,33 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Badges & price" subtitle="Destaque · Lançamento · Novo · price tag" viewport="700x160" -->
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=700">
+<title>Components — Badges & tags</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; background: var(--bg-1); padding: 22px 24px; font-family: var(--font-sans); }
+  .wrap { display:flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .tag { display:inline-flex; align-items:center; gap: 6px; font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 999px; letter-spacing:.02em; }
+  .tag.yellow { background: var(--enove-yellow); color: var(--enove-ink); }
+  .tag.dark { background: var(--enove-graphite); color: #fff; }
+  .tag.ghost { background: #fff; color: var(--enove-ink); border: 1.5px solid var(--border-2); }
+  .tag.soft { background: #FFFCA8; color: var(--enove-ink); }
+  .tag.new { background: var(--enove-ink); color: var(--enove-yellow); }
+  .tag.ok { background: #ECFBE0; color: #2F7A08; }
+  .price { font-family: inherit; font-weight: 900; letter-spacing: -.02em; background: var(--enove-yellow); color: var(--enove-ink); padding: 8px 14px; border-radius: 10px; font-size: 18px; }
+  .row2 { display:flex; gap: 10px; margin-top: 14px; align-items:center; flex-wrap: wrap; }
+</style>
+</head><body>
+  <div class="wrap">
+    <span class="tag yellow">DESTAQUE</span>
+    <span class="tag dark">LANÇAMENTO</span>
+    <span class="tag new">NOVO</span>
+    <span class="tag soft">· Pronto p/ morar</span>
+    <span class="tag ghost">3 quartos</span>
+    <span class="tag ok">Venda fechada</span>
+  </div>
+  <div class="row2">
+    <span class="price">R$ 1.240.000</span>
+    <span class="tag ghost">Menezes Vieira · Porto Alegre</span>
+  </div>
+</body></html>

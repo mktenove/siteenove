@@ -1,29 +1,4 @@
-# ---- sistema -------------------------------------------------------------
 .DS_Store
 Thumbs.db
 .claude/
 node_modules/
-
-# ---- material de terceiros: NAO publicar em repositorio publico ----------
-# Estes quatro arquivos vieram do site de referencia (findrealestate.com) e
-# foram usados como base de estudo. Continuam no disco, so nao sobem.
-# Para producao precisam ser substituidos por arte propria da Enove.
-prototipo/assets/hero/back.webp
-prototipo/assets/hero/cloud.webp
-prototipo/assets/hero/smoke.webp
-prototipo/assets/hero/house.webp
-
-# ---- fontes trial: a licenca nao cobre redistribuicao --------------------
-# Sao versoes de avaliacao da Zetafonts. Ao licenciar a versao comercial,
-# remover estas linhas e versionar os arquivos definitivos.
-prototipo/fonts/*trial*
-prototipo/fonts/altair*
-
-# ---- manual da marca: 114 MB, material interno ---------------------------
-Enove_Design_System/
-
-# ---- placeholders antigos, ja fora de uso --------------------------------
-prototipo/assets/hero/hero-building.png
-prototipo/assets/hero/hero-clouds.png
-prototipo/assets/hero/hero-sky.jpg
-prototipo/assets/hero/predio.png

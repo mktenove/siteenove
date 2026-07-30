@@ -1,0 +1,109 @@
+<!doctype html>
+<!-- @dsCard group="Colors" name="Semantic colors" subtitle="Success · warn · danger · info" viewport="700x170" -->
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=700">
+<title>Colors — Semantic</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FEFEFE; padding: 24px; font-family: var(--font-body); color: #0a0a0a; }
+  .head { display:flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+  .head .t { font-family: var(--font-display); font-weight: 800; font-size: 22px; letter-spacing: -.01em; text-transform: lowercase; margin: 0; }
+  .head .k { font-size: 9.5px; letter-spacing: .22em; text-transform: uppercase; font-weight: 800; color: #8C8A8B; }
+
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .sw {
+    display: grid; grid-template-columns: 72px 1fr auto; gap: 14px; align-items: center;
+    padding: 14px 16px;
+    border: 1px solid #E8E6E1; border-radius: 12px;
+    background: #fff;
+  }
+  .chip {
+    height: 64px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 800;
+    font-size: 26px; line-height: 1;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+  }
+  .name { font-weight: 800; font-size: 14px; letter-spacing: -.01em; }
+  .role { font-size: 11px; color: #6b6b6b; margin-top: 2px; }
+  .use  { font-size: 11px; color: #3a3a3a; margin-top: 6px; line-height: 1.4; }
+  .hex  { font-family: var(--font-mono); font-size: 10.5px; color: #0a0a0a; font-weight: 600;
+          padding: 4px 8px; border-radius: 999px; background: #F3F2EE; }
+
+  /* pairs: preview of the color ON background it will actually live on */
+  .pair { display: flex; gap: 6px; margin-top: 8px; }
+  .p {
+    font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .p::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+
+  .note { margin-top: 14px; font-size: 11px; color: #6b6b6b; line-height: 1.5; }
+  .note b { color: #0a0a0a; font-weight: 800; }
+</style>
+</head><body>
+
+<div class="head">
+  <h2 class="t">semântica</h2>
+  <div class="k">status · feedback · sinalização</div>
+</div>
+
+<div class="grid">
+
+  <div class="sw">
+    <div class="chip" style="background:#50CF01; color:#0a2a00">✓</div>
+    <div>
+      <div class="name">Sucesso</div>
+      <div class="role">Venda fechada · documento aprovado · visita confirmada</div>
+      <div class="pair">
+        <span class="p" style="color:#2F7A08; background:#ECFBE0">Proposta aceita</span>
+      </div>
+    </div>
+    <div class="hex">#50CF01</div>
+  </div>
+
+  <div class="sw">
+    <div class="chip" style="background:#FF9900; color:#3a1e00">!</div>
+    <div>
+      <div class="name">Atenção</div>
+      <div class="role">Prazo próximo · documentação pendente · alerta</div>
+      <div class="pair">
+        <span class="p" style="color:#8A4A00; background:#FFF1DC">Assinatura pendente</span>
+      </div>
+    </div>
+    <div class="hex">#FF9900</div>
+  </div>
+
+  <div class="sw">
+    <div class="chip" style="background:#FF0000; color:#fff">×</div>
+    <div>
+      <div class="name">Erro</div>
+      <div class="role">Campo inválido · falha crítica · ação destrutiva</div>
+      <div class="pair">
+        <span class="p" style="color:#B80000; background:#FFE5E5">Proposta recusada</span>
+      </div>
+    </div>
+    <div class="hex">#FF0000</div>
+  </div>
+
+  <div class="sw">
+    <div class="chip" style="background:#0004FF; color:#fff">i</div>
+    <div>
+      <div class="name">Informação</div>
+      <div class="role">Dica · tooltip · link neutro · sinalização de sistema</div>
+      <div class="pair">
+        <span class="p" style="color:#0004FF; background:#E3E4FF">Novo lançamento</span>
+      </div>
+    </div>
+    <div class="hex">#0004FF</div>
+  </div>
+
+</div>
+
+<div class="note">
+  <b>Regra:</b> cores semânticas nunca aparecem em headlines, backgrounds de seção ou CTAs primários — esses continuam pretos, amarelos (Imobiliária) ou dourados (Select). Semântica é só para <b>estado</b>, <b>feedback</b> e <b>sinalização de sistema</b>.
+</div>
+
+</body></html>
+</content>

@@ -1,0 +1,29 @@
+<!doctype html>
+<!-- @dsCard group="Components" name="Property card" subtitle="Canonical listing card — photo, tag, price, meta" viewport="700x340" -->
+<html lang="pt-BR"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=700">
+<title>Components — Property card</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin: 0; background: var(--bg-1); padding: 18px 24px; font-family: var(--font-sans); }
+  .card { width: 320px; border-radius: 22px; overflow: hidden; background: #fff; box-shadow: 0 10px 24px -8px rgba(15,13,14,.12), 0 2px 6px rgba(15,13,14,.05); border: 1px solid var(--border-1); }
+  .photo { height: 160px; background: linear-gradient(135deg, #4A4648 0%, #2B2829 100%); position: relative; }
+  .photo::after { content:""; position:absolute; inset:0; background-image: radial-gradient(circle at 30% 40%, rgba(255,255,0,.08), transparent 60%); }
+  .tag { position:absolute; top: 12px; left: 12px; background: var(--enove-yellow); color: var(--enove-ink); font-size: 11px; font-weight: 800; letter-spacing:.08em; padding: 5px 10px; border-radius: 999px; text-transform: uppercase; }
+  .heart { position:absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 999px; background: rgba(255,255,255,.92); display:grid; place-items:center; }
+  .body { padding: 16px 18px 18px; }
+  .price { font-size: 22px; font-weight: 900; letter-spacing:-.02em; color: var(--enove-ink); }
+  .addr { font-size: 13px; color: var(--fg-3); margin-top: 2px; }
+  .meta { display:flex; gap: 14px; font-size: 12px; color: var(--fg-2); margin-top: 12px; border-top: 1px solid var(--border-1); padding-top: 12px; }
+  .meta b { color: var(--fg-1); font-weight: 700; }
+</style>
+</head><body>
+  <div class="card">
+    <div class="photo"><span class="tag">Destaque</span><span class="heart">♡</span></div>
+    <div class="body">
+      <div class="price">R$ 1.240.000</div>
+      <div class="addr">Menino Deus · Porto Alegre</div>
+      <div class="meta"><span><b>3</b> quartos</span><span><b>2</b> banh.</span><span><b>112</b> m²</span><span><b>2</b> vagas</span></div>
+    </div>
+  </div>
+</body></html>

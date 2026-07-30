@@ -14,25 +14,19 @@ Depois: <http://localhost:8899/index.html>
 
 > Precisa de servidor local — abrir com `file://` bloqueia as fontes por CORS.
 
-## O que NÃO está versionado, e por quê
+## Procedência dos arquivos — o que precisa ser substituído
 
-Este repositório é **público**. Quatro grupos de arquivos ficaram de fora de
-propósito. Todos continuam no disco de quem já tem o projeto; só não sobem.
+Está tudo versionado, inclusive o que abaixo. Estes itens **não são
+definitivos** e continuam sendo bloqueadores de go-live:
 
-| Ignorado | Motivo |
+| Arquivo | Situação |
 |---|---|
-| `assets/hero/{back,cloud,smoke,house}.webp` | Vieram do site usado como referência de estudo (findrealestate.com). São de terceiros e precisam ser substituídos por arte própria antes de produção. |
-| `fonts/*trial*`, `fonts/altair*` | Versões de avaliação da Zetafonts. A licença de trial não cobre redistribuição. |
-| `Enove_Design_System/` | 114 MB de manual de marca — material interno, e peso demais para o histórico. |
-| `assets/hero/{hero-*,predio.png}` | Placeholders já fora de uso. |
+| `prototipo/assets/hero/{back,cloud,smoke,house}.webp` | Vieram do site usado como referência de estudo (findrealestate.com). Precisam ser substituídos por arte própria da Enove antes de produção. |
+| `prototipo/fonts/*trial*`, `fonts/altair*` | Versões de avaliação da Zetafonts. Substituem **todos os dígitos** por marca d'água da fundição — todo preço sairia como propaganda. Precisam da licença comercial. |
+| Fotos em `app.js` | Unsplash, ilustrativas. Nenhuma é do Vale do Sinos. |
+| `Enove_Design_System/` | Manual de marca, material interno da Enove. O repositório é público. |
 
-**Consequência prática:** um clone limpo roda, mas o hero aparece sem o céu e
-sem as nuvens, e a tipografia de display cai para a fonte de sistema. Para
-trabalhar, copie esses arquivos por fora.
-
-Para versioná-los, é preciso primeiro resolver a origem de cada um:
-tornar o repositório privado não resolve a licença das fontes, só reduz a
-exposição.
+`prototipo/fonts/Poppins-*` é aberta (SIL OFL) e pode ficar como está.
 
 ## Pendências antes de produção
 

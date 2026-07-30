@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Placa do Corretor · Enove</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<style>
+  @page { size: A4 portrait; margin: 0; }
+  html, body { margin: 0; padding: 0; background: #2a2a2a; }
+  body { display: grid; place-items: center; min-height: 100vh; font-family: var(--font-body); }
+  @media print { body { background: #fff; } .print-hint { display: none !important; } }
+
+  .print-hint {
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+    background: #FFFF00; color: #000; padding: 10px 16px; border-radius: 999px;
+    font-family: var(--font-display); font-weight: 800; font-size: 12px;
+    letter-spacing: .12em; text-transform: uppercase;
+    box-shadow: 0 12px 28px -8px rgba(0,0,0,.4);
+    z-index: 10;
+  }
+
+  .sheet {
+    width: 210mm; height: 297mm;
+    background: #000; color: #fff;
+    display: grid; grid-template-rows: auto 1fr auto;
+    padding: 18mm 16mm;
+    box-sizing: border-box;
+    position: relative; overflow: hidden;
+  }
+  .sheet::before {
+    content: ""; position: absolute; right: -80mm; top: -80mm;
+    width: 220mm; height: 220mm;
+    background: radial-gradient(circle, rgba(255,255,0,.18), transparent 60%);
+  }
+  .sheet > * { position: relative; z-index: 1; }
+
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .top img.mark { height: 22mm; }
+  .top .badge {
+    border: 2px solid #FFFF00; color: #FFFF00;
+    padding: 8px 14px; border-radius: 999px;
+    font-family: var(--font-display); font-weight: 800;
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  }
+
+  .body {
+    display: grid; grid-template-rows: 1fr auto; gap: 12mm;
+    align-items: center;
+  }
+  .photo {
+    width: 100%; aspect-ratio: 4 / 5; max-height: 130mm; margin: 0 auto;
+    background: linear-gradient(135deg, #444, #1a1a1a);
+    border: 4px solid #FFFF00;
+    display: grid; place-items: center;
+    color: rgba(255,255,255,.3); font-size: 14px;
+    letter-spacing: .24em; text-transform: uppercase; font-weight: 700;
+  }
+  .who {
+    border-top: 3px solid #FFFF00; padding-top: 14mm;
+    text-align: center;
+  }
+  .who .nm {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: 48pt; letter-spacing: -.02em; line-height: 1; text-transform: lowercase;
+  }
+  .who .ro {
+    font-size: 14pt; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
+    color: rgba(255,255,255,.7); margin-top: 8px;
+  }
+  .who .tel {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: 28pt; color: #FFFF00; margin-top: 14px; letter-spacing: -.01em;
+  }
+  .who .creci {
+    display: inline-block; margin-top: 14px;
+    background: #FFFF00; color: #000; padding: 6px 14px;
+    font-size: 11pt; letter-spacing: .14em; text-transform: uppercase; font-weight: 800;
+  }
+
+  .foot {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 8mm; border-top: 1px solid rgba(255,255,255,.16);
+    font-size: 9pt; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
+    color: rgba(255,255,255,.55);
+  }
+  .foot .y { color: #FFFF00; }
+</style>
+</head>
+<body>
+
+<div class="print-hint">Pressione ⌘ / Ctrl + P para salvar como PDF</div>
+
+<div class="sheet">
+  <div class="top">
+    <img class="mark" src="../assets/logos/enove-yellow-transparent.png" alt="Enove">
+    <span class="badge">Plantão de hoje</span>
+  </div>
+
+  <div class="body">
+    <div class="photo">FOTO DO CORRETOR</div>
+    <div class="who">
+      <div class="nm">guilherme silva</div>
+      <div class="ro">corretor de imóveis</div>
+      <div class="tel">(51) 99000-0000</div>
+      <div class="creci">CRECI-RS 00000-F</div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>enove imobiliária · estância velha/rs</span>
+    <span class="y">enove.com.br</span>
+  </div>
+</div>
+
+</body>
+</html>
