@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>enove imobiliária — conectando pessoas a sonhos</title>
+<meta name="description" content="Imóveis em Estância Velha e no Vale do Sinos. Diga o que você procura em uma frase — a gente encontra.">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="assets/logos/enove-mark.svg">
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<div class="progress" aria-hidden="true"></div>
+<span class="proto-flag">Protótipo <b>·</b> Enove 2026</span>
+
+<!-- ============================ HEADER ============================ -->
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="hdr__logo" href="index.html" aria-label="enove imobiliária, página inicial">
+      <img src="assets/logos/enove-yellow.png" alt="enove imobiliária">
+    </a>
+    <nav class="hdr__nav">
+      <a href="#buscar">Comprar</a>
+      <a href="#bairros">Bairros</a>
+      <a href="#select" class="is-select">Enove Select</a>
+      <a href="#avaliar">Vender meu imóvel</a>
+      <a href="#time">Time</a>
+    </nav>
+    <div class="hdr__acts">
+      <span class="hdr__tel">Plantão <b>(51) 99766-8999</b></span>
+      <a class="btn btn--primary btn--sm" href="#avaliar">Anunciar imóvel</a>
+      <button class="burger" aria-label="Abrir menu">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================= HERO ============================= -->
+<!-- Dois estagios. A: a cena com o predio emergindo das nuvens.
+     B: a chapa clara com o wordmark VAZADO, revelando o predio dentro das
+     letras. Detalhe do empilhamento e da mascara em site.css. -->
+<section class="hero" data-hero>
+  <div class="hero__stage">
+
+    <!-- z 0 -->
+
+    <div class="hero__sky" data-sky aria-hidden="true">
+      <img src="assets/hero/back.webp" alt="" fetchpriority="high">
+    </div>
+
+    <!-- cloud = nevoa difusa · smoke = banco denso. Dois usos de cada,
+         em profundidades diferentes, como no site de referencia. -->
+    <div class="neb neb--cloud-far"   data-nebfar   aria-hidden="true"><div class="neb__loop" data-loop data-razao="768/326"></div></div>
+    <!-- z 10 · PNG recortado: emerge das nuvens, nao de uma caixa -->
+    <img class="hero__building" data-building
+         src="assets/hero/predio.webp" width="1024" height="1512"
+         fetchpriority="high" decoding="async"
+         alt="Edificio residencial com varandas arborizadas, iluminado a noite">
+
+    <div class="neb neb--cloud-mid"   data-nebmid   aria-hidden="true"><div class="neb__loop" data-loop data-razao="768/326"></div></div>
+    <div class="neb neb--smoke-bank"  data-nebbank  aria-hidden="true"><div class="neb__loop" data-loop data-razao="768/248"></div></div>
+
+    <!-- z 28 · o wordmark em contorno, sobre o predio -->
+    <div class="hero__outline" data-knockline aria-hidden="true">
+    <svg class="hero__outline__svg"
+         viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <text class="line__word" x="720" y="430" text-anchor="middle"><tspan data-ltr>e</tspan><tspan data-ltr>n</tspan><tspan data-ltr>o</tspan><tspan data-ltr>v</tspan><tspan data-ltr>e</tspan></text>
+      <text class="line__sub"  x="720" y="548" text-anchor="middle"><tspan data-ltr>i</tspan><tspan data-ltr>m</tspan><tspan data-ltr>o</tspan><tspan data-ltr>b</tspan><tspan data-ltr>i</tspan><tspan data-ltr>l</tspan><tspan data-ltr>i</tspan><tspan data-ltr>&#225;</tspan><tspan data-ltr>r</tspan><tspan data-ltr>i</tspan><tspan data-ltr>a</tspan></text>
+    </svg>
+    </div>
+
+    <!-- z 30 · chapa com o wordmark vazado.
+         Na mascara: branco = chapa visivel, preto = buraco.
+         Por isso o retangulo e branco e o texto e preto. -->
+    <div class="hero__knock" data-knock aria-hidden="true">
+      <!-- A chapa e uma div comum com mask-image apontando para um SVG ja
+           rasterizavel como imagem, com o wordmark em contorno vetorial.
+           Um elemento <mask> referenciado por mask="url(#id)" e um recurso
+           SVG vivo, reavaliado a cada mudanca de pintura; como imagem, o
+           navegador rasteriza uma vez e aplica como canal alfa. -->
+      <div class="hero__knock__plate"></div>
+      <svg class="hero__knock__svg"
+           viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+        <g data-knocksub>
+          <text class="knock__sub" x="720" y="548" text-anchor="middle">imobili&#225;ria</text>
+        </g>
+      </svg>
+    </div>
+
+    <!-- z 40 · estagio A: a missao da marca, que sai de cena no estagio B -->
+    <div class="hero__center" data-stagea>
+      <h1 class="hero__title" data-title>conectando pessoas a sonhos.</h1>
+      <p class="hero__tagline" data-tagline>
+        Im&oacute;veis em Est&acirc;ncia Velha e em todo o Vale do Sinos.
+      </p>
+      <a class="btn btn--primary hero__cta" data-cta href="#buscar">
+        Encontrar meu im&oacute;vel
+        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <!-- estas duas passam POR CIMA do texto e do knockout -->
+    <div class="neb neb--cloud-front" data-nebcfront aria-hidden="true"><div class="neb__loop" data-loop data-razao="768/326"></div></div>
+    <div class="neb neb--smoke-front" data-nebsfront aria-hidden="true"><div class="neb__loop" data-loop data-razao="768/248"></div></div>
+
+    <!-- z 50 · nuvens acima de TUDO, inclusive do vazado. Comecam
+         cobrindo o centro e se abrem para as extremidades no scroll. -->
+    <div class="neb neb--edge-l" data-edgel aria-hidden="true"><div class="neb__loop" data-loop data-razao="768/326"></div></div>
+    <div class="neb neb--edge-r" data-edger aria-hidden="true"><div class="neb__loop" data-loop data-razao="768/326"></div></div>
+
+    <!-- z 55 · um tufo de cada lado, na altura da frase, cobrindo de leve
+         as pontas do texto. Abrem para fora conforme o scroll. -->
+    <div class="neb neb--tuft-l" data-tuftl aria-hidden="true"><div class="neb__loop"></div></div>
+    <div class="neb neb--tuft-r" data-tuftr aria-hidden="true"><div class="neb__loop"></div></div>
+
+    <div class="scrollcue" aria-hidden="true">Rolar<i></i></div>
+  </div>
+</section>
+
+<!-- ==================== BUSCA CONVERSACIONAL ====================== -->
+<!-- Estava no hero antes. Saiu de la para o hero ficar cinematografico,
+     mas continua sendo a primeira coisa depois dele: e o diferencial n1. -->
+<section class="section finder overlap" id="buscar">
+  <!-- a secao nao comeca com uma borda: comeca com uma nuvem que sobe por
+       cima do hero e se dissolve no branco, como na referencia -->
+  <div class="cloudtop" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="finder__head rise">
+      <div class="eyebrow">Busca sem filtro</div>
+      <h2 class="rally" style="margin:12px 0 16px">A SUA PR&Oacute;XIMA CASA N&Atilde;O EST&Aacute;<br>NUMA LISTA DE FILTROS.</h2>
+      <p class="lead">
+        Escreva o que voc&ecirc; procura do seu jeito, com as suas palavras.
+        A gente entende &mdash; inclusive o que nenhum formul&aacute;rio pergunta.
+      </p>
+    </div>
+
+    <div class="ask">
+      <div class="ask__box">
+        <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="ask-input" class="ask__input" type="text"
+               placeholder="casa de 3 quartos at&eacute; 600 mil com p&aacute;tio pro cachorro"
+               aria-label="Descreva o im&oacute;vel que voc&ecirc; procura">
+        <button id="ask-go" class="btn btn--primary">
+          <span>Buscar</span>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="chips">
+        <button class="chip" data-ask="casa com p&aacute;tio pro cachorro at&eacute; 800 mil">p&aacute;tio pro cachorro</button>
+        <button class="chip" data-ask="apartamento no centro perto de mercado pra sair do aluguel">sair do aluguel</button>
+        <button class="chip" data-ask="casa de 3 quartos com su&iacute;te e churrasqueira perto de escola">perto de escola</button>
+        <button class="chip" data-ask="terreno em condom&iacute;nio fechado pra construir">terreno pra construir</button>
+        <button class="chip" data-ask="apartamento com lazer completo piscina e academia">lazer completo</button>
+      </div>
+      <p class="ask__hint">Sem filtro, sem cadastro. &Eacute; s&oacute; escrever.</p>
+    </div>
+
+    <div class="finder__stats">
+      <div class="finder__stat rise"><b data-count="320" data-pre="+">+320</b><span>im&oacute;veis na carteira</span></div>
+      <div class="finder__stat rise"><b data-count="9">9</b><span>cidades no Vale do Sinos</span></div>
+      <div class="finder__stat rise"><b data-count="24" data-pos=" h">24 h</b><span>tempo m&aacute;ximo de resposta</span></div>
+      <div class="finder__stat rise"><b>CRECI 24.775J</b><span>desde 2019</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== MANIFESTO ========================== -->
+<section class="manifesto">
+  <div class="manifesto__in">
+    <p class="mline">não é sobre metro quadrado.</p>
+    <p class="mline">é sobre <span class="mline__hi">onde a sua vida</span> vai acontecer.</p>
+    <p class="mline">a gente conhece cada rua daqui.</p>
+    <p class="mline">é por isso que a gente <span class="mline__hi">acerta</span>.</p>
+
+    <div class="manifesto__foot rise">
+      <a class="btn btn--primary" href="#buscar">
+        Começar pela sua frase
+        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <p class="body-s" style="max-width:44ch;margin:0;color:rgba(255,255,255,.6)">
+        Somos a imobiliária que mais cresce no Vale do Sinos. Não cortamos caminho:
+        se o imóvel não serve para você, a gente fala.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= RESULTADOS DA BUSCA ==================== -->
+<section class="section dark" id="resultados" hidden>
+  <div class="wrap">
+    <div class="read rise">
+      <div class="read__hd">
+        <svg class="ico ico--sm" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>
+        O que entendemos do seu pedido
+      </div>
+      <div class="read__tokens" id="leitura"></div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;margin:48px 0 24px">
+      <h2 class="rally" id="conta-resultados" style="color:#fff">Resultados</h2>
+      <a class="btn btn--ghost-dark btn--sm" href="#">Salvar esta busca e receber avisos</a>
+    </div>
+
+    <div class="grid" id="grid-resultados"></div>
+  </div>
+</section>
+
+<!-- =========================== BAIRROS ============================ -->
+<section class="section overlap" id="bairros" style="background:var(--bg-1)">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:48px">
+      <div class="rise">
+        <div class="eyebrow">Inteligência de bairro</div>
+        <h2 class="rally" style="margin:12px 0 16px">A GENTE MORA AQUI.<br>E ISSO MUDA TUDO.</h2>
+        <p class="lead">
+          Portal nacional mostra o imóvel. Nós mostramos a rua, a escola do lado,
+          o tempo até Novo Hamburgo e quanto o metro quadrado vale ali de verdade.
+        </p>
+      </div>
+      <a class="btn btn--ghost" href="#">
+        Abrir o mapa completo
+        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="grid">
+      <a class="hood rise" href="#">
+        <img data-plx="7" src="https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=900&q=72" alt="Bairro Lira">
+        <div class="hood__in">
+          <div class="hood__name">lira</div>
+          <p class="hood__desc">Ruas largas e arborizadas, casas com pátio. O bairro de quem quer espaço sem sair da cidade.</p>
+          <div class="hood__facts">
+            <span class="fact"><b>R$ 3.900</b>/m²</span>
+            <span class="fact"><b>4</b> escolas a pé</span>
+            <span class="fact"><b>14 min</b> até NH</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="hood rise" href="#">
+        <img data-plx="7" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=900&q=72" alt="Bairro Centro">
+        <div class="hood__in">
+          <div class="hood__name">centro</div>
+          <p class="hood__desc">Tudo a pé: mercado, farmácia, banco, praça. Onde o apartamento faz mais sentido que a casa.</p>
+          <div class="hood__facts">
+            <span class="fact"><b>R$ 4.900</b>/m²</span>
+            <span class="fact"><b>92</b> serviços a pé</span>
+            <span class="fact"><b>11 min</b> até NH</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="hood rise" href="#">
+        <img data-plx="7" src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=900&q=72" alt="Bairro União">
+        <div class="hood__in">
+          <div class="hood__name">união</div>
+          <p class="hood__desc">Bairro de família. Melhor relação metro quadrado por qualidade de vida da cidade.</p>
+          <div class="hood__facts">
+            <span class="fact"><b>R$ 3.750</b>/m²</span>
+            <span class="fact"><b>3</b> escolas a pé</span>
+            <span class="fact"><b>16 min</b> até NH</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FITA HORIZONTAL · CIDADES ================= -->
+<section class="reel">
+  <div class="reel__head">
+    <div class="eyebrow rise">Vale do Sinos</div>
+    <h2 class="rally" style="margin:12px 0 16px;color:#fff">NOVE CIDADES.<br>UM TIME QUE MORA NELAS.</h2>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap">
+      <p class="lead rise" style="color:rgba(255,255,255,.7);margin:0">
+        A Enove nasceu em Estância Velha e cresceu pela região inteira.
+        Em cada cidade tem um corretor que conhece o comércio, a escola e o trânsito.
+      </p>
+      <div class="reel__hint">
+        <svg class="ico ico--sm" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        Continue rolando
+      </div>
+    </div>
+  </div>
+
+  <div class="reel__track">
+    <article class="reel__item">
+      <div class="reel__ph" data-plx-frame>
+        <img data-plx="6" src="https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=900&q=72" alt="Estância Velha">
+      </div>
+      <div class="reel__cap">
+        <div class="reel__name">estância velha</div>
+        <div class="reel__meta"><b>142</b> imóveis<br>R$ 3.900/m²</div>
+      </div>
+    </article>
+
+    <article class="reel__item">
+      <div class="reel__ph" data-plx-frame>
+        <img data-plx="6" src="https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=900&q=72" alt="Novo Hamburgo">
+      </div>
+      <div class="reel__cap">
+        <div class="reel__name">novo hamburgo</div>
+        <div class="reel__meta"><b>68</b> imóveis<br>R$ 5.200/m²</div>
+      </div>
+    </article>
+
+    <article class="reel__item">
+      <div class="reel__ph" data-plx-frame>
+        <img data-plx="6" src="https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?auto=format&fit=crop&w=900&q=72" alt="Ivoti">
+      </div>
+      <div class="reel__cap">
+        <div class="reel__name">ivoti</div>
+        <div class="reel__meta"><b>39</b> imóveis<br>R$ 4.100/m²</div>
+      </div>
+    </article>
+
+    <article class="reel__item">
+      <div class="reel__ph" data-plx-frame>
+        <img data-plx="6" src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=72" alt="Dois Irmãos">
+      </div>
+      <div class="reel__cap">
+        <div class="reel__name">dois irmãos</div>
+        <div class="reel__meta"><b>27</b> imóveis<br>R$ 3.800/m²</div>
+      </div>
+    </article>
+
+    <article class="reel__item">
+      <div class="reel__ph" data-plx-frame>
+        <img data-plx="6" src="https://images.unsplash.com/photo-1592595896551-12b371d546d5?auto=format&fit=crop&w=900&q=72" alt="Campo Bom">
+      </div>
+      <div class="reel__cap">
+        <div class="reel__name">campo bom</div>
+        <div class="reel__meta"><b>24</b> imóveis<br>R$ 3.600/m²</div>
+      </div>
+    </article>
+
+    <article class="reel__item">
+      <div class="reel__ph" data-plx-frame>
+        <img data-plx="6" src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?auto=format&fit=crop&w=900&q=72" alt="São Leopoldo">
+      </div>
+      <div class="reel__cap">
+        <div class="reel__name">são leopoldo</div>
+        <div class="reel__meta"><b>21</b> imóveis<br>R$ 4.400/m²</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ========================== DESTAQUES =========================== -->
+<section class="section" style="background:var(--bg-3)">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:40px">
+      <div class="rise">
+        <div class="eyebrow">Imóveis prontos</div>
+        <h2 class="rally" style="margin-top:12px">SELECIONADOS PELO TIME<br>NESTA SEMANA.</h2>
+      </div>
+      <a class="btn btn--ghost" href="#">
+        Ver todos os imóveis
+        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="grid" id="grid-destaques"></div>
+  </div>
+</section>
+
+<!-- ========================= ENOVE SELECT ========================= -->
+<section class="section select-band" id="select">
+  <div class="wrap">
+    <div style="max-width:640px;margin-bottom:48px" class="rise">
+      <div class="eyebrow">Enove Select · lançamentos</div>
+      <h2 class="rally" style="margin:12px 0 16px">O QUE AINDA VAI EXISTIR<br>JÁ PODE SER SEU.</h2>
+      <p class="lead">Cada lançamento com página própria, plantas, condições e disponibilidade em tempo real.</p>
+    </div>
+
+    <div class="grid grid--2">
+      <div class="launch rise">
+        <img data-plx="9" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=75" alt="Buriti Garden Premium">
+        <div class="launch__in">
+          <span class="launch__badge">Enove Select</span>
+          <div class="launch__name">buriti garden premium</div>
+          <div class="launch__meta">
+            <span>Terrenos de <b>260 a 500 m²</b></span>
+            <span>Entrada <b>25%</b></span>
+            <span>Condomínio fechado</span>
+          </div>
+          <div class="mirror" aria-label="68% das unidades vendidas">
+            <i class="sold"></i><i class="sold"></i><i class="sold"></i><i class="sold"></i>
+            <i class="sold"></i><i class="sold"></i><i class="sold"></i><i></i><i></i><i></i>
+          </div>
+          <div class="mirror__lbl" style="margin-bottom:20px">68% vendido · 12 lotes disponíveis</div>
+          <a class="btn btn--select" href="#">
+            Ver espelho de vendas
+            <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="launch rise">
+        <img data-plx="9" src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=75" alt="Horizon Clube Residencial">
+        <div class="launch__in">
+          <span class="launch__badge">Enove Select</span>
+          <div class="launch__name">horizon clube residencial</div>
+          <div class="launch__meta">
+            <span><b>2 e 3</b> dormitórios</span>
+            <span>A partir de <b>R$ 465 mil</b></span>
+            <span>Lazer completo</span>
+          </div>
+          <div class="mirror" aria-label="34% das unidades vendidas">
+            <i class="sold"></i><i class="sold"></i><i class="sold"></i>
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+          </div>
+          <div class="mirror__lbl" style="margin-bottom:20px">34% vendido · lançamento em obras</div>
+          <a class="btn btn--select" href="#">
+            Ver plantas e condições
+            <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= COMO FUNCIONA ======================== -->
+<section class="section">
+  <div class="wrap">
+    <div style="max-width:620px;margin-bottom:56px" class="rise">
+      <div class="eyebrow">Como funciona</div>
+      <h2 class="rally" style="margin:12px 0 16px">TRÊS PASSOS.<br>NENHUM FORMULÁRIO.</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step rise">
+        <div class="step__n">01</div>
+        <h3>Você escreve</h3>
+        <p class="body-s">
+          Do seu jeito, com as suas palavras. "Casa com pátio pro cachorro, perto de
+          escola, até 600 mil." Não precisa saber o nome do bairro nem o tipo do imóvel.
+        </p>
+      </div>
+      <div class="step rise">
+        <div class="step__n">02</div>
+        <h3>A gente entende</h3>
+        <p class="body-s">
+          Cruzamos o que você disse com tudo que existe na cidade — inclusive o que está
+          escrito no meio da descrição e nenhum filtro alcança. E explicamos por que
+          cada imóvel apareceu.
+        </p>
+      </div>
+      <div class="step rise">
+        <div class="step__n">03</div>
+        <h3>Você visita</h3>
+        <p class="body-s">
+          Corretor com nome, rosto e agenda aberta. Você escolhe o horário na tela.
+          Resposta em até 24 horas, sempre.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== AVALIAÇÃO INSTANTÂNEA ===================== -->
+<section class="section valuate" id="avaliar">
+  <div class="wrap">
+    <div class="grid grid--2" style="gap:64px;align-items:center">
+      <div class="rise">
+        <div class="eyebrow">Para quem vende</div>
+        <h2 class="rally" style="margin:12px 0 20px">QUANTO VALE<br>O SEU IMÓVEL HOJE?</h2>
+        <p class="lead" style="margin-bottom:24px">
+          Você responde quatro coisas e recebe a faixa de valor na hora — antes de falar
+          com qualquer corretor. Sem ligação, sem enrolação.
+        </p>
+        <p class="body-s" style="max-width:46ch">
+          A conta usa o preço por metro quadrado que a Enove pratica em cada bairro
+          de Estância Velha. Se quiser, um corretor confirma pessoalmente em até 24 horas.
+        </p>
+      </div>
+
+      <div class="vform rise">
+        <div class="field">
+          <label for="v-bairro">Bairro</label>
+          <select id="v-bairro">
+            <option>Centro</option><option selected>Lira</option><option>União</option>
+            <option>Lago Azul</option><option>Buriti Garden</option><option>Outro</option>
+          </select>
+        </div>
+        <div class="field--row">
+          <div class="field">
+            <label for="v-tipo">Tipo</label>
+            <select id="v-tipo"><option value="casa">Casa</option><option value="apartamento">Apartamento</option><option value="terreno">Terreno</option></select>
+          </div>
+          <div class="field">
+            <label for="v-quartos">Quartos</label>
+            <select id="v-quartos"><option>1</option><option>2</option><option selected>3</option><option>4</option></select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="v-area">Área construída (m²)</label>
+          <input id="v-area" type="number" value="150" min="20" step="1">
+        </div>
+        <button id="v-go" class="btn btn--ink btn--block">
+          Calcular agora
+          <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <div class="vresult" id="v-out" hidden></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= TIME ============================= -->
+<section class="section" id="time">
+  <div class="wrap">
+    <div style="max-width:620px;margin-bottom:48px" class="rise">
+      <div class="eyebrow">Quem atende você</div>
+      <h2 class="rally" style="margin:12px 0 16px">VOCÊ NÃO FALA<br>COM UM FORMULÁRIO.</h2>
+      <p class="lead">Cada imóvel tem um corretor com nome, rosto e agenda. Você escolhe com quem quer falar.</p>
+    </div>
+
+    <div class="grid grid--4">
+      <a class="person rise" href="#">
+        <div class="person__ph"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=500&q=72" alt=""></div>
+        <div class="person__name">Maicon Rodrigues</div>
+        <div class="person__role">Diretor · CRECI 24.775J</div>
+        <div class="person__hood">Lançamentos e Select</div>
+      </a>
+      <a class="person rise" href="#">
+        <div class="person__ph"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=500&q=72" alt=""></div>
+        <div class="person__name">Fabiana Klein</div>
+        <div class="person__role">Corretora</div>
+        <div class="person__hood">Centro e Lira</div>
+      </a>
+      <a class="person rise" href="#">
+        <div class="person__ph"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=72" alt=""></div>
+        <div class="person__name">Diego Fontoura</div>
+        <div class="person__role">Corretor</div>
+        <div class="person__hood">União e Lago Azul</div>
+      </a>
+      <a class="person rise" href="#">
+        <div class="person__ph"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=500&q=72" alt=""></div>
+        <div class="person__name">Priscila Adams</div>
+        <div class="person__role">Corretora</div>
+        <div class="person__hood">Ivoti e Dois Irmãos</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================== CULTURA ============================ -->
+<section class="section graphite">
+  <div class="wrap">
+    <div class="grid grid--2" style="gap:64px;align-items:center">
+      <div class="rise">
+        <div class="eyebrow" style="color:var(--enove-yellow)">Jeito Enove de ser</div>
+        <h2 class="rally" style="margin:12px 0 20px;color:#fff">
+          FAZEMOS A COISA<br><span class="mark-yellow">CERTA</span> SEMPRE.
+        </h2>
+        <p class="lead" style="color:rgba(255,255,255,.75)">
+          Não cortamos caminho. Se o imóvel não serve para você, a gente fala.
+          É assim que a Enove virou a imobiliária que mais cresce no Vale do Sinos.
+        </p>
+      </div>
+      <div class="grid grid--2" style="gap:32px">
+        <div class="value rise"><h3 style="color:#fff">Integridade</h3><p class="body-s">Preço na tela, custo total na conta, sem letra miúda.</p></div>
+        <div class="value rise"><h3 style="color:#fff">Performance</h3><p class="body-s">Nunca deixe um cliente esperando. Resposta em até 24 h.</p></div>
+        <div class="value rise"><h3 style="color:#fff">Inovação</h3><p class="body-s">Tecnologia a serviço de quem compra, não do anúncio.</p></div>
+        <div class="value rise"><h3 style="color:#fff">Conexão</h3><p class="body-s">Conectar pessoas a sonhos. É literalmente por isso que existimos.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div>
+        <img class="logo" src="assets/logos/enove-yellow.png" alt="enove imobiliária">
+        <p class="body-s" style="max-width:34ch;color:rgba(255,255,255,.68)">
+          Conectando pessoas a sonhos em Estância Velha e em todo o Vale do Sinos.
+        </p>
+        <div style="display:flex;gap:12px;margin-top:24px">
+          <a class="btn btn--ghost-dark btn--sm" href="#">Instagram</a>
+          <a class="btn btn--ghost-dark btn--sm" href="#">Facebook</a>
+          <a class="btn btn--ghost-dark btn--sm" href="#">YouTube</a>
+        </div>
+      </div>
+      <div>
+        <h4>Comprar</h4>
+        <ul>
+          <li><a href="#">Casas em Estância Velha</a></li>
+          <li><a href="#">Apartamentos no Centro</a></li>
+          <li><a href="#">Terrenos</a></li>
+          <li><a href="#">Imóveis em Ivoti</a></li>
+          <li><a href="#">Imóveis em Novo Hamburgo</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Enove</h4>
+        <ul>
+          <li><a href="#select">Enove Select</a></li>
+          <li><a href="#time">Nosso time</a></li>
+          <li><a href="#avaliar">Anunciar imóvel</a></li>
+          <li><a href="#">Trabalhe conosco</a></li>
+          <li><a href="#">Mapa do site</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Fale com a gente</h4>
+        <ul>
+          <li>Plantão de vendas<br><a href="tel:+5551997668999" style="color:#fff;font-weight:600">(51) 99766-8999</a></li>
+          <li>Escritório<br><a href="tel:+555131028999" style="color:#fff;font-weight:600">(51) 3102-8999</a></li>
+          <li>Av. Brasil, 1213 — Centro<br>Estância Velha / RS</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ftr__bar">
+      <span>Enove Imobiliária · CRECI 24.775J · Todos os direitos reservados</span>
+      <span>Protótipo de proposta — dados de imóveis ilustrativos</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wpp" href="https://wa.me/5551997668999" aria-label="Falar no WhatsApp">
+  <svg class="ico" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.3A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.5 9.5c0 3 2 5 5 5"/></svg>
+</a>
+
+<script src="vendor/lenis.min.js"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="motion.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

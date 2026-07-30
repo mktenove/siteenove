@@ -1,0 +1,275 @@
+/* =========================================================================
+   ENOVE DESIGN SYSTEM — colors & type
+   Source of truth: https://enovebrand-wsqn6uw2.manus.space/ (Manual de Identidade Visual)
+   ========================================================================= */
+
+/* -- Brand fonts (uploaded) ---------------------------------------------- */
+/* PRIMARY DISPLAY : Cocogoose Pro — the actual Enove wordmark family.
+   Ultra-geometric rounded sans.  This IS the brand face.                    */
+@font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Ultralight-trial.ttf') format('truetype');        font-weight: 200; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Ultralight-Italic-trial.ttf') format('truetype'); font-weight: 200; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Thin-trial.ttf') format('truetype');              font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Thin-Italic-trial.ttf') format('truetype');       font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Light-trial.ttf') format('truetype');             font-weight: 350; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Light-Italic-trial.ttf') format('truetype');      font-weight: 350; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Semilight-trial.ttf') format('truetype');         font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Semilight-Italic-trial.ttf') format('truetype');  font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Regular-trial.ttf') format('truetype');           font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Italic-trial.ttf') format('truetype');            font-weight: 600; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Bold-trial.ttf') format('truetype');              font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Bold-Italic-trial.ttf') format('truetype');       font-weight: 800; font-style: italic; font-display: swap; }
+
+/* Cocogoose Pro Letterpress — special display for logos/hero moments */
+@font-face { font-family: 'Cocogoose Letterpress'; src: url('fonts/Cocogoose-Pro-Letterpress-Regular-trial.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+
+/* Cocogoose Pro Darkmode — optimised for on-black use */
+@font-face { font-family: 'Cocogoose Darkmode'; src: url('fonts/Cocogoose-Pro-Darkmode-trial.ttf') format('truetype');        font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Cocogoose Darkmode'; src: url('fonts/Cocogoose-Pro-Darkmode-Italic-trial.ttf') format('truetype'); font-weight: 700; font-style: italic; font-display: swap; }
+
+/* BODY / UI : Poppins — the workhorse secondary */
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-Thin.ttf') format('truetype');            font-weight: 100; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-ThinItalic.ttf') format('truetype');      font-weight: 100; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-ExtraLight.ttf') format('truetype');      font-weight: 200; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-ExtraLightItalic.ttf') format('truetype'); font-weight: 200; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-Light.ttf') format('truetype');           font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-LightItalic.ttf') format('truetype');     font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-Regular.ttf') format('truetype');         font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-Italic.ttf') format('truetype');          font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-Medium.ttf') format('truetype');          font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-MediumItalic.ttf') format('truetype');    font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-SemiBold.ttf') format('truetype');        font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-SemiBoldItalic.ttf') format('truetype');  font-weight: 600; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-Bold.ttf') format('truetype');            font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-BoldItalic.ttf') format('truetype');      font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-ExtraBold.ttf') format('truetype');       font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-ExtraBoldItalic.ttf') format('truetype'); font-weight: 800; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-Black.ttf') format('truetype');           font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Poppins'; src: url('fonts/Poppins-BlackItalic.ttf') format('truetype');     font-weight: 900; font-style: italic; font-display: swap; }
+
+/* Altair — alternative display family (kept available) */
+@font-face { font-family: 'Altair'; src: url('fonts/altair.regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Altair'; src: url('fonts/altair.bold.ttf') format('truetype');    font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Altair'; src: url('fonts/altair.heavy.ttf') format('truetype');   font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Altair'; src: url('fonts/altair.ultra.ttf') format('truetype');   font-weight: 950; font-style: normal; font-display: swap; }
+
+/* Bungee — signage / placa display */
+@font-face { font-family: 'Bungee'; src: url('fonts/Bungee-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+
+/* Script (Enove Select only) — Allura as substitution, flagged */
+@import url('https://fonts.googleapis.com/css2?family=Allura&display=swap');
+
+:root {
+  /* ---------------------------------------------------------------------
+     BRAND CORE — per official Manual de Identidade Visual
+     --------------------------------------------------------------------- */
+  --enove-yellow:        #FFFF00;   /* Amarelo Enove · Pantone Yellow C */
+  --enove-yellow-light:  #FFFF66;   /* Amarelo Claro (secondary) */
+  --enove-yellow-hot:    #FFEA00;   /* press / active */
+  --enove-yellow-soft:   #FFFCA8;   /* tinted background */
+  --enove-yellow-dim:    #F5ED00;   /* hover */
+
+  --enove-black:         #000000;   /* Preto Puro · Pantone Black C (PRIMARY) */
+  --enove-white:         #FEFEFE;   /* Branco */
+  --enove-graphite:      #373435;   /* Grafite (secondary) */
+  --enove-gray-mid:      #8C8A8B;   /* Cinza Médio */
+  --enove-gray-light:    #D4D3D3;   /* Cinza Claro */
+
+  --enove-ink:           #000000;   /* alias of black for legibility */
+
+  /* Enove Select — premium sub-brand (lançamentos) */
+  --select-gold:         #C89B3C;
+  --select-gold-soft:    #E7C77A;
+  --select-gold-pale:    #F5E6B8;
+  --select-gold-deep:    #8A6618;
+
+  /* Semantic */
+  --ok:                  #50CF01;
+  --warn:                #FF9900;
+  --danger:              #FF0000;
+  --info:                #0004FF;
+
+  /* ---------------------------------------------------------------------
+     FOREGROUND / BACKGROUND TOKENS
+     --------------------------------------------------------------------- */
+  --bg-1:        var(--enove-white);        /* canvas */
+  --bg-2:        #FFFFFF;                   /* cards */
+  --bg-3:        #F5F5F5;                   /* subtle fill */
+  --bg-invert:   var(--enove-black);        /* dark hero / footer */
+  --bg-graphite: var(--enove-graphite);     /* secondary dark surface */
+
+  --fg-1:        var(--enove-black);
+  --fg-2:        #2A2829;
+  --fg-3:        var(--enove-gray-mid);
+  --fg-4:        var(--enove-gray-light);
+  --fg-on-dark:  var(--enove-white);
+  --fg-on-yellow:var(--enove-black);        /* yellow ALWAYS pairs with black */
+
+  --accent:      var(--enove-yellow);
+  --accent-fg:   var(--enove-black);
+
+  --border-1:    #E6E6E6;
+  --border-2:    var(--enove-gray-light);
+  --border-dark: rgba(255,255,255,0.14);
+
+  /* ---------------------------------------------------------------------
+     ELEVATION
+     --------------------------------------------------------------------- */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 10px 24px -8px rgba(0,0,0,0.14), 0 2px 6px rgba(0,0,0,0.06);
+  --shadow-lg: 0 24px 48px -16px rgba(0,0,0,0.22), 0 4px 10px rgba(0,0,0,0.06);
+  --shadow-yellow: 0 12px 28px -10px rgba(255,230,0,0.55);
+
+  /* ---------------------------------------------------------------------
+     RADII
+     --------------------------------------------------------------------- */
+  --r-xs:  4px;
+  --r-sm:  8px;
+  --r-md:  14px;
+  --r-lg:  22px;
+  --r-xl:  32px;
+  --r-pill: 999px;
+
+  /* ---------------------------------------------------------------------
+     SPACING SCALE (8-px base)
+     --------------------------------------------------------------------- */
+  --sp-0:  0; /* @kind spacing */
+  --sp-1:  4px;  --sp-2:  8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px;  --sp-7: 48px;  --sp-8: 64px; --sp-9: 96px; --sp-10: 128px;
+
+  /* ---------------------------------------------------------------------
+     TYPE
+     Display + wordmark : Cocogoose Pro  (official brand font — matches logo)
+     Body + UI          : Poppins        (official secondary, great legibility)
+     Signage / placa    : Bungee
+     Hero specialty     : Cocogoose Letterpress  /  Cocogoose Darkmode
+     Select script      : Allura (substitution flagged)
+     --------------------------------------------------------------------- */
+  --font-display:     'Cocogoose Pro', 'Altair', 'Helvetica Neue', Arial, sans-serif;
+  --font-display-dark:'Cocogoose Darkmode', 'Cocogoose Pro', 'Helvetica Neue', Arial, sans-serif;
+  --font-letterpress: 'Cocogoose Letterpress', 'Cocogoose Pro', 'Helvetica Neue', Arial, sans-serif;
+  --font-heading:     'Cocogoose Pro', 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  --font-body:        'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  --font-signage:     'Bungee', 'Cocogoose Pro', Impact, sans-serif;
+  --font-script:      'Allura', 'Brush Script MT', cursive;
+  --font-mono:        ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* weights */
+  --w-thin: 100;      /* @kind font */
+  --w-light: 300;     /* @kind font */
+  --w-regular: 400;   /* @kind font */
+  --w-medium: 500;    /* @kind font */
+  --w-bold: 700;      /* @kind font */
+  --w-extrabold: 800; /* @kind font */
+  --w-heavy: 900;     /* @kind font */
+  --w-ultra: 950;     /* @kind font */
+
+  /* display sizes */
+  --t-display-xl: 5.5rem;   /* 88px — hero */
+  --t-display-l:  4rem;     /* 64px */
+  --t-display-m:  3rem;     /* 48px */
+  --t-h1:         2.25rem;  /* 36px (manual: H1 32–48pt) */
+  --t-h2:         1.75rem;  /* 28px (manual: H2 24–28pt) */
+  --t-h3:         1.25rem;  /* 20px (manual: H3 18–20pt DM Sans Bold) */
+  --t-h4:         1rem;     /* 16px */
+  --t-body-l:     1rem;     /* 16px (manual: body 14–16pt DM Sans Reg) */
+  --t-body:       0.9375rem;/* 15px */
+  --t-body-s:     0.875rem; /* 14px */
+  --t-caption:    0.8125rem;/* 13px */
+  --t-micro:      0.6875rem;/* 11px */
+
+  /* line heights */
+  --lh-tight: 1.02; /* @kind font */
+  --lh-snug: 1.12;  /* @kind font */
+  --lh-base: 1.45;  /* @kind font */
+  --lh-relax: 1.6;  /* @kind font */
+
+  /* tracking */
+  --tr-tight: -0.02em; /* @kind font */
+  --tr-normal: 0;      /* @kind font */
+  --tr-wide: 0.04em;   /* @kind font */
+  --tr-wider: 0.12em;  /* @kind font */
+
+  /* motion */
+  --ease-standard: cubic-bezier(.2,.7,.2,1); /* @kind other */
+  --ease-out:      cubic-bezier(.16,1,.3,1); /* @kind other */
+  --dur-1: 120ms; /* @kind other */
+  --dur-2: 200ms; /* @kind other */
+  --dur-3: 320ms; /* @kind other */
+  --dur-4: 520ms; /* @kind other */
+}
+
+/* =========================================================================
+   SEMANTIC TYPE
+   ========================================================================= */
+html, body {
+  font-family: var(--font-body);
+  color: var(--fg-1);
+  background: var(--bg-1);
+  font-size: 16px;
+  line-height: var(--lh-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Hero display — lowercase, heavy, tight — the wordmark in motion */
+.display-xl, .display-l, .display-m {
+  font-family: var(--font-display);
+  font-weight: var(--w-heavy);
+  letter-spacing: var(--tr-tight);
+  line-height: var(--lh-tight);
+  text-transform: lowercase;
+  color: var(--fg-1);
+}
+.display-xl { font-size: var(--t-display-xl); }
+.display-l  { font-size: var(--t-display-l); }
+.display-m  { font-size: var(--t-display-m); }
+
+/* Headings — Cocogoose Pro Bold for H1/H2, Poppins Bold for H3/H4 */
+h1, .h1 { font-family: var(--font-heading); font-size: var(--t-h1); font-weight: 800; line-height: var(--lh-snug); letter-spacing: var(--tr-tight); }
+h2, .h2 { font-family: var(--font-heading); font-size: var(--t-h2); font-weight: 800; line-height: var(--lh-snug); letter-spacing: var(--tr-tight); }
+h3, .h3 { font-family: var(--font-body);    font-size: var(--t-h3); font-weight: 700; line-height: 1.25; }
+h4, .h4 { font-family: var(--font-body);    font-size: var(--t-h4); font-weight: 700; line-height: 1.3;  text-transform: uppercase; letter-spacing: var(--tr-wide); }
+
+p, .body    { font-family: var(--font-body); font-size: var(--t-body-l); line-height: var(--lh-relax); color: var(--fg-2); text-wrap: pretty; }
+.body-l     { font-size: var(--t-body-l); line-height: var(--lh-relax); color: var(--fg-2); }
+.body-s     { font-size: var(--t-body-s); line-height: var(--lh-base); color: var(--fg-2); }
+.caption    { font-size: var(--t-caption); color: var(--fg-3); }
+
+/* Eyebrow */
+.eyebrow, .micro-caps {
+  font-family: var(--font-heading);
+  font-size: var(--t-micro);
+  text-transform: uppercase;
+  letter-spacing: var(--tr-wider);
+  font-weight: 700;
+  color: var(--fg-3);
+}
+
+/* "imobiliária" tagline — DM Sans Italic */
+.tagline {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--fg-2);
+}
+
+/* Signage (placa) */
+.signage {
+  font-family: var(--font-signage);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+/* Select sub-brand */
+.select-script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  color: var(--select-gold);
+}
+
+a { color: var(--fg-1); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+a:hover { color: var(--enove-graphite); }
+
+::selection { background: var(--enove-yellow); color: var(--enove-black); }
