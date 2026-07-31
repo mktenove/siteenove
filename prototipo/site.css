@@ -512,19 +512,82 @@ html.lenis, html.lenis body { height: auto; }
 }
 
 /* ---------- manifesto — declaração em linhas grandes ------------------ */
-.manifesto { background: var(--enove-black); color: #fff; padding: var(--sp-10) 0; overflow: hidden; }
-.manifesto__in { max-width: 1120px; margin: 0 auto; padding: 0 64px; }
-.mline {
-  font-family: var(--font-display); font-weight: 800; text-transform: lowercase;
-  font-size: clamp(1.9rem, 4.6vw, 4rem); line-height: 1.06; letter-spacing: -.035em;
-  margin: 0 0 var(--sp-3); color: rgba(255,255,255,.16);
-  transition: color var(--dur-3) var(--ease-standard);
+/* ---------- top investimentos (carrossel coverflow) ------------------- */
+.topinv { background: var(--enove-black); color: #fff; overflow: hidden; }
+.topinv__head { text-align: center; max-width: 62ch; margin: 0 auto var(--sp-8); }
+.topinv__head .rally { color: #fff; margin: 10px 0 14px; }
+.topinv__head .lead  { color: rgba(255,255,255,.7); }
+
+/* A pista tem altura fixa porque os cartoes sao absolutos: sem isso a secao
+   colapsaria. O overflow escondido corta os cartoes distantes sem precisar
+   remove-los do DOM — eles seguem navegaveis por teclado. */
+.carr { position: relative; height: 604px; margin-inline: auto; }
+.carr__pista { position: absolute; inset: 0; }
+
+.carr__card {
+  position: absolute; top: 0; left: 50%; width: 348px; height: 580px;
+  margin-left: -174px; border-radius: var(--r-lg); overflow: hidden;
+  display: flex; align-items: flex-end;
+  background: var(--enove-graphite);
+  transition: transform var(--dur-4) var(--ease-standard),
+              opacity   var(--dur-4) var(--ease-standard);
+  will-change: transform, opacity;
 }
-.mline.is-lit { color: #fff; }
-.mline.is-lit .mline__hi { color: var(--enove-yellow); }
-.mline__hi { color: rgba(255,255,0,.2); transition: color var(--dur-3) var(--ease-standard); }
-.manifesto__foot { margin-top: var(--sp-8); display: flex; gap: var(--sp-6);
-                   flex-wrap: wrap; align-items: center; }
+.carr__card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.carr__card::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,0,0,.34) 58%, rgba(0,0,0,.12) 100%);
+}
+/* o ativo ganha a moldura clara, como no carrossel de referencia */
+.carr__card.is-ativo { box-shadow: 0 0 0 3px rgba(255,255,255,.92), var(--shadow-lg); }
+
+/* z-index aqui e obrigatorio: o ::after e gerado como ultimo filho e, com
+   os dois posicionados em z-index auto, o gradiente pintaria por cima do
+   texto — o mesmo defeito que ja tinha acontecido nos cards de bairro. */
+.carr__in { position: relative; z-index: 1; padding: var(--sp-5); width: 100%; }
+
+.carr__badge {
+  display: inline-block; font-size: var(--t-micro);
+  /* Poppins, nao a display: o selo tem um numero, e a Cocogoose trial troca
+     TODO digito pelo glifo de marca d'agua da fundicao. */
+  font-family: var(--font-body);
+  font-weight: 700; letter-spacing: var(--tr-wider); text-transform: uppercase;
+  background: var(--enove-yellow); color: var(--enove-black);   /* amarelo so com preto */
+  padding: 5px 12px; border-radius: var(--r-pill); margin-bottom: var(--sp-4);
+}
+.carr__nome {
+  font-family: var(--font-display); font-weight: 800; font-size: 1.9rem;
+  text-transform: lowercase; letter-spacing: -.03em; line-height: 1.02;
+  margin: 0 0 10px; color: #fff;
+}
+.carr__local {
+  display: flex; align-items: center; gap: 7px; margin: 0 0 4px;
+  font-size: var(--t-body-s); color: rgba(255,255,255,.86);
+}
+.carr__local .ico { width: 17px; height: 17px; stroke: var(--enove-yellow); flex: none; }
+.carr__specs { margin: 0 0 var(--sp-5); font-size: var(--t-caption); color: rgba(255,255,255,.6); }
+.carr__cta { width: 100%; justify-content: center; }
+/* so o cartao ativo e clicavel: nos vizinhos o CTA fica fora do foco tambem */
+.carr__card:not(.is-ativo) .carr__cta { pointer-events: none; }
+
+.carr__nav {
+  position: absolute; top: 50%; margin-top: -24px; z-index: 20;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22);
+  color: #fff; display: grid; place-items: center; cursor: pointer;
+  transition: background var(--dur-2) var(--ease-standard);
+}
+.carr__nav:hover { background: rgba(255,255,255,.2); }
+.carr__nav--ant  { left: max(24px, 4vw); }
+.carr__nav--prox { right: max(24px, 4vw); }
+
+.carr__dots { display: flex; justify-content: center; gap: 9px; margin-top: var(--sp-6); }
+.carr__dot {
+  width: 9px; height: 9px; border-radius: 50%; cursor: pointer;
+  background: rgba(255,255,255,.28); border: 0; padding: 0;
+  transition: background var(--dur-2) var(--ease-standard), width var(--dur-2) var(--ease-standard);
+}
+.carr__dot.is-ativo { background: var(--enove-yellow); width: 26px; border-radius: var(--r-pill); }
 
 /* ---------- como funciona (3 passos) --------------------------------- */
 .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-6); }
@@ -933,6 +996,15 @@ img.plx {
   .manifesto { padding: var(--sp-8) 0; }
   .manifesto__in, .reel__head, .reel__track { padding-left: 24px; padding-right: 24px; }
   /* no celular a fita volta a ser rolagem horizontal nativa, sem pin */
+  /* no celular o cartao encolhe para os vizinhos ainda espiarem pela borda */
+  .carr { height: 500px; }
+  .carr__card { width: 240px; height: 476px; margin-left: -120px; }
+  .carr__nome { font-size: 1.45rem; }
+  .carr__nav { width: 40px; height: 40px; margin-top: -20px; }
+  .carr__nav--ant  { left: 6px; }
+  .carr__nav--prox { right: 6px; }
+  .topinv__head .lead { font-size: var(--t-body-s); }
+
   .reel { min-height: auto; padding: var(--sp-8) 0; }
   .reel__ph { height: 58vw; }
   .reel__track { overflow-x: auto; scroll-snap-type: x mandatory;

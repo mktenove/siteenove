@@ -421,3 +421,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
   observar();
 });
+
+/* =======================================================================
+   Carrossel "top investimentos" — coverflow
+   Os cartoes sao absolutos e posicionados pela DISTANCIA ate o ativo, nao
+   por uma pista que desliza. Isso e o que permite o cartao central crescer
+   e os vizinhos recuarem sem reflow: so transform e opacity mudam.
+   ======================================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const carr = document.querySelector('[data-carr]');
+  if (!carr) return;
+  const cards = [...carr.querySelectorAll('[data-carr-card]')];
+  if (!cards.length) return;
+  const dots = document.querySelector('[data-carr-dots]');
+  const suave = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let ativo = Math.floor(cards.length / 2);   // comeca no meio, como a referencia
+
+  /* O passo lateral acompanha a largura do cartao para os vizinhos
+     aparecerem pela borda sem encostar no central. */
+  const passo = () => {
+    const l = cards[0].offsetWidth;
+    return Math.min(l * 1.02, innerWidth * 0.34);
+  };
+
+  function pintar() {
+    const p = passo();
+    cards.forEach((c, i) => {
+      const d = i - ativo, ad = Math.abs(d);
+      const escala = ad === 0 ? 1 : Math.max(0.72, 0.86 - (ad - 1) * 0.07);
+      const visivel = ad <= 2;
+      c.style.transform = `translateX(${d * p}px) scale(${escala})`;
+      c.style.opacity   = ad === 0 ? '1' : (visivel ? String(0.42 - (ad - 1) * 0.20) : '0');
+      c.style.zIndex    = String(20 - ad);
+      c.classList.toggle('is-ativo', ad === 0);
+      /* fora de vista sai da ordem de tabulacao: senao o Tab passeia por
+         cartoes que ninguem esta vendo */
+      c.querySelectorAll('a,button').forEach(el => el.tabIndex = ad === 0 ? 0 : -1);
+      c.setAttribute('aria-hidden', ad === 0 ? 'false' : 'true');
+    });
+    if (dots) [...dots.children].forEach((b, i) => {
+      b.classList.toggle('is-ativo', i === ativo);
+      b.setAttribute('aria-selected', i === ativo ? 'true' : 'false');
+    });
+  }
+
+  const ir = i => { ativo = (i + cards.length) % cards.length; pintar(); };
+
+  if (dots) {
+    cards.forEach((c, i) => {
+      const b = document.createElement('button');
+      b.className = 'carr__dot'; b.type = 'button'; b.role = 'tab';
+      b.setAttribute('aria-label', c.querySelector('.carr__nome').textContent.trim());
+      b.addEventListener('click', () => ir(i));
+      dots.appendChild(b);
+    });
+  }
+  carr.querySelector('[data-carr-ant]')?.addEventListener('click', () => ir(ativo - 1));
+  carr.querySelector('[data-carr-prox]')?.addEventListener('click', () => ir(ativo + 1));
+  /* clicar num vizinho traz ele para o centro */
+  cards.forEach((c, i) => c.addEventListener('click', e => {
+    if (i !== ativo) { e.preventDefault(); ir(i); }
+  }));
+
+  carr.tabIndex = 0;
+  carr.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); ir(ativo - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); ir(ativo + 1); }
+  });
+
+  /* arrasto: so decide a direcao ao soltar, para nao brigar com a rolagem
+     vertical da pagina no celular */
+  let x0 = null, y0 = null;
+  const pegar = e => { const t = e.touches ? e.touches[0] : e; x0 = t.clientX; y0 = t.clientY; };
+  const soltar = e => {
+    if (x0 === null) return;
+    const t = e.changedTouches ? e.changedTouches[0] : e;
+    const dx = t.clientX - x0, dy = t.clientY - y0;
+    if (Math.abs(dx) > 46 && Math.abs(dx) > Math.abs(dy)) ir(ativo + (dx < 0 ? 1 : -1));
+    x0 = y0 = null;
+  };
+  carr.addEventListener('pointerdown', pegar);
+  carr.addEventListener('pointerup', soltar);
+  carr.addEventListener('touchstart', pegar, { passive: true });
+  carr.addEventListener('touchend', soltar, { passive: true });
+
+  if (!suave) cards.forEach(c => c.style.transition = 'none');
+  addEventListener('resize', pintar);
+  pintar();
+});

@@ -168,24 +168,115 @@
 </section>
 
 <!-- =========================== MANIFESTO ========================== -->
-<section class="manifesto">
-  <div class="manifesto__in">
-    <p class="mline">não é sobre metro quadrado.</p>
-    <p class="mline">é sobre <span class="mline__hi">onde a sua vida</span> vai acontecer.</p>
-    <p class="mline">a gente conhece cada rua daqui.</p>
-    <p class="mline">é por isso que a gente <span class="mline__hi">acerta</span>.</p>
-
-    <div class="manifesto__foot rise">
-      <a class="btn btn--primary" href="#buscar">
-        Começar pela sua frase
-        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-      <p class="body-s" style="max-width:44ch;margin:0;color:rgba(255,255,255,.6)">
-        Somos a imobiliária que mais cresce no Vale do Sinos. Não cortamos caminho:
-        se o imóvel não serve para você, a gente fala.
-      </p>
-    </div>
+<!-- ============================ TOP INVESTIMENTOS ======================
+     Carrossel coverflow: os cartoes sao posicionados por JS conforme a
+     distancia ate o ativo. Detalhe da mecanica em app.js. -->
+<section class="section topinv" id="top-investimentos">
+  <div class="wrap topinv__head">
+    <div class="eyebrow">sele&ccedil;&atilde;o da semana</div>
+    <h2 class="rally">top investimentos.</h2>
+    <p class="lead">Os empreendimentos com melhor rela&ccedil;&atilde;o entre valor de entrada
+       e valoriza&ccedil;&atilde;o projetada no Vale do Sinos.</p>
   </div>
+
+  <div class="carr" data-carr>
+    <div class="carr__pista" data-carr-pista>
+      <article class="carr__card" data-carr-card>
+        <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&amp;fit=crop&amp;w=760&amp;h=1140&amp;q=72"
+             alt="canto dos pássaros, Estância Velha, RS" loading="lazy" width="760" height="1140">
+        <div class="carr__in">
+          <span class="carr__badge">top 10 investimentos</span>
+          <h3 class="carr__nome">canto dos pássaros</h3>
+          <p class="carr__local">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Estância Velha, RS
+          </p>
+          <p class="carr__specs">3 e 4 dorm. &middot; de 92 a 140 m²</p>
+          <a class="btn btn--primary carr__cta" href="imovel.html">
+            Ver empreendimento
+            <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+      <article class="carr__card" data-carr-card>
+        <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&amp;fit=crop&amp;w=760&amp;h=1140&amp;q=72"
+             alt="reserva do vale, Ivoti, RS" loading="lazy" width="760" height="1140">
+        <div class="carr__in">
+          <span class="carr__badge">top 10 investimentos</span>
+          <h3 class="carr__nome">reserva do vale</h3>
+          <p class="carr__local">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Ivoti, RS
+          </p>
+          <p class="carr__specs">2 e 3 dorm. &middot; de 68 a 104 m²</p>
+          <a class="btn btn--primary carr__cta" href="imovel.html">
+            Ver empreendimento
+            <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+      <article class="carr__card" data-carr-card>
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=760&amp;h=1140&amp;q=72"
+             alt="jardim das acácias, Novo Hamburgo, RS" loading="lazy" width="760" height="1140">
+        <div class="carr__in">
+          <span class="carr__badge">top 10 investimentos</span>
+          <h3 class="carr__nome">jardim das acácias</h3>
+          <p class="carr__local">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Novo Hamburgo, RS
+          </p>
+          <p class="carr__specs">3 dorm. &middot; de 88 a 112 m²</p>
+          <a class="btn btn--primary carr__cta" href="imovel.html">
+            Ver empreendimento
+            <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+      <article class="carr__card" data-carr-card>
+        <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&amp;fit=crop&amp;w=760&amp;h=1140&amp;q=72"
+             alt="mirante do sinos, Dois Irmãos, RS" loading="lazy" width="760" height="1140">
+        <div class="carr__in">
+          <span class="carr__badge">top 10 investimentos</span>
+          <h3 class="carr__nome">mirante do sinos</h3>
+          <p class="carr__local">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Dois Irmãos, RS
+          </p>
+          <p class="carr__specs">4 dorm. &middot; de 148 a 210 m²</p>
+          <a class="btn btn--primary carr__cta" href="imovel.html">
+            Ver empreendimento
+            <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+      <article class="carr__card" data-carr-card>
+        <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&amp;fit=crop&amp;w=760&amp;h=1140&amp;q=72"
+             alt="villa toscana, Campo Bom, RS" loading="lazy" width="760" height="1140">
+        <div class="carr__in">
+          <span class="carr__badge">top 10 investimentos</span>
+          <h3 class="carr__nome">villa toscana</h3>
+          <p class="carr__local">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Campo Bom, RS
+          </p>
+          <p class="carr__specs">2 e 3 dorm. &middot; de 72 a 96 m²</p>
+          <a class="btn btn--primary carr__cta" href="imovel.html">
+            Ver empreendimento
+            <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <button class="carr__nav carr__nav--ant" data-carr-ant aria-label="Empreendimento anterior">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="carr__nav carr__nav--prox" data-carr-prox aria-label="Pr&oacute;ximo empreendimento">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+
+  <div class="carr__dots" data-carr-dots role="tablist" aria-label="Escolher empreendimento"></div>
 </section>
 
 <!-- ======================= RESULTADOS DA BUSCA ==================== -->

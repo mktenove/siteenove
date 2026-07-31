@@ -36,7 +36,7 @@ Depois: <http://localhost:8899/index.html>
 | Scroll com inércia (Lenis), sincronizado ao ScrollTrigger | todo o site |
 | Hero composto em **3 camadas** com velocidades distintas: fundo, foto, marca d'água | home |
 | Seção seguinte emerge como nuvem, sem borda | home |
-| Manifesto: linhas acendem ao cruzar o meio da tela | home |
+| Carrossel coverflow "top investimentos" | home |
 | Fita horizontal das 9 cidades, presa na tela (1.208 px de curso) | home |
 | Parallax nas imagens editoriais (bairros, lançamentos, galeria, mapa) | ambas |
 | Títulos revelados por máscara (clip-path), preservando `<br>` e destaques | ambas |
@@ -106,6 +106,26 @@ nuvem frontais estavam ACIMA dela e lavavam o tom (o rodape chegava a
 `#eef4f8`). Desceram para z27/z26 e as cortinas cairam de `.78` para `.46` de
 opacidade. Medido em Chrome real: media `#abc5d4`, desvio de 11/255 do alvo —
 mais azul em cima, mais claro embaixo, onde estao as nuvens.
+
+### Carrossel "top investimentos"
+
+Substituiu a secao do manifesto. Mecanica de coverflow: os cartoes sao
+**absolutos e posicionados pela distancia ate o ativo**, nao por uma pista
+que desliza. E isso que permite o cartao central crescer e os vizinhos
+recuarem sem reflow — so `transform` e `opacity` mudam.
+
+- navegacao por setas, pontos, seta do teclado, arrasto e clique num vizinho
+- o arrasto so decide a direcao ao soltar, e ignora gestos mais verticais que
+  horizontais: senao competiria com a rolagem da pagina no celular
+- fora do centro, os links saem da ordem de tabulacao (`tabIndex = -1`) e o
+  cartao fica `aria-hidden` — sem isso o Tab passeia por cartoes invisiveis
+- `z-index: 1` no `.carr__in`, pela mesma razao dos cards de bairro: o
+  `::after` e gerado como ultimo filho e pintaria por cima do texto
+
+**O selo usa Poppins, nao a display.** Ele tem um numero ("top 10"), e a
+Cocogoose trial troca todo digito pelo glifo de marca d'agua da fundicao —
+na primeira versao o selo saiu ilegivel. Mesma armadilha ja documentada para
+os precos.
 
 ### A transicao do hero para a secao seguinte
 

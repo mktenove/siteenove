@@ -343,20 +343,7 @@
   /* =====================================================================
      5. MANIFESTO — as linhas acendem conforme sobem
      ===================================================================== */
-  function manifesto() {
-    gsap.utils.toArray('.mline').forEach(l => {
-      gsap.set(l, { opacity: 0, y: 26 });
-      gsap.to(l, {
-        opacity: 1, y: 0, duration: 0.8, ease: EASE,
-        scrollTrigger: { trigger: l, start: 'top 88%', once: true }
-      });
-      // acende ao cruzar o meio da tela e apaga ao sair por cima
-      ScrollTrigger.create({
-        trigger: l, start: 'top 72%', end: 'bottom 28%',
-        onToggle: s => l.classList.toggle('is-lit', s.isActive)
-      });
-    });
-  }
+
 
   /* =====================================================================
      6. FITA HORIZONTAL PRESA NA TELA
@@ -504,7 +491,6 @@
     reveal();
     titulos();
     hero();
-    manifesto();
     fita();
     contadores();
     header();
