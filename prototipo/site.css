@@ -37,15 +37,6 @@ a { text-decoration: none; color: inherit; }
 .dark .eyebrow { color: var(--enove-yellow); }
 .graphite { background: var(--enove-graphite); color: var(--fg-on-dark); }
 
-/* rótulo de protótipo */
-.proto-flag {
-  position: fixed; z-index: 200; bottom: 18px; left: 18px;
-  background: var(--enove-graphite); color: #fff;
-  font-size: var(--t-micro); font-weight: 700; letter-spacing: var(--tr-wider);
-  text-transform: uppercase; padding: 8px 14px; border-radius: var(--r-pill);
-  border: 1px solid rgba(255,255,255,.18);
-}
-.proto-flag b { color: var(--enove-yellow); }
 
 /* ---------- tipografia auxiliar --------------------------------------- */
 .display-hero {
@@ -1024,5 +1015,4 @@ img.plx {
   .ask__box { padding: 6px 6px 6px 16px; }
   .finder__stats { gap: var(--sp-5); }
   .ask__box .btn span { display: none; }
-  .proto-flag { left: 12px; bottom: 12px; font-size: 10px; padding: 6px 10px; }
 }
