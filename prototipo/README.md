@@ -401,9 +401,9 @@ Dois detalhes que sao facilmente esquecidos e quebram a experiencia:
 - **O foco volta para o circulo de origem ao fechar.** Sem isso quem navega
   por teclado e devolvido ao topo do documento.
 
-O anel usa `conic-gradient` no degradê quente-para-frio das redes sociais:
-amarelo e laranja embaixo a esquerda, subindo para magenta e roxo em cima a
-direita. **E o unico ponto do site fora da paleta do manual** — foi uma
+O anel usa `conic-gradient` so em tons QUENTES: magenta no topo, descendo
+por coral e laranja ate o amarelo embaixo a esquerda. **Sem roxo nem azul** —
+a versao anterior tinha, e era exatamente o que destoava da referencia. **E o unico ponto do site fora da paleta do manual** — foi uma
 escolha deliberada, porque a leitura de "isto abre como story" depende
 dessas cores. A primeira versao usava amarelo e o dourado do Enove Select e
 nao comunicava o formato.

@@ -1023,16 +1023,16 @@ img.plx {
   display: flex; flex-direction: column; align-items: center; gap: 10px;
   background: none; border: 0; padding: 0; cursor: pointer; width: 96px;
 }
-/* Anel no degradê quente-para-frio das redes sociais: amarelo e laranja
-   embaixo a esquerda, subindo para magenta e roxo em cima a direita. E o
-   unico ponto do site fora da paleta do manual — a leitura de "story"
-   depende dessas cores. */
+/* Anel so em tons QUENTES: magenta no topo, descendo por coral e laranja
+   ate o amarelo embaixo a esquerda. Sem roxo nem azul — a primeira versao
+   tinha, e era justamente o que destoava. E o unico ponto do site fora da
+   paleta do manual. */
 .dest__anel {
   width: 88px; height: 88px; border-radius: 50%; display: grid; place-items: center;
-  background: conic-gradient(from 215deg,
-              #FEDA75 0%, #FA7E1E 15%, #D62976 40%,
-              #962FBF 65%, #4F5BD5 82%, #FEDA75 100%);
-  padding: 3px; transition: transform var(--dur-3) var(--ease-out);
+  background: conic-gradient(from 0deg,
+              #E0359C 0%, #EE3F58 25%, #F58E3C 50%,
+              #FBD14B 72%, #E0359C 100%);
+  padding: 4px; transition: transform var(--dur-3) var(--ease-out);
 }
 .dest__item:hover .dest__anel,
 .dest__item:focus-visible .dest__anel { transform: scale(1.06); }
