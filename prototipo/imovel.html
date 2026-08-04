@@ -180,94 +180,6 @@
     </div>
   </section>
 
-  <!-- ==================== SIMULADOR DE CUSTO REAL ================= -->
-  <section class="section cost">
-    <div class="wrap">
-      <div style="max-width:620px;margin-bottom:48px" class="rise">
-        <div class="eyebrow">Transparência total</div>
-        <h2 class="rally" style="margin:12px 0 16px;color:#fff">
-          QUANTO ESTA CASA<br>CUSTA <span class="mark-yellow">DE VERDADE</span>.
-        </h2>
-        <p class="lead" style="color:rgba(255,255,255,.75)">
-          O preço do anúncio é só o começo. Aqui você vê a entrada completa, com ITBI e
-          cartório, e quanto vai pesar por mês. Mexa nos controles.
-        </p>
-      </div>
-
-      <div class="grid grid--2" style="gap:48px;align-items:start">
-
-        <!-- controles -->
-        <div class="cost__panel rise">
-          <div class="field">
-            <label for="s-preco">Valor negociado</label>
-            <input id="s-preco" type="number" value="745000" step="5000">
-          </div>
-
-          <div class="field">
-            <label for="s-entrada">Entrada — <span id="s-entrada-lbl">20%</span></label>
-            <input id="s-entrada" class="slider" type="range" min="20" max="80" step="5" value="20">
-          </div>
-
-          <div class="field">
-            <label for="s-prazo">Prazo — <span id="s-prazo-lbl">30 anos</span></label>
-            <input id="s-prazo" class="slider" type="range" min="5" max="35" step="1" value="30">
-          </div>
-
-          <div class="field--row">
-            <div class="field">
-              <label for="s-taxa">Juros ao ano (%)</label>
-              <input id="s-taxa" type="number" value="10.5" step="0.1">
-            </div>
-            <div class="field">
-              <label for="s-cond">Condomínio (R$)</label>
-              <input id="s-cond" type="number" value="0" step="10">
-            </div>
-          </div>
-
-          <div class="field" style="margin-bottom:0">
-            <label for="s-iptu">IPTU mensal (R$)</label>
-            <input id="s-iptu" type="number" value="142" step="5">
-          </div>
-        </div>
-
-        <!-- resultado -->
-        <div class="cost__out rise">
-          <div>
-            <div class="eyebrow" style="color:var(--enove-yellow);margin-bottom:16px">O que sai do bolso na assinatura</div>
-            <div class="cost__row"><span>Entrada</span><b id="o-entrada">—</b></div>
-            <div class="cost__row"><span>ITBI (2%)</span><b id="o-itbi">—</b></div>
-            <div class="cost__row"><span>Escritura e registro (1,5%)</span><b id="o-cartorio">—</b></div>
-            <div class="cost__row cost__row--big"><span>Total no dia</span><b id="o-dia">—</b></div>
-          </div>
-
-          <div style="margin-top:24px">
-            <div class="eyebrow" style="color:var(--enove-yellow);margin-bottom:16px">O que pesa todo mês</div>
-            <div class="cost__row"><span>Parcela do financiamento</span><b id="o-parcela">—</b></div>
-            <div class="cost__row"><span>Condomínio</span><b id="o-cond">—</b></div>
-            <div class="cost__row"><span>IPTU</span><b id="o-iptu">—</b></div>
-            <div class="cost__row cost__row--big"><span>Custo mensal</span><b id="o-mensal">—</b></div>
-          </div>
-
-          <div class="cost__row" style="border:0;padding-top:8px">
-            <span>Renda familiar necessária</span><b id="o-renda">—</b>
-          </div>
-
-          <p class="cost__note">
-            Simulação pela tabela Price, com taxa efetiva. ITBI e cartório são estimativas
-            para o Rio Grande do Sul e variam conforme o município e o cartório. Bancos
-            avaliam renda, score e o próprio imóvel — a aprovação final é sempre deles.
-            A Enove acompanha você em todo o processo.
-          </p>
-
-          <a class="btn btn--primary" href="#" style="align-self:start">
-            Quero ajuda com o financiamento
-            <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ======================== IMAGENS ============================ -->
   <section class="section">
     <div class="wrap">
@@ -485,6 +397,94 @@
         </a>
       </div>
       <div class="grid" id="grid-similares"></div>
+    </div>
+  </section>
+
+  <!-- ==================== SIMULADOR DE CUSTO REAL ================= -->
+  <section class="section cost" id="custo">
+    <div class="wrap">
+      <div style="max-width:620px;margin-bottom:48px" class="rise">
+        <div class="eyebrow">Transparência total</div>
+        <h2 class="rally" style="margin:12px 0 16px;color:#fff">
+          QUANTO ESTA CASA<br>CUSTA <span class="mark-yellow">DE VERDADE</span>.
+        </h2>
+        <p class="lead" style="color:rgba(255,255,255,.75)">
+          O preço do anúncio é só o começo. Aqui você vê a entrada completa, com ITBI e
+          cartório, e quanto vai pesar por mês. Mexa nos controles.
+        </p>
+      </div>
+
+      <div class="grid grid--2" style="gap:48px;align-items:start">
+
+        <!-- controles -->
+        <div class="cost__panel rise">
+          <div class="field">
+            <label for="s-preco">Valor negociado</label>
+            <input id="s-preco" type="number" value="745000" step="5000">
+          </div>
+
+          <div class="field">
+            <label for="s-entrada">Entrada — <span id="s-entrada-lbl">20%</span></label>
+            <input id="s-entrada" class="slider" type="range" min="20" max="80" step="5" value="20">
+          </div>
+
+          <div class="field">
+            <label for="s-prazo">Prazo — <span id="s-prazo-lbl">30 anos</span></label>
+            <input id="s-prazo" class="slider" type="range" min="5" max="35" step="1" value="30">
+          </div>
+
+          <div class="field--row">
+            <div class="field">
+              <label for="s-taxa">Juros ao ano (%)</label>
+              <input id="s-taxa" type="number" value="10.5" step="0.1">
+            </div>
+            <div class="field">
+              <label for="s-cond">Condomínio (R$)</label>
+              <input id="s-cond" type="number" value="0" step="10">
+            </div>
+          </div>
+
+          <div class="field" style="margin-bottom:0">
+            <label for="s-iptu">IPTU mensal (R$)</label>
+            <input id="s-iptu" type="number" value="142" step="5">
+          </div>
+        </div>
+
+        <!-- resultado -->
+        <div class="cost__out rise">
+          <div>
+            <div class="eyebrow" style="color:var(--enove-yellow);margin-bottom:16px">O que sai do bolso na assinatura</div>
+            <div class="cost__row"><span>Entrada</span><b id="o-entrada">—</b></div>
+            <div class="cost__row"><span>ITBI (2%)</span><b id="o-itbi">—</b></div>
+            <div class="cost__row"><span>Escritura e registro (1,5%)</span><b id="o-cartorio">—</b></div>
+            <div class="cost__row cost__row--big"><span>Total no dia</span><b id="o-dia">—</b></div>
+          </div>
+
+          <div style="margin-top:24px">
+            <div class="eyebrow" style="color:var(--enove-yellow);margin-bottom:16px">O que pesa todo mês</div>
+            <div class="cost__row"><span>Parcela do financiamento</span><b id="o-parcela">—</b></div>
+            <div class="cost__row"><span>Condomínio</span><b id="o-cond">—</b></div>
+            <div class="cost__row"><span>IPTU</span><b id="o-iptu">—</b></div>
+            <div class="cost__row cost__row--big"><span>Custo mensal</span><b id="o-mensal">—</b></div>
+          </div>
+
+          <div class="cost__row" style="border:0;padding-top:8px">
+            <span>Renda familiar necessária</span><b id="o-renda">—</b>
+          </div>
+
+          <p class="cost__note">
+            Simulação pela tabela Price, com taxa efetiva. ITBI e cartório são estimativas
+            para o Rio Grande do Sul e variam conforme o município e o cartório. Bancos
+            avaliam renda, score e o próprio imóvel — a aprovação final é sempre deles.
+            A Enove acompanha você em todo o processo.
+          </p>
+
+          <a class="btn btn--primary" href="#" style="align-self:start">
+            Quero ajuda com o financiamento
+            <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
