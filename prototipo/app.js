@@ -529,17 +529,17 @@ document.addEventListener('DOMContentLoaded', () => {
     { titulo: 'fachada', quadros: [
       { foto: '1600607687939-ce8a6c25118c', txt: 'Frente voltada para o nascente — sol da manhã na sala.' },
       { foto: '1600585154340-be6161a56a0c', txt: 'Recuo de 4 m: dá para estacionar dois carros fora da garagem.' },
-      { foto: '1524661135-423995f22d0b',    txt: 'Rua sem saída, com pouco movimento de passagem.' } ] },
+      { foto: '1567496898669-ee935f5f647a', txt: 'Rua sem saída, com pouco movimento de passagem.' } ] },
     { titulo: 'área gourmet', quadros: [
       { foto: '1600566753086-00f18fb6b3ea', txt: 'Churrasqueira e bancada de frente para o pátio.' },
-      { foto: '1573496359142-b8d87734a5a2', txt: 'Cobertura sobre a área toda — usa no inverno também.' } ] },
+      { foto: '1600121848594-d8644e57abab', txt: 'Cobertura sobre a área toda — usa no inverno também.' } ] },
     { titulo: 'living', quadros: [
       { foto: '1600585154340-be6161a56a0c', txt: 'Pé-direito de 2,90 m e janela em toda a parede oeste.' },
       { foto: '1600566753086-00f18fb6b3ea', txt: 'Integrado à cozinha, sem parede entre os ambientes.' },
       { foto: '1600607687939-ce8a6c25118c', txt: 'Piso porcelanato, aquecimento por piso na sala.' } ] },
     { titulo: 'entorno', quadros: [
-      { foto: '1524661135-423995f22d0b',    txt: 'Escola a 400 m, a pé por rua com calçada nos dois lados.' },
-      { foto: '1573496359142-b8d87734a5a2', txt: 'Mercado e farmácia a 6 minutos caminhando.' } ] },
+      { foto: '1583608205776-bfd35f0d9f83', txt: 'Escola a 400 m, a pé por rua com calçada nos dois lados.' },
+      { foto: '1567496898669-ee935f5f647a', txt: 'Mercado e farmácia a 6 minutos caminhando.' } ] },
   ];
 
   const barras   = visor.querySelector('[data-story-barras]');
@@ -650,4 +650,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'ArrowRight') { e.preventDefault(); avancar(1); }
     if (e.key === 'ArrowLeft')  { e.preventDefault(); avancar(-1); }
   });
+});
+
+/* A barra de acao so sobe depois que o hero sai de cena: no topo ela
+   competiria com o CTA do proprio hero. */
+document.addEventListener('DOMContentLoaded', () => {
+  const barra = document.querySelector('[data-pdpbar]');
+  const hero  = document.querySelector('.pdph');
+  if (!barra || !hero) return;
+  const ver = () => barra.classList.toggle('is-visivel',
+                      hero.getBoundingClientRect().bottom < 0);
+  addEventListener('scroll', ver, { passive: true });
+  ver();
 });

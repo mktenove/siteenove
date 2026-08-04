@@ -1093,3 +1093,94 @@ img.plx {
   .dest__anel { width: 72px; height: 72px; }
   .dest__rot  { max-width: 78px; font-size: var(--t-micro); }
 }
+
+/* ---------- página do imóvel: hero, fatos, mosaico, barra ------------- */
+.pdph { position: relative; height: min(62vh, 620px); overflow: hidden; display: flex; align-items: flex-end; }
+.pdph__foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pdph::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.82) 0%, rgba(0,0,0,.28) 52%, rgba(0,0,0,.12) 100%);
+}
+/* z-index pelo mesmo motivo dos cards: o ::after e o ultimo filho e
+   pintaria por cima do texto */
+.pdph__in { position: relative; z-index: 1; padding-bottom: var(--sp-7); color: #fff; }
+/* .card__tag e absoluto na origem (canto do card). Aqui precisa fluir em
+   linha, senao os dois selos empilham por cima do nome. */
+.pdph__tags { display: flex; gap: 8px; margin-bottom: var(--sp-4); }
+.pdph__tags .card__tag { position: static; }
+.pdph__nome {
+  font-family: var(--font-display); font-weight: 800; text-transform: lowercase;
+  letter-spacing: -.035em; line-height: 1; margin: 0;
+  font-size: clamp(2rem, 5.2vw, 4.2rem); color: #fff;
+}
+.pdph__end { margin: 12px 0 0; font-size: var(--t-body); color: rgba(255,255,255,.82); }
+
+.pdpfatos { border-bottom: 1px solid var(--line-1); background: var(--bg-1); }
+.pdpfatos__in { display: flex; flex-wrap: wrap; gap: var(--sp-6) var(--sp-8); padding-block: var(--sp-5); }
+.pdpfato { display: flex; align-items: center; gap: 12px; font-size: var(--t-body-s); color: var(--fg-2); }
+.pdpfato .ico { width: 22px; height: 22px; stroke: var(--enove-black); flex: none; }
+
+/* mosaico 1 grande + 2 a direita + 4 embaixo, como na referencia */
+.mos {
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: "g g g a" "g g g b" "c d e f";
+}
+.mos > a { position: relative; overflow: hidden; border-radius: var(--r-md); display: block; min-height: 150px; }
+.mos > a img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mos__grande { grid-area: g; }
+.mos > a:nth-of-type(2) { grid-area: a; }
+.mos > a:nth-of-type(3) { grid-area: b; }
+.mos > a:nth-of-type(4) { grid-area: c; }
+.mos > a:nth-of-type(5) { grid-area: d; }
+.mos > a:nth-of-type(6) { grid-area: e; }
+.mos > a:nth-of-type(7) { grid-area: f; }
+.mos__cel--mais::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.58); }
+.mos__mais {
+  position: absolute; inset: 0; z-index: 1; display: grid; place-content: center;
+  color: #fff; font-size: var(--t-body-s); text-align: center; line-height: 1.2;
+}
+.mos__mais b { display: block; font-size: 1.6rem; font-weight: 800; }
+
+.carac { list-style: none; margin: 0; padding: 0;
+         display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px var(--sp-6); }
+.carac li { display: flex; align-items: flex-start; gap: 10px; font-size: var(--t-body-s); color: var(--fg-2); }
+.carac li::before {
+  content: ""; flex: none; width: 18px; height: 18px; margin-top: 1px;
+  border-radius: 50%; background: var(--enove-yellow);
+  /* o "check" e desenhado com mascara: sem SVG por item */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m5 13 4 4L19 7' stroke='%23000' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 74% no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m5 13 4 4L19 7' stroke='%23000' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 74% no-repeat;
+}
+
+/* barra de acao fixa. z-index abaixo do visor de stories (300) para nao
+   aparecer por cima dele. */
+.pdpbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 120;
+  background: var(--enove-black); color: #fff;
+  border-top: 1px solid rgba(255,255,255,.12);
+  transform: translateY(100%); transition: transform var(--dur-3) var(--ease-standard);
+}
+.pdpbar.is-visivel { transform: none; }
+.pdpbar__in { display: flex; align-items: center; justify-content: space-between;
+              gap: var(--sp-5); padding-block: 12px; }
+.pdpbar__val b { font-family: var(--font-num); font-weight: 800; font-size: 1.25rem; }
+.pdpbar__val span { display: block; font-size: var(--t-caption); color: rgba(255,255,255,.62); }
+.pdpbar__acts { display: flex; gap: var(--sp-3); flex: none; }
+.pdpbar .btn--ghost { border-color: rgba(255,255,255,.34); color: #fff; }
+
+@media (max-width: 1080px) {
+  .carac { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+  .pdph { height: min(56vh, 460px); }
+  .mos { grid-template-columns: repeat(2, 1fr);
+         grid-template-areas: "g g" "a b" "c d" "e f"; }
+  .mos > a { min-height: 120px; }
+  .mos__grande { min-height: 210px; }
+  .carac { grid-template-columns: 1fr; }
+  .pdpbar__in { flex-direction: column; align-items: stretch; gap: 10px; }
+  .pdpbar__val { display: flex; align-items: baseline; gap: 10px; }
+  .pdpbar__val span { display: inline; }
+  .pdpbar__acts .btn { flex: 1; justify-content: center; }
+}

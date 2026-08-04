@@ -39,26 +39,37 @@
 
 <main class="pdp">
 
-  <!-- ========================== GALERIA ========================== -->
-  <div class="gal">
-    <div class="gal__side">
-      <div class="gal__cell">
-        <img data-plx="6" src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=72" alt="Sala de estar">
-      </div>
-      <div class="gal__cell">
-        <img data-plx="6" src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=800&q=72" alt="Dormitório">
-      </div>
-    </div>
-    <div class="gal__main">
-      <img data-plx="8" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=78" alt="Fachada da casa no bairro Lira">
-      <div class="gal__badges">
+  <!-- =========================== HERO ============================ -->
+  <!-- Foto sangrando com o nome por cima, como na referencia. A galeria
+       desceu para uma secao propria mais abaixo. -->
+  <header class="pdph">
+    <img class="pdph__foto" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=2000&amp;q=80"
+         alt="Fachada da casa no bairro Lira" fetchpriority="high" width="2000" height="1125">
+    <div class="wrap pdph__in">
+      <div class="pdph__tags">
         <span class="card__tag">Exclusivo Enove</span>
-        <span class="card__tag card__tag--ink">Tour 360°</span>
+        <span class="card__tag card__tag--ink">Tour 360&deg;</span>
       </div>
-      <button class="gal__all">
-        <svg class="ico ico--sm" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        Ver 28 fotos e o vídeo
-      </button>
+      <h1 class="pdph__nome">casa com p&aacute;tio no lira</h1>
+      <p class="pdph__end">Rua das Ac&aacute;cias &middot; Lira &middot; Est&acirc;ncia Velha / RS</p>
+    </div>
+  </header>
+
+  <!-- ==================== FATOS EM LINHA ========================== -->
+  <div class="pdpfatos">
+    <div class="wrap pdpfatos__in">
+      <div class="pdpfato">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10V20h13V10"/></svg>
+        <span>Casa em condom&iacute;nio aberto</span>
+      </div>
+      <div class="pdpfato">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Rua das Ac&aacute;cias, 240 &middot; Est&acirc;ncia Velha / RS</span>
+      </div>
+      <div class="pdpfato">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4m-6 8 2 2 4-4"/></svg>
+        <span>Pronto para morar &middot; escritura em dia</span>
+      </div>
     </div>
   </div>
 
@@ -69,12 +80,6 @@
       <div>
         <div class="crumb">
           <a href="index.html">Início</a> · <a href="#">Estância Velha</a> · <a href="#">Lira</a> · <span>CA1715</span>
-        </div>
-
-        <h1>casa com pátio no lira</h1>
-        <div class="pdp__loc">
-          <svg class="ico ico--sm" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-          Rua das Acácias · Lira · Estância Velha / RS
         </div>
 
         <div class="specs">
@@ -263,6 +268,52 @@
     </div>
   </section>
 
+  <!-- ======================== IMAGENS ============================ -->
+  <section class="section">
+    <div class="wrap">
+      <h2 class="rally" style="font-size:var(--t-h2);margin:0 0 24px">IMAGENS DA CASA</h2>
+      <div class="mos">
+        <a class="mos__grande" href="#" aria-label="Abrir galeria">
+          <img data-plx="6" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=1400&amp;q=76" alt="Fachada">
+        </a>
+        <a class="mos__cel" href="#" aria-label="Abrir galeria">
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=800&amp;q=72" alt="Sala de estar">
+        </a>
+        <a class="mos__cel" href="#" aria-label="Abrir galeria">
+          <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&amp;fit=crop&amp;w=800&amp;q=72" alt="Cozinha">
+        </a>
+        <a class="mos__cel" href="#" aria-label="Abrir galeria">
+          <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&amp;fit=crop&amp;w=800&amp;q=72" alt="Dormit&oacute;rio">
+        </a>
+        <a class="mos__cel" href="#" aria-label="Abrir galeria">
+          <img src="https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?auto=format&amp;fit=crop&amp;w=800&amp;q=72" alt="P&aacute;tio">
+        </a>
+        <a class="mos__cel" href="#" aria-label="Abrir galeria">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=800&amp;q=72" alt="&Aacute;rea gourmet">
+        </a>
+        <a class="mos__cel mos__cel--mais" href="#" aria-label="Ver as outras 23 fotos">
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=800&amp;q=72" alt="">
+          <span class="mos__mais"><b class="num">+23</b> fotos</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== TODAS AS CARACTERISTICAS ================= -->
+  <section class="section section--tight">
+    <div class="wrap">
+      <h2 class="rally" style="font-size:var(--t-h2);margin:0 0 24px">TODAS AS CARACTER&Iacute;STICAS</h2>
+      <ul class="carac">
+        <li>3 dormit&oacute;rios</li><li>1 su&iacute;te com closet</li><li>3 banheiros</li>
+        <li>2 vagas cobertas</li><li>Churrasqueira</li><li>&Aacute;rea gourmet coberta</li>
+        <li>Cozinha sob medida</li><li>Lareira na sala de jantar</li><li>Aquecimento a piso</li>
+        <li>Po&ccedil;o artesiano</li><li>Portaria 24h no condom&iacute;nio</li><li>Piso porcelanato</li>
+        <li>Janelas com vidro duplo</li><li>Lavanderia separada</li><li>P&aacute;tio com grama</li>
+        <li>Escritura registrada</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- ========================= DESTAQUES ========================== -->
   <!-- Circulos no formato de destaque de rede social. Abrem um visor de
        stories em tela cheia: barras de progresso, avanco automatico, toque
@@ -302,7 +353,7 @@
         <li>
           <button class="dest__item" type="button" data-dest="3">
             <span class="dest__anel">
-              <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=70"
+              <img src="https://images.unsplash.com/photo-1567496898669-ee935f5f647a?auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=70"
                    alt="" loading="lazy" width="200" height="200">
             </span>
             <span class="dest__rot">entorno</span>
@@ -404,6 +455,23 @@
       <div class="grid" id="grid-similares"></div>
     </div>
   </section>
+
+  <!-- ================= BARRA DE ACAO FIXA ======================== -->
+  <div class="pdpbar" data-pdpbar>
+    <div class="wrap pdpbar__in">
+      <div class="pdpbar__val">
+        <b class="num">R$ 745.000</b>
+        <span>ou <b class="num">R$ 5.242</b>/m&ecirc;s simulado</span>
+      </div>
+      <div class="pdpbar__acts">
+        <a class="btn btn--ghost btn--sm" href="#custo">Simular financiamento</a>
+        <a class="btn btn--primary btn--sm" href="#agendar">
+          Agendar visita
+          <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
 
 </main>
 

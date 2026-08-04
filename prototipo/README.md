@@ -46,6 +46,7 @@ Depois: <http://localhost:8899/index.html>
 | Header comprime, barra de progresso de leitura | ambas |
 | Entradas escalonadas: especificações, custos, entorno | página do imóvel |
 | Destaques em círculos que abrem um visor de stories | página do imóvel |
+| Barra de ação que sobe quando o hero sai de cena | página do imóvel |
 
 Tudo calibrado pelo manual: easing sem bounce, durações 120/200/320/520 ms,
 reveals em fade + subida curta, sem zoom agressivo.
@@ -351,6 +352,35 @@ sem bloco preso invisivel, sem texto cortado, sem erros.
 
 > **Se mudar o `font-size` mobile do lockup, `knock-mask-mobile.svg` precisa
 > ser regerado** — vale o mesmo aviso do arquivo de desktop.
+
+## A página do imóvel
+
+Reestruturada seguindo a referência que voce trouxe:
+
+| Bloco | O que e |
+|---|---|
+| hero | foto sangrando com o nome e o endereco por cima |
+| linha de fatos | tipo, endereco e situacao, com icone |
+| mosaico | 1 grande + 2 a direita + 4 embaixo, com "+23 fotos" no ultimo |
+| todas as caracteristicas | lista em grade, com o check desenhado por mascara CSS |
+| destaques | circulos que abrem stories (abaixo) |
+| barra de acao | fixa no rodape, sobe quando o hero sai de cena |
+
+**A barra so aparece depois do hero.** No topo ela competiria com o CTA do
+proprio hero, e o visitante veria dois "agendar visita" ao mesmo tempo.
+
+**`.card__tag` precisou de `position: static` no hero.** Na origem ele e
+absoluto, ancorado no canto de um card — reaproveitado no hero, os dois
+selos empilhavam por cima do nome do imovel.
+
+### Atencao com as fotos de exemplo
+
+Duas fotos do Unsplash em uso **nao sao de imoveis**: uma e um mapa-mundi e a
+outra e o retrato de uma pessoa. Ambas estao corretas onde ja estavam — o
+mapa no bloco "mapa do bairro", o retrato na corretora e no time — mas foram
+parar por engano no mosaico e nos stories, onde apareciam como "patio" e
+"rua sem saida". Ao trocar fotos de exemplo, conferir o que o ID devolve:
+o nome do arquivo nao diz nada sobre o conteudo.
 
 ## Destaques em formato de story
 
