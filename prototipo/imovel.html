@@ -263,6 +263,75 @@
     </div>
   </section>
 
+  <!-- ========================= DESTAQUES ========================== -->
+  <!-- Circulos no formato de destaque de rede social. Abrem um visor de
+       stories em tela cheia: barras de progresso, avanco automatico, toque
+       nas laterais e segurar para pausar. Logica em app.js. -->
+  <section class="section dest" id="destaques">
+    <div class="wrap">
+      <div class="eyebrow">Destaques</div>
+      <h2 class="rally" style="margin:12px 0 28px">O QUE UMA FOTO N&Atilde;O CONTA.</h2>
+      <ul class="dest__lista">
+        <li>
+          <button class="dest__item" type="button" data-dest="0">
+            <span class="dest__anel">
+              <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=70"
+                   alt="" loading="lazy" width="200" height="200">
+            </span>
+            <span class="dest__rot">fachada</span>
+          </button>
+        </li>
+        <li>
+          <button class="dest__item" type="button" data-dest="1">
+            <span class="dest__anel">
+              <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=70"
+                   alt="" loading="lazy" width="200" height="200">
+            </span>
+            <span class="dest__rot">área gourmet</span>
+          </button>
+        </li>
+        <li>
+          <button class="dest__item" type="button" data-dest="2">
+            <span class="dest__anel">
+              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=70"
+                   alt="" loading="lazy" width="200" height="200">
+            </span>
+            <span class="dest__rot">living</span>
+          </button>
+        </li>
+        <li>
+          <button class="dest__item" type="button" data-dest="3">
+            <span class="dest__anel">
+              <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=70"
+                   alt="" loading="lazy" width="200" height="200">
+            </span>
+            <span class="dest__rot">entorno</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- visor de stories -->
+  <div class="story" data-story hidden role="dialog" aria-modal="true"
+       aria-label="Destaques do im&oacute;vel">
+    <div class="story__topo">
+      <div class="story__barras" data-story-barras></div>
+      <div class="story__cab">
+        <span class="story__titulo" data-story-titulo></span>
+        <button class="story__fechar" data-story-fechar type="button" aria-label="Fechar destaques">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <figure class="story__quadro">
+      <img data-story-img alt="">
+      <figcaption class="story__legenda" data-story-legenda></figcaption>
+    </figure>
+    <button class="story__lado story__lado--ant"  data-story-ant  type="button" aria-label="Anterior"></button>
+    <button class="story__lado story__lado--prox" data-story-prox type="button" aria-label="Pr&oacute;ximo"></button>
+  </div>
+
   <!-- ====================== LOCALIZAÇÃO / BAIRRO ================== -->
   <section class="section">
     <div class="wrap">

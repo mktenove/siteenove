@@ -45,6 +45,7 @@ Depois: <http://localhost:8899/index.html>
 | Espelho de vendas preenchendo barra por barra | Enove Select |
 | Header comprime, barra de progresso de leitura | ambas |
 | Entradas escalonadas: especificações, custos, entorno | página do imóvel |
+| Destaques em círculos que abrem um visor de stories | página do imóvel |
 
 Tudo calibrado pelo manual: easing sem bounce, durações 120/200/320/520 ms,
 reveals em fade + subida curta, sem zoom agressivo.
@@ -350,6 +351,33 @@ sem bloco preso invisivel, sem texto cortado, sem erros.
 
 > **Se mudar o `font-size` mobile do lockup, `knock-mask-mobile.svg` precisa
 > ser regerado** — vale o mesmo aviso do arquivo de desktop.
+
+## Destaques em formato de story
+
+Circulos com anel em degradê que abrem um visor em tela cheia, no padrao de
+destaques de rede social. Quatro destaques, 2 a 3 quadros cada.
+
+- uma barra de progresso por quadro, avanco automatico de 5 s
+- toque/clique nas laterais navega; segurar pausa; arrastar para baixo fecha
+- teclado: setas e `Escape`
+- ao terminar um destaque segue para o proximo; depois do ultimo, fecha
+- com "reduzir movimento" ligado o avanco automatico **nao roda** — so manual
+
+Dois detalhes que sao facilmente esquecidos e quebram a experiencia:
+
+- **A rolagem da pagina precisa ser travada enquanto o visor esta aberto**, e
+  o Lenis parado junto (`__lenis.stop()`). Sem isso a pagina rola atras do
+  visor. Verificado que solta ao fechar, senao a pagina fica presa.
+- **O foco volta para o circulo de origem ao fechar.** Sem isso quem navega
+  por teclado e devolvido ao topo do documento.
+
+O anel usa `conic-gradient` na paleta da marca — amarelo para o dourado do
+Enove Select — e nao o degradê da rede social que inspirou o formato.
+
+No desktop o visor **nao ocupa a tela toda**: o quadro fica num palco
+vertical de 440 px centrado, com as barras e o cabecalho alinhados a ele.
+Espalhados pela largura inteira, ficavam a metros da foto. No celular
+preenche a tela.
 
 ## Fluidez do scroll — como foi calibrada
 

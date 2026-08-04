@@ -1016,3 +1016,80 @@ img.plx {
   .finder__stats { gap: var(--sp-5); }
   .ask__box .btn span { display: none; }
 }
+
+/* ---------- destaques (circulos) + visor de stories ------------------- */
+.dest__lista { display: flex; gap: var(--sp-5); list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+.dest__item {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  background: none; border: 0; padding: 0; cursor: pointer; width: 96px;
+}
+/* o anel e um conic-gradient da paleta da marca — amarelo para o dourado
+   do Enove Select, nao o degradê da rede social */
+.dest__anel {
+  width: 88px; height: 88px; border-radius: 50%; display: grid; place-items: center;
+  background: conic-gradient(from 210deg, var(--enove-yellow), var(--select-gold),
+                             var(--enove-yellow), var(--select-gold-deep), var(--enove-yellow));
+  padding: 3px; transition: transform var(--dur-3) var(--ease-out);
+}
+.dest__item:hover .dest__anel,
+.dest__item:focus-visible .dest__anel { transform: scale(1.06); }
+.dest__anel img {
+  width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+  border: 3px solid var(--bg-1); display: block;
+}
+.dest__rot {
+  font-size: var(--t-caption); color: var(--fg-2); text-align: center;
+  line-height: 1.25; max-width: 96px;
+}
+
+/* ---- visor ---- */
+.story[hidden] { display: none; }
+.story {
+  position: fixed; inset: 0; z-index: 300; background: #000;
+  display: grid; place-items: center;
+}
+/* Palco vertical centrado: no desktop o story nao ocupa a tela toda, senao
+   as barras e o cabecalho ficam a metros da foto. No celular preenche. */
+.story__quadro {
+  position: absolute; top: 0; bottom: 0; left: 50%; margin: 0;
+  width: min(100%, 440px); transform: translateX(-50%);
+}
+.story__quadro img { width: 100%; height: 100%; object-fit: contain; background: #000; }
+.story__legenda {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 96px var(--sp-6) var(--sp-6);
+  background: linear-gradient(to top, rgba(0,0,0,.85), transparent);
+  color: #fff; font-size: var(--t-body-s); text-align: center;
+}
+.story__topo {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: min(100%, 440px); z-index: 2; padding: 14px 14px 0;
+}
+.story__barras { display: flex; gap: 4px; }
+.story__barra { flex: 1; height: 3px; border-radius: 2px; background: rgba(255,255,255,.3); overflow: hidden; }
+.story__barra i { display: block; height: 100%; width: 0; background: #fff; }
+.story__cab { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+.story__titulo {
+  color: #fff; font-family: var(--font-display); font-weight: 800;
+  text-transform: lowercase; letter-spacing: -.02em; font-size: 1.15rem;
+}
+.story__fechar {
+  background: none; border: 0; color: #fff; cursor: pointer; padding: 6px;
+  display: grid; place-items: center;
+}
+.story__fechar .ico { width: 26px; height: 26px; }
+
+/* metades invisiveis de toque, como numa rede social. z-index abaixo do
+   topo para o botao de fechar continuar clicavel. */
+.story__lado {
+  position: absolute; top: 0; bottom: 0; width: 34%; z-index: 1;
+  background: none; border: 0; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.story__lado--ant  { left: 0; }
+.story__lado--prox { right: 0; width: 66%; }
+
+@media (max-width: 720px) {
+  .dest__item { width: 78px; }
+  .dest__anel { width: 72px; height: 72px; }
+  .dest__rot  { max-width: 78px; font-size: var(--t-micro); }
+}

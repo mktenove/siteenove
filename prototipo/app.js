@@ -509,3 +509,145 @@ document.addEventListener('DOMContentLoaded', () => {
   addEventListener('resize', pintar);
   pintar();
 });
+
+/* =======================================================================
+   Destaques em formato de story
+   Cada destaque tem varios quadros. O visor mostra uma barra de progresso
+   por quadro, avanca sozinho e aceita toque nas laterais, teclado e
+   arrasto para baixo. Ao chegar no fim de um destaque, segue para o
+   proximo; depois do ultimo, fecha.
+   ======================================================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const visor = document.querySelector('[data-story]');
+  const gatilhos = [...document.querySelectorAll('[data-dest]')];
+  if (!visor || !gatilhos.length) return;
+
+  const F = (foto, w = 900, h = 1600) =>
+    `https://images.unsplash.com/photo-${foto}?auto=format&fit=crop&w=${w}&h=${h}&q=72`;
+
+  const DESTAQUES = [
+    { titulo: 'fachada', quadros: [
+      { foto: '1600607687939-ce8a6c25118c', txt: 'Frente voltada para o nascente — sol da manhã na sala.' },
+      { foto: '1600585154340-be6161a56a0c', txt: 'Recuo de 4 m: dá para estacionar dois carros fora da garagem.' },
+      { foto: '1524661135-423995f22d0b',    txt: 'Rua sem saída, com pouco movimento de passagem.' } ] },
+    { titulo: 'área gourmet', quadros: [
+      { foto: '1600566753086-00f18fb6b3ea', txt: 'Churrasqueira e bancada de frente para o pátio.' },
+      { foto: '1573496359142-b8d87734a5a2', txt: 'Cobertura sobre a área toda — usa no inverno também.' } ] },
+    { titulo: 'living', quadros: [
+      { foto: '1600585154340-be6161a56a0c', txt: 'Pé-direito de 2,90 m e janela em toda a parede oeste.' },
+      { foto: '1600566753086-00f18fb6b3ea', txt: 'Integrado à cozinha, sem parede entre os ambientes.' },
+      { foto: '1600607687939-ce8a6c25118c', txt: 'Piso porcelanato, aquecimento por piso na sala.' } ] },
+    { titulo: 'entorno', quadros: [
+      { foto: '1524661135-423995f22d0b',    txt: 'Escola a 400 m, a pé por rua com calçada nos dois lados.' },
+      { foto: '1573496359142-b8d87734a5a2', txt: 'Mercado e farmácia a 6 minutos caminhando.' } ] },
+  ];
+
+  const barras   = visor.querySelector('[data-story-barras]');
+  const img      = visor.querySelector('[data-story-img]');
+  const legenda  = visor.querySelector('[data-story-legenda]');
+  const titulo   = visor.querySelector('[data-story-titulo]');
+  const DURACAO  = 5000;
+  const semAnim  = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let iDest = 0, iQuadro = 0, t0 = 0, decorrido = 0, raf = null, pausado = false, aberto = false;
+
+  function montarBarras() {
+    barras.innerHTML = '';
+    DESTAQUES[iDest].quadros.forEach(() => {
+      const b = document.createElement('div');
+      b.className = 'story__barra';
+      b.appendChild(document.createElement('i'));
+      barras.appendChild(b);
+    });
+  }
+
+  function pintar() {
+    const d = DESTAQUES[iDest], q = d.quadros[iQuadro];
+    img.src = F(q.foto);
+    img.alt = `${d.titulo}: ${q.txt}`;
+    legenda.textContent = q.txt;
+    titulo.textContent = d.titulo;
+    [...barras.children].forEach((b, i) => {
+      b.firstChild.style.width = i < iQuadro ? '100%' : '0%';
+    });
+  }
+
+  function tick(agora) {
+    if (!aberto) return;
+    if (!pausado) {
+      decorrido += agora - t0;
+      const p = Math.min(1, decorrido / DURACAO);
+      const barra = barras.children[iQuadro];
+      if (barra) barra.firstChild.style.width = (p * 100) + '%';
+      if (p >= 1) { avancar(1); return; }
+    }
+    t0 = agora;
+    raf = requestAnimationFrame(tick);
+  }
+
+  function reiniciar() {
+    decorrido = 0;
+    cancelAnimationFrame(raf);
+    if (semAnim) return;            // sem avanco automatico: so manual
+    t0 = performance.now();
+    raf = requestAnimationFrame(tick);
+  }
+
+  function avancar(passo) {
+    const d = DESTAQUES[iDest];
+    if (iQuadro + passo < 0) {
+      if (iDest === 0) { iQuadro = 0; reiniciar(); pintar(); return; }
+      iDest--; iQuadro = DESTAQUES[iDest].quadros.length - 1; montarBarras();
+    } else if (iQuadro + passo >= d.quadros.length) {
+      if (iDest === DESTAQUES.length - 1) { fechar(); return; }
+      iDest++; iQuadro = 0; montarBarras();
+    } else {
+      iQuadro += passo;
+    }
+    pintar(); reiniciar();
+  }
+
+  function abrir(i) {
+    iDest = i; iQuadro = 0; aberto = true;
+    visor.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    window.__lenis?.stop();
+    montarBarras(); pintar(); reiniciar();
+    visor.querySelector('[data-story-fechar]').focus();
+  }
+
+  function fechar() {
+    aberto = false;
+    cancelAnimationFrame(raf);
+    visor.hidden = true;
+    document.documentElement.style.overflow = '';
+    window.__lenis?.start();
+    gatilhos[iDest]?.focus();
+  }
+
+  gatilhos.forEach((g, i) => g.addEventListener('click', () => abrir(i)));
+  visor.querySelector('[data-story-fechar]').addEventListener('click', fechar);
+  visor.querySelector('[data-story-ant]').addEventListener('click', () => avancar(-1));
+  visor.querySelector('[data-story-prox]').addEventListener('click', () => avancar(1));
+
+  /* segurar pausa, como numa rede social */
+  const segurar = v => () => { pausado = v; };
+  visor.addEventListener('pointerdown', segurar(true));
+  visor.addEventListener('pointerup', segurar(false));
+  visor.addEventListener('pointercancel', segurar(false));
+
+  /* arrastar para baixo fecha */
+  let y0 = null;
+  visor.addEventListener('touchstart', e => { y0 = e.touches[0].clientY; }, { passive: true });
+  visor.addEventListener('touchend', e => {
+    if (y0 !== null && e.changedTouches[0].clientY - y0 > 90) fechar();
+    y0 = null;
+  }, { passive: true });
+
+  document.addEventListener('keydown', e => {
+    if (!aberto) return;
+    if (e.key === 'Escape')     { e.preventDefault(); fechar(); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); avancar(1); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); avancar(-1); }
+  });
+});
