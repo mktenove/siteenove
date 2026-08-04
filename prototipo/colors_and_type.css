@@ -19,6 +19,14 @@
 @font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Bold-trial.ttf') format('truetype');              font-weight: 800; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Cocogoose Pro'; src: url('fonts/Cocogoose-Pro-Bold-Italic-trial.ttf') format('truetype');       font-weight: 800; font-style: italic; font-display: swap; }
 
+/* DISPLAY EDITORIAL : Playfair Display — SIL OFL, pode ir para producao.
+   Substituiu a Cocogoose nos titulos e textos de display. A Cocogoose
+   permanece SO no contorno do wordmark do hero, que precisa continuar
+   batendo com a mascara ja assada em contorno vetorial. */
+@font-face { font-family: 'Playfair Display'; src: url('fonts/PlayfairDisplay-Bold.ttf') format('truetype');       font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Playfair Display'; src: url('fonts/PlayfairDisplay-ExtraBold.ttf') format('truetype');  font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Playfair Display'; src: url('fonts/PlayfairDisplay-BoldItalic.ttf') format('truetype'); font-weight: 700; font-style: italic; font-display: swap; }
+
 /* Cocogoose Pro Letterpress — special display for logos/hero moments */
 @font-face { font-family: 'Cocogoose Letterpress'; src: url('fonts/Cocogoose-Pro-Letterpress-Regular-trial.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
 
@@ -145,10 +153,14 @@
      Hero specialty     : Cocogoose Letterpress  /  Cocogoose Darkmode
      Select script      : Allura (substitution flagged)
      --------------------------------------------------------------------- */
-  --font-display:     'Cocogoose Pro', 'Altair', 'Helvetica Neue', Arial, sans-serif;
+  --font-display:     'Playfair Display', Georgia, 'Times New Roman', serif;
+  /* usada so no contorno do hero, que tem de casar com a mascara assada */
+  --font-wordmark:    'Cocogoose Pro', 'Helvetica Neue', Arial, sans-serif;
   --font-display-dark:'Cocogoose Darkmode', 'Cocogoose Pro', 'Helvetica Neue', Arial, sans-serif;
   --font-letterpress: 'Cocogoose Letterpress', 'Cocogoose Pro', 'Helvetica Neue', Arial, sans-serif;
-  --font-heading:     'Cocogoose Pro', 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  /* rotulos micro em caixa alta: Poppins. Serifada nesse tamanho fica
+     ilegivel, e assim nao sobra Cocogoose viva fora do contorno do hero. */
+  --font-heading:     'Poppins', 'Helvetica Neue', Arial, sans-serif;
   --font-body:        'Poppins', 'Helvetica Neue', Arial, sans-serif;
   --font-signage:     'Bungee', 'Cocogoose Pro', Impact, sans-serif;
   --font-script:      'Allura', 'Brush Script MT', cursive;

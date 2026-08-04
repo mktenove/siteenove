@@ -530,6 +530,31 @@ taxa de quadros — por isso otimizar imagem ou camada nao teria adiantado.
 > real de scroll e nao mede nada util. As medicoes acima usam evento de roda
 > de verdade.
 
+## Duas famílias de display, e o porquê
+
+| Token | Familia | Onde |
+|---|---|---|
+| `--font-display` | **Playfair Display** (SIL OFL) | titulos, nomes, textos de display |
+| `--font-wordmark` | **Cocogoose Pro** | SO o contorno do wordmark no hero |
+| `--font-heading` | **Poppins** | rotulos micro em caixa alta |
+| `--font-body` | Poppins | corpo e UI |
+
+**Por que a Cocogoose sobrevive num canto so.** O wordmark do hero esta
+assado em contorno vetorial dentro de `knock-mask.svg`. O `.line__word` e
+texto vivo que precisa se sobrepor exatamente a esse contorno durante o
+cruzamento — com outra fonte, a palavra apareceria duplicada. Por isso ele
+tem um token proprio, e **trocar `--font-display` nao o afeta**.
+
+Conferido sobrepondo o contorno em vermelho sobre o vazado, ambos em escala
+1: o traco assenta na borda dos buracos.
+
+> Uma diferenca de 9,6 px entre o `getBBox()` do `<text>` e a caixa dos
+> buracos medida em pixel **nao e desalinhamento** — sao metodos que medem
+> coisas diferentes. A prova e a sobreposicao visual, nao o numero.
+
+**Os rotulos micro foram para Poppins.** Serifada em 11 px caixa alta fica
+ilegivel, e assim nao sobra Cocogoose viva fora do contorno do hero.
+
 ## Armadilhas da fonte trial (alem dos numeros)
 
 A Cocogoose trial ja tinha quebrado os digitos. Ela tambem **corrompe a
