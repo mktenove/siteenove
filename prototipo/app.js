@@ -627,11 +627,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   gatilhos.forEach((g, i) => g.addEventListener('click', () => abrir(i)));
   visor.querySelector('[data-story-fechar]').addEventListener('click', fechar);
-  visor.querySelector('[data-story-ant]').addEventListener('click', () => avancar(-1));
-  visor.querySelector('[data-story-prox]').addEventListener('click', () => avancar(1));
+  /* ha dois de cada: a metade invisivel de toque e a seta visivel */
+  visor.querySelectorAll('[data-story-ant]').forEach(b => b.addEventListener('click', () => avancar(-1)));
+  visor.querySelectorAll('[data-story-prox]').forEach(b => b.addEventListener('click', () => avancar(1)));
+
+  /* Pausa manual, separada do "segurar para pausar": sem essa distincao,
+     soltar o dedo depois de apertar o botao voltaria a tocar na hora. */
+  const btPausa  = visor.querySelector('[data-story-pausa]');
+  const icPausa  = visor.querySelector('[data-icone-pausa]');
+  const icPlay   = visor.querySelector('[data-icone-play]');
+  let travado = false;
+  btPausa.addEventListener('click', e => {
+    e.stopPropagation();
+    travado = !travado;
+    pausado = travado;
+    icPausa.hidden = travado; icPlay.hidden = !travado;
+    btPausa.setAttribute('aria-label', travado ? 'Retomar' : 'Pausar');
+  });
+
+  const salvar = visor.querySelector('[data-story-salvar]');
+  salvar.addEventListener('click', e => {
+    e.stopPropagation();
+    salvar.setAttribute('aria-pressed',
+      salvar.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+  });
 
   /* segurar pausa, como numa rede social */
-  const segurar = v => () => { pausado = v; };
+  const segurar = v => e => {
+    if (travado) return;                       // pausa manual tem prioridade
+    if (e.target.closest('.story__bt, .story__cta')) return;   // controles nao pausam
+    pausado = v;
+  };
+  visor.querySelector('[data-story-cta]').addEventListener('click', fechar);
   visor.addEventListener('pointerdown', segurar(true));
   visor.addEventListener('pointerup', segurar(false));
   visor.addEventListener('pointercancel', segurar(false));

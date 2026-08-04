@@ -393,6 +393,22 @@ destaques de rede social. Quatro destaques, 2 a 3 quadros cada.
 - ao terminar um destaque segue para o proximo; depois do ultimo, fecha
 - com "reduzir movimento" ligado o avanco automatico **nao roda** — so manual
 
+A moldura tem avatar, nome do imovel, o destaque atual, botao de pausa
+visivel e setas fora do quadro no desktop. No rodape, no lugar do campo de
+resposta de uma rede social, vao as acoes que fazem sentido aqui: **agendar
+visita** e **salvar o imovel**.
+
+**A pausa manual e separada do "segurar para pausar".** Sem essa distincao,
+soltar o dedo depois de apertar o botao de pausa voltaria a tocar na hora.
+Medido: parado avanca 0,66% em 1,4 s (contra os 28% que avancaria correndo);
+ao retomar, 24% em 1,2 s, exatamente a taxa esperada.
+
+> **`hidden` nao funciona em elemento SVG.** O atributo e do HTML, e a regra
+> da folha do navegador que o implementa nao alcanca o namespace do SVG —
+> `<svg hidden>` continua desenhando, com `display: block` computado e
+> nenhuma regra de autor envolvida. Os icones de pausa e play apareciam
+> empilhados ate existir um `[hidden] { display: none }` explicito no CSS.
+
 Dois detalhes que sao facilmente esquecidos e quebram a experiencia:
 
 - **A rolagem da pagina precisa ser travada enquanto o visor esta aberto**, e

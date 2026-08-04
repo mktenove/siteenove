@@ -369,10 +369,22 @@
     <div class="story__topo">
       <div class="story__barras" data-story-barras></div>
       <div class="story__cab">
-        <span class="story__titulo" data-story-titulo></span>
-        <button class="story__fechar" data-story-fechar type="button" aria-label="Fechar destaques">
-          <svg class="ico" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
-        </button>
+        <span class="story__ident">
+          <img class="story__av" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&amp;fit=crop&amp;w=120&amp;h=120&amp;q=70" alt="">
+          <span class="story__txt">
+            <b>casa com p&aacute;tio no lira</b>
+            <i data-story-titulo></i>
+          </span>
+        </span>
+        <span class="story__ctrl">
+          <button class="story__bt" data-story-pausa type="button" aria-label="Pausar">
+            <svg class="ico" data-icone-pausa viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg>
+            <svg class="ico" data-icone-play viewBox="0 0 24 24" hidden><path d="M7 4v16l13-8z"/></svg>
+          </button>
+          <button class="story__bt" data-story-fechar type="button" aria-label="Fechar destaques">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </span>
       </div>
     </div>
     <figure class="story__quadro">
@@ -381,6 +393,26 @@
     </figure>
     <button class="story__lado story__lado--ant"  data-story-ant  type="button" aria-label="Anterior"></button>
     <button class="story__lado story__lado--prox" data-story-prox type="button" aria-label="Pr&oacute;ximo"></button>
+
+    <!-- setas visiveis, fora do quadro. So no desktop: no celular o toque
+         nas laterais ja resolve e elas roubariam area util. -->
+    <button class="story__seta story__seta--ant"  data-story-ant  type="button" aria-label="Anterior">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="story__seta story__seta--prox" data-story-prox type="button" aria-label="Pr&oacute;ximo">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+
+    <div class="story__rodape">
+      <a class="btn btn--primary story__cta" href="#agendar" data-story-cta>
+        Agendar visita
+        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <button class="story__bt story__salvar" data-story-salvar type="button"
+              aria-pressed="false" aria-label="Salvar im&oacute;vel">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M20.8 6.6a5 5 0 0 0-7.1 0L12 8.3l-1.7-1.7a5 5 0 1 0-7.1 7.1l8.8 8.8 8.8-8.8a5 5 0 0 0 0-7.1Z"/></svg>
+      </button>
+    </div>
   </div>
 
   <!-- ====================== LOCALIZAÇÃO / BAIRRO ================== -->
