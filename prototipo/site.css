@@ -1023,12 +1023,15 @@ img.plx {
   display: flex; flex-direction: column; align-items: center; gap: 10px;
   background: none; border: 0; padding: 0; cursor: pointer; width: 96px;
 }
-/* o anel e um conic-gradient da paleta da marca — amarelo para o dourado
-   do Enove Select, nao o degradê da rede social */
+/* Anel no degradê quente-para-frio das redes sociais: amarelo e laranja
+   embaixo a esquerda, subindo para magenta e roxo em cima a direita. E o
+   unico ponto do site fora da paleta do manual — a leitura de "story"
+   depende dessas cores. */
 .dest__anel {
   width: 88px; height: 88px; border-radius: 50%; display: grid; place-items: center;
-  background: conic-gradient(from 210deg, var(--enove-yellow), var(--select-gold),
-                             var(--enove-yellow), var(--select-gold-deep), var(--enove-yellow));
+  background: conic-gradient(from 215deg,
+              #FEDA75 0%, #FA7E1E 15%, #D62976 40%,
+              #962FBF 65%, #4F5BD5 82%, #FEDA75 100%);
   padding: 3px; transition: transform var(--dur-3) var(--ease-out);
 }
 .dest__item:hover .dest__anel,

@@ -401,8 +401,12 @@ Dois detalhes que sao facilmente esquecidos e quebram a experiencia:
 - **O foco volta para o circulo de origem ao fechar.** Sem isso quem navega
   por teclado e devolvido ao topo do documento.
 
-O anel usa `conic-gradient` na paleta da marca — amarelo para o dourado do
-Enove Select — e nao o degradê da rede social que inspirou o formato.
+O anel usa `conic-gradient` no degradê quente-para-frio das redes sociais:
+amarelo e laranja embaixo a esquerda, subindo para magenta e roxo em cima a
+direita. **E o unico ponto do site fora da paleta do manual** — foi uma
+escolha deliberada, porque a leitura de "isto abre como story" depende
+dessas cores. A primeira versao usava amarelo e o dourado do Enove Select e
+nao comunicava o formato.
 
 No desktop o visor **nao ocupa a tela toda**: o quadro fica num palco
 vertical de 440 px centrado, com as barras e o cabecalho alinhados a ele.
