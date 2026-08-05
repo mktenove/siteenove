@@ -23,9 +23,12 @@
    Substituiu a Cocogoose nos titulos e textos de display. A Cocogoose
    permanece SO no contorno do wordmark do hero, que precisa continuar
    batendo com a mascara ja assada em contorno vetorial. */
-@font-face { font-family: 'Playfair Display'; src: url('fonts/PlayfairDisplay-Bold.ttf') format('truetype');       font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Playfair Display'; src: url('fonts/PlayfairDisplay-ExtraBold.ttf') format('truetype');  font-weight: 800; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Playfair Display'; src: url('fonts/PlayfairDisplay-BoldItalic.ttf') format('truetype'); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Playfair Display'; src: url('fonts/PlayfairDisplay-Bold.woff2') format('woff2'),
+                                                  url('fonts/PlayfairDisplay-Bold.ttf') format('truetype');       font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Playfair Display'; src: url('fonts/PlayfairDisplay-ExtraBold.woff2') format('woff2'),
+                                                  url('fonts/PlayfairDisplay-ExtraBold.ttf') format('truetype');  font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Playfair Display'; src: url('fonts/PlayfairDisplay-BoldItalic.woff2') format('woff2'),
+                                                  url('fonts/PlayfairDisplay-BoldItalic.ttf') format('truetype'); font-weight: 700; font-style: italic; font-display: swap; }
 
 /* Cocogoose Pro Letterpress — special display for logos/hero moments */
 @font-face { font-family: 'Cocogoose Letterpress'; src: url('fonts/Cocogoose-Pro-Letterpress-Regular-trial.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }

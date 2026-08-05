@@ -500,7 +500,33 @@
     pdp();
     redeDeSeguranca();
 
-    window.addEventListener('load', () => ScrollTrigger.refresh());
-    if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh());
+    /* Um refresh REMEDE tudo e re-cria os pins. Caindo com o visitante ja
+       dentro de uma secao pinada, o `start` dela nao se desloca um pouco:
+       COLAPSA. Medido com as fontes chegando tarde — start 6046 virou -145,
+       a fita despinou e a pagina saltou 1063 px.
+
+       Nao basta guardar as chamadas daqui: o ScrollTrigger tem eventos
+       proprios de auto-refresh (`load`, `resize`) que nao passam por este
+       codigo. Por isso a lista e reduzida ao DOMContentLoaded e o resto e
+       controlado abaixo. */
+    ScrollTrigger.config({ autoRefreshEvents: 'DOMContentLoaded' });
+
+    let pendente = false, larguraAnterior = window.innerWidth;
+    const noTopo = () => window.scrollY < 200;
+    const refrescar = () => {
+      if (noTopo()) { ScrollTrigger.refresh(); pendente = false; }
+      else pendente = true;          /* fica agendado para a volta ao topo */
+    };
+    addEventListener('scroll', () => { if (pendente && noTopo()) refrescar(); },
+                     { passive: true });
+    addEventListener('load', refrescar);
+    if (document.fonts) document.fonts.ready.then(refrescar);
+    /* No celular, esconder a barra do navegador dispara resize so na ALTURA.
+       Remedir por causa disso corromperia o pin no meio da leitura. */
+    addEventListener('resize', () => {
+      if (window.innerWidth === larguraAnterior) return;
+      larguraAnterior = window.innerWidth;
+      refrescar();
+    });
   });
 })();
