@@ -2,3 +2,13 @@
 Thumbs.db
 .claude/
 node_modules/
+
+# ---- migração ------------------------------------------------------------
+# credenciais: a service_role dá acesso total ao banco e NUNCA pode subir
+.env
+.env.*
+!.env.exemplo
+# dados extraídos e fotos baixadas: volumosos e reconstituíveis
+migracao/fichas/
+migracao/fotos/
+migracao/*.log
