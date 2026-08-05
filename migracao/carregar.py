@@ -99,6 +99,11 @@ def mapear(im):
         "origem_flip_id":im.get("idPostgres"),
     }
 
+def slugificar(txt):
+    import unicodedata
+    t = unicodedata.normalize("NFKD", txt).encode("ascii", "ignore").decode()
+    return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", t.lower())).strip("-")
+
 def achar_ou_criar(tabela, filtro, dados):
     q = "&".join(f"{k}=eq.{urllib.parse.quote(str(v))}" for k, v in filtro.items())
     achou = rest(f"{tabela}?{q}&select=id&limit=1")
@@ -111,7 +116,7 @@ def carregar(limite=None, so_conferir=False):
     arqs = sorted(os.listdir(FICHAS)) if os.path.isdir(FICHAS) else []
     if not arqs: sys.exit("nenhuma ficha em fichas/ — rode extrair.py --buscar")
     if limite: arqs = arqs[:limite]
-    cidades, bairros = {}, {}
+    cidades, bairros, conds = {}, {}, {}
     lote, fotos_total, sem_codigo = [], 0, 0
 
     for a in arqs:
@@ -135,10 +140,27 @@ def carregar(limite=None, so_conferir=False):
                             "bairro", {"cidade_id": cidades[cid], "nome": bai},
                             {"cidade_id": cidades[cid], "nome": bai})
                     linha["bairro_id"] = bairros[ch]
+            # Condomínio é entidade própria: 45 imóveis do maior deles
+            # apontariam para o mesmo registro em vez de repetir os dados.
+            cid_flip = im.get("condominioId")
+            if im.get("possuiCondominio") and cid_flip:
+                if cid_flip not in conds:
+                    nome = (im.get("condominio") or f"Condomínio {cid_flip}").strip()
+                    conds[cid_flip] = achar_ou_criar(
+                        "condominio", {"origem_flip_id": cid_flip},
+                        {"origem_flip_id": cid_flip, "nome": nome,
+                         "slug": f"{slugificar(nome)}-{cid_flip}",
+                         "cidade_id": linha.get("cidade_id"),
+                         "bairro_id": linha.get("bairro_id"),
+                         "lat": linha.get("lat"), "lng": linha.get("lng"),
+                         "publicado": True})
+                linha["condominio_id"] = conds[cid_flip]
+
         lote.append((linha, im.get("photos") or []))
         fotos_total += len(im.get("photos") or [])
 
     print(f"fichas lidas: {len(arqs)}  |  mapeadas: {len(lote)}  |  sem código: {sem_codigo}")
+    if conds: print(f"condomínios criados/reaproveitados: {len(conds)}")
     print(f"fotos referenciadas: {fotos_total}")
     if so_conferir:
         print("\nexemplo do que seria gravado:")
