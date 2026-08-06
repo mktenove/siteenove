@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function recarregarCondominios() {
     const secao = document.querySelector('#top-investimentos');
     const pista = document.querySelector('[data-carr-pista]');
-    ENOVE_DB.condominios(8).then(cs => {
+    ENOVE_DB.condominios(5).then(cs => {
       const pista = document.querySelector('[data-carr-pista]');
       if (!cs || !cs.length || !pista) return;
       pista.innerHTML = cs.map(cartaoCondominio).join('');
@@ -487,7 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const gb = document.querySelector('[data-bairros]');
       if (gb && p.bairros.length) {
-        gb.innerHTML = p.bairros.slice(0, 6).map(b => `
+        gb.innerHTML = p.bairros.slice(0, 3).map(b => `
           <a class="hood rise" href="bairro.html?b=${encodeURIComponent(b.nome)}&c=${encodeURIComponent(b.cidade)}">
             <img data-plx="7" src="${b.foto || ''}" alt="Bairro ${b.nome}" loading="lazy">
             <div class="hood__in">
@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
       /* `comEmpreendimento` é preenchido pela consulta de condomínios, que
          roda em paralelo. Cidade sem nenhum sai da fita: clicar nela levaria
          a uma vitrine vazia. */
-      const cidades = p.cidades.filter(c => comEmpreendimento.has(c.nome));
+      const cidades = p.cidades.filter(c => comEmpreendimento.has(c.nome)).slice(0, 6);
       if (fita && cidades.length) {
         fita.innerHTML = cidades.map(c => `
           <article class="reel__item" data-cidade="${c.nome}" role="button" tabindex="0"
@@ -577,7 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.ENOVE_MOTION?.recalcular?.();
     });
 
-    ENOVE_DB.condominios(8).then(cs => {
+    ENOVE_DB.condominios(5).then(cs => {
       const pista = document.querySelector('[data-carr-pista]');
       if (!cs || !cs.length || !pista) return;
       /* usa cartaoCondominio, que leva o destino do empreendimento. A cópia

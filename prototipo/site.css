@@ -1284,15 +1284,50 @@ img.plx {
 .chat-abrir.is-oculto { opacity: 0; pointer-events: none; transform: scale(.7); }
 .chat-abrir .ico { width: 28px; height: 28px; fill: none; stroke: currentColor;
                    stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
-.chat-abrir__bolha {
-  position: absolute; right: 72px; top: 50%; transform: translateY(-50%);
-  white-space: nowrap; background: #fff; color: var(--fg-1);
-  font-size: var(--t-body-s); font-weight: 600; padding: 10px 15px;
-  border-radius: var(--r-pill); box-shadow: var(--shadow-md);
-  transition: opacity 300ms, transform 300ms var(--ease-out);
+/* o selo de nao lida: e ele que faz o botao parecer mensagem esperando */
+.chat-abrir__selo {
+  position: absolute; top: -2px; right: -2px; min-width: 21px; height: 21px;
+  border-radius: 11px; background: #F02D3A; color: #fff; border: 2px solid var(--bg-1);
+  font-size: .7rem; font-weight: 700; line-height: 17px; text-align: center;
+  animation: chatSelo 420ms var(--ease-out) both;
 }
-.chat-abrir__bolha.is-fora { opacity: 0; transform: translate(8px,-50%); }
-@media (max-width: 560px) { .chat-abrir__bolha { display: none; } }
+@keyframes chatSelo { from { transform: scale(0); } to { transform: scale(1); } }
+
+/* o aviso: um cartao de notificacao, com avatar, remetente e previa */
+.chat-aviso {
+  position: fixed; right: 22px; bottom: 96px; z-index: 130;
+  /* âncora do botão de dispensar */
+  width: 296px; max-width: calc(100vw - 44px);
+  display: flex; align-items: flex-start;
+  background: #fff; border-radius: 14px; box-shadow: var(--shadow-lg);
+  opacity: 0; transform: translateY(14px) scale(.96); transform-origin: bottom right;
+  transition: opacity 260ms, transform 260ms var(--ease-out);
+}
+.chat-aviso.is-dentro { opacity: 1; transform: none; }
+.chat-aviso[hidden] { display: none; }
+.chat-aviso__abrir {
+  flex: 1; min-width: 0; display: flex; gap: 11px; align-items: center;
+  background: 0; border: 0; cursor: pointer; text-align: left;
+  padding: 13px 14px; font: inherit; border-radius: 14px;
+}
+.chat-aviso__av { width: 38px; height: 38px; border-radius: 50%; flex: none;
+                  background: var(--enove-black); display: grid; place-items: center; }
+.chat-aviso__av img { width: 21px; height: 21px; object-fit: contain; }
+.chat-aviso__txt { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.chat-aviso__txt b { font-size: .8rem; font-weight: 700; color: var(--fg-1);
+                     display: flex; align-items: baseline; gap: 6px; }
+.chat-aviso__txt i { font-style: normal; font-size: .68rem; font-weight: 500;
+                     color: var(--fg-3); }
+.chat-aviso__txt em { font-style: normal; font-size: .88rem; color: var(--fg-2);
+                      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chat-aviso__x {
+  position: absolute; top: 6px; right: 6px; z-index: 1;
+  background: 0; border: 0; cursor: pointer; padding: 6px;
+  color: var(--fg-3); opacity: .5;
+}
+.chat-aviso__x:hover { opacity: 1; }
+.chat-aviso__x .ico { width: 14px; height: 14px; fill: none; stroke: currentColor;
+                      stroke-width: 2.4; stroke-linecap: round; }
 
 .chat {
   position: fixed; right: 22px; bottom: 22px; z-index: 200;

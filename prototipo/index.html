@@ -754,8 +754,24 @@
      esta marcado em atendimento.js. -->
 <button class="chat-abrir" data-chat-abrir aria-label="Falar com a Enove">
   <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.3A8.5 8.5 0 1 1 21 11.5Z"/></svg>
-  <span class="chat-abrir__bolha" data-chat-bolha>O que voc&ecirc; procura?</span>
+  <span class="chat-abrir__selo" data-chat-selo hidden>1</span>
 </button>
+
+<!-- A pergunta chega como mensagem recebida, nao como propaganda: e o
+     formato que a pessoa ja sabe abrir. So aparece depois de um tempo de
+     leitura, e nunca depois que a conversa ja comecou. -->
+<div class="chat-aviso" data-chat-aviso hidden>
+  <button class="chat-aviso__x" data-chat-aviso-x aria-label="Dispensar">
+    <svg class="ico" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <button class="chat-aviso__abrir" data-chat-abrir>
+    <span class="chat-aviso__av"><img src="assets/logos/enove-mark.svg" alt=""></span>
+    <span class="chat-aviso__txt">
+      <b>Enove Im&oacute;veis <i>agora</i></b>
+      <em>O que voc&ecirc; procura?</em>
+    </span>
+  </button>
+</div>
 
 <aside class="chat" data-chat hidden aria-live="polite" aria-label="Atendimento Enove">
   <header class="chat__topo">

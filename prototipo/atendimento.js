@@ -20,8 +20,10 @@
   const form    = painel.querySelector('[data-chat-form]');
   const campo   = painel.querySelector('[data-chat-campo]');
   const status  = painel.querySelector('[data-chat-status]');
-  const botao   = document.querySelector('[data-chat-abrir]');
-  const bolha   = document.querySelector('[data-chat-bolha]');
+  const botoes  = document.querySelectorAll('[data-chat-abrir]');
+  const botao   = document.querySelector('.chat-abrir');
+  const aviso   = document.querySelector('[data-chat-aviso]');
+  const selo    = document.querySelector('[data-chat-selo]');
   const CORRETOR = '5551997668999';
 
   /* O que a conversa já sabe. Vira um lead no fim. */
@@ -216,9 +218,17 @@
   /* ---------- abrir e fechar -------------------------------------------- */
   let aberto = false, iniciado = false;
 
+  function esconderAviso() {
+    if (!aviso || aviso.hidden) return;
+    aviso.classList.remove('is-dentro');
+    setTimeout(() => { aviso.hidden = true; }, 260);
+  }
+
   async function abrir() {
     if (aberto) return;
     aberto = true;
+    esconderAviso();
+    if (selo) selo.hidden = true;
     painel.hidden = false;
     requestAnimationFrame(() => painel.classList.add('is-aberto'));
     botao.classList.add('is-oculto');
@@ -237,7 +247,9 @@
     setTimeout(() => { if (!aberto) painel.hidden = true; }, 260);
   }
 
-  botao.addEventListener('click', abrir);
+  botoes.forEach(b => b.addEventListener('click', abrir));
+  if (aviso) aviso.querySelector('[data-chat-aviso-x]')
+    .addEventListener('click', e => { e.stopPropagation(); esconderAviso(); });
   painel.querySelector('[data-chat-fechar]').addEventListener('click', fechar);
   addEventListener('keydown', e => { if (e.key === 'Escape' && aberto) fechar(); });
 
@@ -250,9 +262,15 @@
     ouvir(t);
   });
 
-  /* A bolha "O que você procura?" some depois de um tempo: se ela ficasse
-     para sempre, viraria parte do cenário e ninguém mais a leria. */
-  setTimeout(() => bolha && bolha.classList.add('is-fora'), 9000);
+  /* O aviso entra depois de sete segundos: cedo demais atropela a leitura
+     do hero, tarde demais a pessoa ja rolou para longe do canto da tela.
+     Nunca reaparece depois de dispensado ou depois da conversa comecar. */
+  setTimeout(() => {
+    if (aberto || iniciado || !aviso) return;
+    if (selo) selo.hidden = false;
+    aviso.hidden = false;
+    requestAnimationFrame(() => aviso.classList.add('is-dentro'));
+  }, 7000);
 
   /* Qualquer botão de contato da página passa a abrir a conversa em vez de
      jogar a pessoa para fora do site. */
