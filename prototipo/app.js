@@ -325,53 +325,6 @@ function avaliar() {
   out.hidden = false;
 }
 
-/* =========================================================================
-   3. SIMULADOR DE CUSTO REAL (página do imóvel)
-   Tabela Price · ITBI e cartório estimados para RS.
-   ========================================================================= */
-const ITBI_PCT     = 0.02;    // Estância Velha — confirmar alíquota vigente
-const CARTORIO_PCT = 0.015;   // escritura + registro, estimativa
-
-function simular() {
-  const preco  = +document.getElementById('s-preco').value;
-  const entrPc = +document.getElementById('s-entrada').value;
-  const anos   = +document.getElementById('s-prazo').value;
-  const taxaAA = +document.getElementById('s-taxa').value;
-  const cond   = +document.getElementById('s-cond').value || 0;
-  const iptu   = +document.getElementById('s-iptu').value || 0;
-
-  const entrada  = preco * (entrPc / 100);
-  const financiado = preco - entrada;
-  const i = Math.pow(1 + taxaAA / 100, 1 / 12) - 1;   // taxa efetiva mensal
-  const n = anos * 12;
-  const parcela = financiado > 0 ? financiado * i / (1 - Math.pow(1 + i, -n)) : 0;
-
-  const itbi     = preco * ITBI_PCT;
-  const cartorio = preco * CARTORIO_PCT;
-  const entradaTotal = entrada + itbi + cartorio;
-  const mensal   = parcela + cond + iptu;
-  const renda    = mensal / 0.30;
-
-  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-
-  set('s-entrada-lbl', entrPc + '%');
-  set('s-prazo-lbl',   anos + ' anos');
-
-  // o trilho de preço lê os mesmos números — nunca divergem do simulador
-  set('o-rail-parcela', brl0(parcela));
-  set('o-rail-entrada', entrPc + '%');
-  set('o-rail-prazo',   anos + ' anos');
-
-  document.getElementById('o-entrada').textContent  = brl0(entrada);
-  document.getElementById('o-itbi').textContent     = brl0(itbi);
-  document.getElementById('o-cartorio').textContent = brl0(cartorio);
-  document.getElementById('o-dia').textContent      = brl0(entradaTotal);
-  document.getElementById('o-parcela').textContent  = brl0(parcela);
-  document.getElementById('o-cond').textContent     = brl0(cond);
-  document.getElementById('o-iptu').textContent     = brl0(iptu);
-  document.getElementById('o-mensal').textContent   = brl0(mensal);
-  document.getElementById('o-renda').textContent    = brl0(renda);
-}
 
 /* =========================================================================
    4. UI
@@ -425,13 +378,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // avaliação
   const vgo = document.getElementById('v-go');
   if (vgo) vgo.addEventListener('click', avaliar);
-
-  // simulador
-  if (document.getElementById('s-preco')) {
-    ['s-entrada','s-prazo','s-taxa','s-cond','s-iptu','s-preco']
-      .forEach(id => document.getElementById(id).addEventListener('input', simular));
-    simular();
-  }
 
   // destaques da home
   const dest = document.getElementById('grid-destaques');

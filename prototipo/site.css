@@ -820,28 +820,7 @@ html.lenis, html.lenis body { height: auto; }
 .broker__ok { font-size: var(--t-caption); color: var(--fg-2); margin-top: 3px; }
 
 /* custo real */
-.cost { background: var(--enove-black); color: #fff; }
-.cost__panel { background: var(--enove-graphite); border-radius: var(--r-lg); padding: var(--sp-6); }
-.cost__panel label { color: rgba(255,255,255,.6); }
-.cost__panel input, .cost__panel select {
-  background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16); color: #fff;
-}
-.cost__panel input:focus, .cost__panel select:focus {
-  border-color: var(--enove-yellow); box-shadow: 0 0 0 3px rgba(255,255,0,.15);
-}
-.cost__panel select option { color: #000; }
 .slider { width: 100%; accent-color: var(--enove-yellow); }
-.cost__out { display: grid; gap: var(--sp-4); }
-.cost__row { display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-4);
-             padding-bottom: var(--sp-3); border-bottom: 1px solid rgba(255,255,255,.12); }
-.cost__row span { font-size: var(--t-body-s); color: rgba(255,255,255,.68); }
-.cost__row b { font-family: var(--font-num); font-weight: 800; font-size: 1.125rem;
-               letter-spacing: -.02em; white-space: nowrap; }
-.cost__row--big b { font-size: 1.75rem; color: var(--enove-yellow); }
-.cost__row--big { border-bottom: 0; }
-.cost__note { font-size: var(--t-caption); color: rgba(255,255,255,.45); line-height: 1.5; }
-
-/* mapa / bairro */
 .mapblock { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--sp-6); align-items: stretch; }
 .mapbox { position: relative; border-radius: var(--r-lg); overflow: hidden; min-height: 400px;
           background: var(--bg-3); border: 1px solid var(--border-1); }

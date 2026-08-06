@@ -600,9 +600,6 @@ dígitos e decidir se os números voltam para o display.
 
 - **Busca conversacional** — interpreta a frase, mostra os filtros extraídos e
   explica por que cada imóvel apareceu, com % de match relativo ao pedido.
-- **Simulador de custo real** — tabela Price com taxa efetiva mensal, ITBI,
-  escritura e registro, custo mensal e renda necessária. O valor no trilho de
-  preço lê os mesmos números, então nunca divergem.
 - **Avaliação instantânea** — faixa de valor por R$/m² de bairro.
 
 ## O que é simulado
@@ -623,6 +620,4 @@ dígitos e decidir se os números voltam para o display.
 1. **Licença das fontes** — ver o achado acima. Bloqueia o go-live.
 2. **Fotografia real** — o site é construído para fotografia grande; foto de
    celular mal iluminada fica pior que o site atual.
-3. **Alíquota do ITBI** — `app.js` usa 2% para Estância Velha e 1,5% de
-   escritura + registro. Confirmar os valores vigentes.
 4. **Integração com o Flip CRM** — definir se há API ou apenas feed XML.
