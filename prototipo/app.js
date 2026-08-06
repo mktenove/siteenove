@@ -205,6 +205,17 @@ function buscar(txt, fonte) {
 }
 
 /* ---------- render ---------------------------------------------------- */
+/* O Lenis controla a rolagem da página. Um `scrollIntoView` nativo rola por
+   fora dele: a posição real e a que o Lenis acredita ficam diferentes, e o
+   ScrollTrigger — que lê do Lenis — passa a desenhar os `pin` no lugar
+   errado. Foi o que fazia a fita se sobrepor ao carrossel depois de clicar
+   numa cidade. */
+function rolarAte(el) {
+  if (!el) return;
+  if (window.__lenis) window.__lenis.scrollTo(el, { offset: -80 });
+  else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function cardHTML(r, comMotivo) {
   const im = r.im;
   const pct = r.max > 0 ? Math.min(99, Math.round((r.score / r.max) * 100)) : 0;
@@ -266,7 +277,7 @@ async function renderBusca(txt) {
 
   zona.hidden = false;
   observar();
-  zona.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  rolarAte(zona);
 }
 
 /* =========================================================================
@@ -442,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `com unidades disponíveis. <a href="#" data-voltar-todos>Ver todas as cidades</a>`;
       document.dispatchEvent(new CustomEvent('enove:carrossel-atualizado'));
       window.ENOVE_MOTION?.recalcular?.();
-      secao.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      rolarAte(secao);
       lead?.querySelector('[data-voltar-todos]')?.addEventListener('click', e => {
         e.preventDefault(); recarregarCondominios();
       });
