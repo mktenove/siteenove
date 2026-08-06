@@ -555,28 +555,10 @@ document.addEventListener('DOMContentLoaded', () => {
     ENOVE_DB.condominios(8).then(cs => {
       const pista = document.querySelector('[data-carr-pista]');
       if (!cs || !cs.length || !pista) return;
-      pista.innerHTML = cs.map(c => {
-        const us = c.imoveis || [];
-        const menor = us.map(u => Number(u.valor)).filter(v => v > 0).sort((a, b) => a - b)[0];
-        const foto = us.map(u => (u.fotos || []).find(f => f.capa)?.url).find(Boolean) || '';
-        return `
-        <article class="carr__card" data-carr-card>
-          <img src="${foto}" alt="${c.nome}" loading="lazy">
-          <div class="carr__in">
-            <span class="carr__badge">${us.length} ${us.length === 1 ? 'unidade' : 'unidades'}</span>
-            <h3 class="carr__nome">${c.nome.toLowerCase()}</h3>
-            <p class="carr__local">
-              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-              ${c.bairro?.nome ? c.bairro.nome + ' · ' : ''}${c.cidade?.nome || ''}
-            </p>
-            <p class="carr__specs">${menor ? 'a partir de ' + brl(menor) : 'valores sob consulta'}</p>
-            <a class="btn btn--primary carr__cta" href="#buscar">Ver unidades
-              <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          </div>
-        </article>`;
-      }).join('');
-      /* o carrossel monta os pontos e posiciona os cartões na carga; com
-         cartões novos ele precisa refazer isso */
+      /* usa cartaoCondominio, que leva o destino do empreendimento. A cópia
+         inline que vivia aqui apontava para #buscar, e o botão rolava para
+         a seção de cima em vez de abrir a página. */
+      pista.innerHTML = cs.map(cartaoCondominio).join('');
       document.dispatchEvent(new CustomEvent('enove:carrossel-atualizado'));
     });
   }
