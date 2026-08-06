@@ -545,10 +545,33 @@
     if (document.fonts) document.fonts.ready.then(refrescar);
     /* No celular, esconder a barra do navegador dispara resize so na ALTURA.
        Remedir por causa disso corromperia o pin no meio da leitura. */
+    /* Mudança de LARGURA refaz o layout inteiro: o percurso da fita depende
+       dela. Não dá para adiar (as medidas velhas dizem que o pin está ativo
+       e o adiamento nunca resolve) nem para medir no lugar (com a seção
+       `fixed`, a posição dela no documento é falsa e o `start` colapsa —
+       6650 virou 559 ao estreitar a janela).
+
+       A saída é medir com a página no TOPO, onde nenhum pin está ativo, e
+       devolver a posição proporcional depois. Redimensionar é raro e
+       deliberado; um pequeno ajuste de rolagem custa menos que a página
+       embaralhada. */
     addEventListener('resize', () => {
-      if (window.innerWidth === larguraAnterior) return;
+      if (window.innerWidth === larguraAnterior) return;   /* só altura: barra do navegador */
       larguraAnterior = window.innerWidth;
-      refrescar();
+      const posicao = window.scrollY;
+      const alturaAntes = document.documentElement.scrollHeight;
+      lenis.scrollTo(0, { immediate: true });
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+        pendente = false;
+        requestAnimationFrame(() => {
+          const alturaDepois = document.documentElement.scrollHeight;
+          const proporcional = alturaAntes > 0
+            ? Math.round(posicao * (alturaDepois / alturaAntes)) : posicao;
+          lenis.scrollTo(proporcional, { immediate: true });
+          ScrollTrigger.update();
+        });
+      });
     });
 
     /* Trocar o conteúdo de exemplo pelo do banco muda a altura da página, e
