@@ -670,7 +670,12 @@ html.lenis, html.lenis body { height: auto; }
 .launch img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .launch::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.35) 60%, transparent 100%);
+  /* O bloco de texto ocupa 310px de um card de 460 e começa no MEIO dele.
+     Com o escurecimento concentrado embaixo, a metade de cima caía sobre
+     foto clara e o texto branco sumia. Agora cobre toda a área de texto. */
+  background: linear-gradient(to top,
+              rgba(0,0,0,.94) 0%, rgba(0,0,0,.88) 42%,
+              rgba(0,0,0,.5) 72%, rgba(0,0,0,.15) 100%);
 }
 .launch__in { position: relative; z-index: 1; padding: var(--sp-6); width: 100%; }
 .launch__badge {

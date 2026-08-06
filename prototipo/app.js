@@ -565,6 +565,50 @@ document.addEventListener('DOMContentLoaded', () => {
       if (window.ENOVE_MOTION?.recalcular) window.ENOVE_MOTION.recalcular();
     });
 
+    /* Lançamentos do Enove Select: os dois maiores empreendimentos, com o
+       botão levando à página de cada um. Antes eram cartões fixos com
+       href="#", que não iam a lugar nenhum. */
+    ENOVE_DB.condominios(2).then(cs => {
+      const grade = document.querySelector('[data-lancamentos]');
+      if (!cs || !cs.length || !grade) return;
+      const brlM = n => n ? 'R$ ' + (n >= 1e6 ? (n/1e6).toFixed(1).replace('.', ',') + ' mi'
+                                              : Math.round(n/1000) + ' mil') : null;
+      grade.innerHTML = cs.map(c => {
+        const us = c.imoveis || [];
+        const menor = us.map(u => Number(u.valor)).filter(v => v > 0).sort((a, b) => a - b)[0];
+        const foto = us.map(u => (u.fotos || []).find(f => f.capa)?.url).find(Boolean) || '';
+        const ds = [...new Set(us.map(u => u.dormitorios).filter(Boolean))].sort((a,b) => a-b);
+        /* "3 e 4 e 5 e 6" não se lê; com três ou mais valores vira faixa */
+        const dorm = !ds.length ? '' :
+          ds.length === 1 ? `<b>${ds[0]}</b> ${ds[0] === 1 ? 'dormitório' : 'dormitórios'}` :
+          ds.length === 2 ? `<b>${ds[0]} e ${ds[1]}</b> dormitórios` :
+                            `<b>${ds[0]} a ${ds[ds.length-1]}</b> dormitórios`;
+        const href = c.slug ? `condominio.html?e=${encodeURIComponent(c.slug)}` : '#';
+        return `
+        <a class="launch rise" href="${href}">
+          <img data-plx="9" src="${foto}" alt="${c.nome}" loading="lazy">
+          <div class="launch__in">
+            <span class="launch__badge">Enove Select</span>
+            <div class="launch__name">${c.nome.toLowerCase()}</div>
+            <div class="launch__meta">
+              ${dorm ? `<span>${dorm}</span>` : ''}
+              ${menor ? `<span>A partir de <b>${brlM(menor)}</b></span>` : ''}
+              <span><b>${us.length}</b> ${us.length === 1 ? 'unidade' : 'unidades'}</span>
+            </div>
+            <div class="mirror__lbl" style="margin-bottom:20px">
+              ${c.bairro?.nome ? c.bairro.nome + ' · ' : ''}${c.cidade?.nome || ''}
+            </div>
+            <span class="btn btn--select">
+              Ver plantas e condições
+              <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </div>
+        </a>`;
+      }).join('');
+      observar();
+      window.ENOVE_MOTION?.recalcular?.();
+    });
+
     ENOVE_DB.condominios(8).then(cs => {
       const pista = document.querySelector('[data-carr-pista]');
       if (!cs || !cs.length || !pista) return;
