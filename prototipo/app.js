@@ -360,6 +360,27 @@ document.addEventListener('DOMContentLoaded', () => {
       c.addEventListener('click', () => { input.value = c.dataset.ask; renderBusca(c.dataset.ask); });
     });
 
+    /* Os banners de região não levam a uma página própria: caem na busca
+       já preenchida. Uma vitrine por região só se justifica quando houver
+       acervo nas duas — hoje só o Vale do Sinos tem. */
+    document.querySelectorAll('[data-regiao]').forEach(b => {
+      const r = b.dataset.regiao;
+      if (!r) return;
+      b.addEventListener('click', e => {
+        e.preventDefault();
+        /* Região sem nada publicado abre a conversa: mandar para uma busca
+           vazia queima a visita, enquanto a conversa ao menos deixa o
+           contato de alguém interessado naquele mercado. */
+        if (b.hasAttribute('data-sem-acervo')) {
+          window.ENOVE_CHAT?.perguntar('Procuro imóvel no ' + r);
+          return;
+        }
+        input.value = 'imóveis no ' + r;
+        renderBusca(input.value);
+        rolarAte(document.getElementById('buscar'));
+      });
+    });
+
     // placeholder rotativo — mostra o alcance da busca sem ocupar tela
     const exemplos = [
       'casa de 3 quartos até 600 mil com pátio pro cachorro',
@@ -379,8 +400,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const vgo = document.getElementById('v-go');
   if (vgo) vgo.addEventListener('click', avaliar);
 
-  // destaques da home
-  const dest = document.getElementById('grid-destaques');
   /* Clicar numa cidade abre os empreendimentos dela. Só 10 das 25 cidades
      têm algum — nas outras, levar a uma vitrine vazia seria pior que não
      ser clicável, então cai nos imóveis da cidade. */
@@ -507,9 +526,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); }
           });
         });
-        /* o título dizia "nove cidades" — conta as que de fato aparecem */
-        const t = document.querySelector('[data-cidades-titulo]');
-        if (t) t.innerHTML = `${cidades.length} CIDADES.<br>UM TIME QUE MORA NELAS.`;
+        /* o título não conta mais cidades: a Enove deixou de se posicionar
+           pelo tamanho da operação local */
       }
       observar();
       if (window.ENOVE_MOTION?.recalcular) window.ENOVE_MOTION.recalcular();
@@ -574,15 +592,10 @@ document.addEventListener('DOMContentLoaded', () => {
   /* preenche destaques e similares com o acervo real quando houver banco */
   if (ENOVE_DB.ativo) ENOVE_DB.buscar({}, 12).then(lista => {
     if (!lista || !lista.length) return;
-    if (dest) dest.innerHTML = lista.slice(0, 6)
-      .map(im => cardHTML({ im, score: 0, motivos: [] }, false)).join('');
     if (sim)  sim.innerHTML  = lista.slice(6, 9)
       .map(im => cardHTML({ im, score: 0, motivos: [] }, false)).join('');
     observar();
   });
-
-  if (dest) dest.innerHTML = IMOVEIS.filter(i => !i.select)
-    .map(im => cardHTML({ im, score: 0, motivos: [] }, false)).join('');
 
   // similares na PDP
   const sim = document.getElementById('grid-similares');

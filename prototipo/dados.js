@@ -80,7 +80,11 @@ window.ENOVE_DB = (() => {
        onde a leitura da frase acontece. */
     async buscar(f = {}, limite = 60) {
       if (!ativo) return null;
-      const q = ['situacao=eq.PUBLICADO', `select=${CAMPOS}`, `limit=${limite}`];
+      /* O Flip trouxe um registro de venda com valor de aluguel (AP1138, R$
+         2.300). Um piso de R$ 20 mil derruba esse tipo de erro de digitação
+         antes de ele virar o imóvel mais barato da vitrine. */
+      const q = ['situacao=eq.PUBLICADO', 'valor=gte.20000',
+                 `select=${CAMPOS}`, `limit=${limite}`];
       const sig = SIGLA[String(f.tipo || '').toLowerCase()];
       if (sig)         q.push(`tipo=eq.${sig}`);
       if (f.precoMax)  q.push(`valor=lte.${f.precoMax}`);
