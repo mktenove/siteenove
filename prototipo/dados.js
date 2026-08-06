@@ -164,13 +164,17 @@ window.ENOVE_DB = (() => {
     async panorama() {
       if (!ativo) return null;
       try {
-        const r = await pegar('imovel?select=codigo,valor,area_util,condominio_id,' +
-          'cidade:cidade_id(nome),bairro:bairro_id(nome),fotos:imovel_foto(url,capa)' +
-          '&situacao=eq.PUBLICADO&limit=2000');
+        /* Só o necessário para contar e ilustrar. A versão anterior trazia
+           TODAS as fotos de cada imóvel — quase 28 mil registros — para
+           contar bairros, e levava dezenas de segundos. O filtro embutido
+           `fotos.capa=is.true` traz uma foto por imóvel. */
+        const r = await pegar('imovel?select=codigo,valor,area_util,' +
+          'cidade:cidade_id(nome),bairro:bairro_id(nome),fotos:imovel_foto(url)' +
+          '&fotos.capa=is.true&situacao=eq.PUBLICADO&limit=2000');
         const cid = new Map(), bai = new Map();
         for (const i of r) {
           const c = i.cidade?.nome, b = i.bairro?.nome;
-          const foto = (i.fotos || []).find(f => f.capa)?.url;
+          const foto = (i.fotos || [])[0]?.url;
           const m2 = (i.valor && i.area_util) ? i.valor / i.area_util : null;
           if (c) {
             if (!cid.has(c)) cid.set(c, { nome: c, n: 0, m2: [], foto: null });

@@ -508,12 +508,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const brl = n => n ? 'R$ ' + Math.round(n).toLocaleString('pt-BR') : '—';
     const comEmpreendimento = new Set();
 
-    /* a fita depende de saber quais cidades têm empreendimento, então o
-       painel só monta depois que os condomínios chegam */
-    ENOVE_DB.condominios(500).then(todos => {
-      (todos || []).forEach(c => c.cidade?.nome && comEmpreendimento.add(c.cidade.nome));
-      return ENOVE_DB.panorama();
-    }).then(p => {
+    /* As duas consultas correm JUNTAS. Encadeadas, os bairros só apareciam
+       depois dos condomínios — e nesse intervalo os cards de espera ficavam
+       na tela. Só a FITA precisa saber quais cidades têm empreendimento;
+       os bairros não dependem disso. */
+    Promise.all([
+      ENOVE_DB.condominios(500).then(todos => {
+        (todos || []).forEach(c => c.cidade?.nome && comEmpreendimento.add(c.cidade.nome));
+      }),
+      ENOVE_DB.panorama()
+    ]).then(([, p]) => {
       if (!p) return;
 
       const gb = document.querySelector('[data-bairros]');

@@ -32,10 +32,10 @@
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   gsap.registerPlugin(ScrollTrigger);
-  // O GSAP promove a camada por conta propria e de forma estavel. No CSS,
-  // um translateZ(0) era apagado assim que o GSAP escrevia transform, e a
-  // promocao ligava/desligava a cada quadro — era isso que piscava.
-  gsap.defaults({ force3D: true });
+  /* O `force3D` global existia para promover a chapa do hero a camada
+     propria. Desde que ela virou uma div com `will-change`, ele so produz
+     sete avisos no console: o GSAP o rejeita nos tweens que nao mexem em
+     transform. Removido. */
   document.documentElement.classList.add('motion-on');
   window.ENOVE_MOTION = { on: true, reveal, parallaxIn };
 
