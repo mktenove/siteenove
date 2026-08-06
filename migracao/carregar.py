@@ -170,6 +170,14 @@ def carregar(limite=None, so_conferir=False):
     # imóveis em blocos — upsert pelo código
     B = 50
     linhas = [l for l, _ in lote]
+    # O PostgREST recusa o lote se os objetos tiverem conjuntos de chaves
+    # diferentes ("All object keys must match"). Imóvel sem condomínio ou
+    # sem bairro não ganhava essas chaves — agora todos têm todas, com None
+    # onde não há valor.
+    chaves = set()
+    for l in linhas: chaves |= l.keys()
+    for l in linhas:
+        for k in chaves: l.setdefault(k, None)
     for i in range(0, len(linhas), B):
         rest("imovel", "POST", linhas[i:i+B],
              {"Prefer": "resolution=merge-duplicates,return=minimal"})
@@ -186,6 +194,37 @@ def carregar(limite=None, so_conferir=False):
                 for p in photos if p.get("url")]
         if regs:
             rest("imovel_foto", "POST", regs, {"Prefer": "return=minimal"})
+    # ---- características ------------------------------------------------
+    # Sem elas o ranqueamento da busca não tem em que se apoiar: "com
+    # churrasqueira" nunca casa com nada e todo imóvel é descartado.
+    catalogo = {c["nome"]: c["id"] for c in rest("caracteristica?select=id,nome&limit=5000")}
+    novas = set()
+    for a in arqs:
+        for c in (json.load(open(os.path.join(FICHAS, a))).get("caracteristicas") or []):
+            nome = (c.get("nome") if isinstance(c, dict) else c) or ""
+            nome = nome.strip()
+            if nome and nome not in catalogo: novas.add(nome)
+    if novas:
+        criadas = rest("caracteristica", "POST",
+                       [{"nome": n, "grupo": "IMOVEL"} for n in sorted(novas)],
+                       {"Prefer": "return=representation"})
+        catalogo.update({c["nome"]: c["id"] for c in criadas})
+    print(f"características no catálogo: {len(catalogo)}")
+
+    vincs = []
+    for a in arqs:
+        im = json.load(open(os.path.join(FICHAS, a)))
+        cod = im.get("codigoImovel")
+        if not cod: continue
+        for c in (im.get("caracteristicas") or []):
+            nome = ((c.get("nome") if isinstance(c, dict) else c) or "").strip()
+            if nome in catalogo:
+                vincs.append({"imovel_codigo": cod, "caracteristica_id": catalogo[nome]})
+    for i in range(0, len(vincs), 500):
+        rest("imovel_caracteristica", "POST", vincs[i:i+500],
+             {"Prefer": "resolution=ignore-duplicates,return=minimal"})
+    print(f"vínculos imóvel↔característica: {len(vincs)}")
+
     print(f"\nfotos gravadas para {sum(1 for _, p in lote if p)} imóveis")
     print("as URLs ainda apontam para o S3 do Flip — rehospedar é o passo seguinte")
 

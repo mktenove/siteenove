@@ -68,12 +68,24 @@ def subir(caminho, dados, tipo):
         r.read()
     return f"{E['SUPABASE_URL']}/storage/v1/object/public/{BUCKET}/{caminho}"
 
+def rest_tudo(caminho, passo=1000):
+    """O PostgREST corta a resposta em 1.000 linhas por padrão, e `limit=` na
+    URL não vence esse teto — é preciso paginar por Range. Sem isto, a
+    medição enxergava 1.000 das 28.278 fotos e parecia estar tudo pronto."""
+    saida, ini = [], 0
+    while True:
+        parte = rest(caminho, extra={"Range-Unit": "items",
+                                     "Range": f"{ini}-{ini+passo-1}"})
+        saida.extend(parte)
+        if len(parte) < passo: return saida
+        ini += passo
+
 def lista(so_capas, por):
     """Fotos ainda apontando para o Flip, na ordem, respeitando os limites."""
     q = ("imovel_foto?select=id,imovel_codigo,url,ordem,capa"
          "&origem_url=not.is.null&url=like.*flip-prod-fotos*"
-         "&order=imovel_codigo.asc,ordem.asc&limit=100000")
-    todas = rest(q)
+         "&order=imovel_codigo.asc,ordem.asc")
+    todas = rest_tudo(q)
     if so_capas:
         return [f for f in todas if f["capa"]]
     if por:

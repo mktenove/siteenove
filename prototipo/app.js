@@ -5,8 +5,13 @@
    comportamento da Claude API — serve para demonstrar a experiência.
    ========================================================================= */
 
+/* Os exemplos embutidos guardam um id do Unsplash; o banco entrega URL
+   completa. Sem esta checagem o prefixo era concatenado na URL do Supabase
+   e todas as fotos do acervo real quebravam. */
 const img = (id, w) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w || 1400}&q=72`;
+  /^https?:\/\//.test(id || '')
+    ? id
+    : `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w || 1400}&q=72`;
 
 /* ---------- acervo ilustrativo ---------------------------------------- */
 const IMOVEIS = [
@@ -183,10 +188,12 @@ function pontuar(im, f) {
   return { score, motivos, falhas };
 }
 
-function buscar(txt) {
+/* `fonte` existe para a busca poder rodar sobre o que veio do banco. Sem
+   ela, o ranqueamento ficaria preso aos exemplos embutidos. */
+function buscar(txt, fonte) {
   const f = interpretar(txt);
   const max = maxPossivel(f);
-  let res = IMOVEIS
+  let res = (fonte || IMOVEIS)
     .map(im => ({ im, ...pontuar(im, f), max }))
     .filter(r => r.falhas.length === 0);
 
@@ -221,7 +228,9 @@ function cardHTML(r, comMotivo) {
       </button>
     </div>
     <div class="card__body">
-      <div class="card__price">${brl0(im.preco)}</div>
+      <!-- 17 imóveis do acervo não têm preço na origem; "R$ 0" seria pior
+           que dizer que o valor não está publicado -->
+      <div class="card__price">${im.preco > 0 ? brl0(im.preco) : 'Sob consulta'}</div>
       <div class="card__addr">${im.bairro} · ${im.cidade}</div>
       <div class="card__meta">${meta}</div>
       ${comMotivo && r.motivos.length
@@ -230,8 +239,12 @@ function cardHTML(r, comMotivo) {
   </a>`;
 }
 
-function renderBusca(txt) {
-  const { f, res } = buscar(txt);
+async function renderBusca(txt) {
+  /* O banco faz o filtro grosso (tipo, preço, quartos, vagas); a leitura da
+     frase e o ranqueamento continuam aqui. Se o banco não responder, cai
+     nos exemplos embutidos e o site segue funcionando. */
+  const fonte = (await ENOVE_DB.buscar(interpretar(txt))) || IMOVEIS;
+  const { f, res } = buscar(txt, fonte);
   const zona   = document.getElementById('resultados');
   const leitura= document.getElementById('leitura');
   const grid   = document.getElementById('grid-resultados');
@@ -248,7 +261,7 @@ function renderBusca(txt) {
 
   const mostrar = res.length
     ? res
-    : IMOVEIS.slice(0, 3).map(im => ({ im, score: 0, max: 0, motivos: [] }));
+    : fonte.slice(0, 3).map(im => ({ im, score: 0, max: 0, motivos: [] }));
   grid.innerHTML = mostrar.map(r => cardHTML(r, res.length > 0)).join('');
 
   zona.hidden = false;
@@ -411,6 +424,92 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // destaques da home
   const dest = document.getElementById('grid-destaques');
+  /* ---- seções que ainda mostravam exemplos ---------------------------
+     Bairros, fita de cidades e carrossel de investimentos passam a sair do
+     acervo. Se o banco não responder, o conteúdo de exemplo do HTML fica
+     onde está — nenhuma seção esvazia. */
+  if (ENOVE_DB.ativo) {
+    const brl = n => n ? 'R$ ' + Math.round(n).toLocaleString('pt-BR') : '—';
+
+    ENOVE_DB.panorama().then(p => {
+      if (!p) return;
+
+      const gb = document.querySelector('[data-bairros]');
+      if (gb && p.bairros.length) {
+        gb.innerHTML = p.bairros.slice(0, 6).map(b => `
+          <a class="hood rise" href="#buscar">
+            <img data-plx="7" src="${b.foto || ''}" alt="Bairro ${b.nome}" loading="lazy">
+            <div class="hood__in">
+              <div class="hood__name">${b.nome.toLowerCase()}</div>
+              <p class="hood__desc">${b.n} ${b.n === 1 ? 'imóvel disponível' : 'imóveis disponíveis'} em ${b.cidade}.</p>
+              <div class="hood__facts">
+                <span class="fact"><b>${b.n}</b> ${b.n === 1 ? 'imóvel' : 'imóveis'}</span>
+                ${b.m2 ? `<span class="fact"><b>${brl(b.m2)}</b>/m²</span>` : ''}
+                <span class="fact"><b>${b.cidade}</b></span>
+              </div>
+            </div>
+          </a>`).join('');
+      }
+
+      const fita = document.querySelector('[data-cidades]');
+      if (fita && p.cidades.length) {
+        fita.innerHTML = p.cidades.slice(0, 12).map(c => `
+          <article class="reel__item">
+            <div class="reel__ph" data-plx-frame>
+              <img data-plx="6" src="${c.foto || ''}" alt="${c.nome}" loading="lazy">
+            </div>
+            <div class="reel__cap">
+              <div class="reel__name">${c.nome.toLowerCase()}</div>
+              <div class="reel__meta"><b>${c.n}</b> ${c.n === 1 ? 'imóvel' : 'imóveis'}${c.m2 ? `<br>${brl(c.m2)}/m²` : ''}</div>
+            </div>
+          </article>`).join('');
+        /* o título dizia "nove cidades" — são 25 no acervo */
+        const t = document.querySelector('[data-cidades-titulo]');
+        if (t) t.innerHTML = `${p.cidades.length} CIDADES.<br>UM TIME QUE MORA NELAS.`;
+      }
+      observar();
+      if (window.ENOVE_MOTION?.recalcular) window.ENOVE_MOTION.recalcular();
+    });
+
+    ENOVE_DB.condominios(8).then(cs => {
+      const pista = document.querySelector('[data-carr-pista]');
+      if (!cs || !cs.length || !pista) return;
+      pista.innerHTML = cs.map(c => {
+        const us = c.imoveis || [];
+        const menor = us.map(u => Number(u.valor)).filter(v => v > 0).sort((a, b) => a - b)[0];
+        const foto = us.map(u => (u.fotos || []).find(f => f.capa)?.url).find(Boolean) || '';
+        return `
+        <article class="carr__card" data-carr-card>
+          <img src="${foto}" alt="${c.nome}" loading="lazy">
+          <div class="carr__in">
+            <span class="carr__badge">${us.length} ${us.length === 1 ? 'unidade' : 'unidades'}</span>
+            <h3 class="carr__nome">${c.nome.toLowerCase()}</h3>
+            <p class="carr__local">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              ${c.bairro?.nome ? c.bairro.nome + ' · ' : ''}${c.cidade?.nome || ''}
+            </p>
+            <p class="carr__specs">${menor ? 'a partir de ' + brl(menor) : 'valores sob consulta'}</p>
+            <a class="btn btn--primary carr__cta" href="#buscar">Ver unidades
+              <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>`;
+      }).join('');
+      /* o carrossel monta os pontos e posiciona os cartões na carga; com
+         cartões novos ele precisa refazer isso */
+      document.dispatchEvent(new CustomEvent('enove:carrossel-atualizado'));
+    });
+  }
+
+  /* preenche destaques e similares com o acervo real quando houver banco */
+  if (ENOVE_DB.ativo) ENOVE_DB.buscar({}, 12).then(lista => {
+    if (!lista || !lista.length) return;
+    if (dest) dest.innerHTML = lista.slice(0, 6)
+      .map(im => cardHTML({ im, score: 0, motivos: [] }, false)).join('');
+    if (sim)  sim.innerHTML  = lista.slice(6, 9)
+      .map(im => cardHTML({ im, score: 0, motivos: [] }, false)).join('');
+    observar();
+  });
+
   if (dest) dest.innerHTML = IMOVEIS.filter(i => !i.select)
     .map(im => cardHTML({ im, score: 0, motivos: [] }, false)).join('');
 
@@ -431,7 +530,10 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   const carr = document.querySelector('[data-carr]');
   if (!carr) return;
-  const cards = [...carr.querySelectorAll('[data-carr-card]')];
+  /* `let`, não `const`: quando os cartões de exemplo são trocados pelos
+     condomínios reais, esta lista precisa ser relida — senão o carrossel
+     continua posicionando elementos que já saíram do DOM. */
+  let cards = [...carr.querySelectorAll('[data-carr-card]')];
   if (!cards.length) return;
   const dots = document.querySelector('[data-carr-dots]');
   const suave = !matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -507,6 +609,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!suave) cards.forEach(c => c.style.transition = 'none');
   addEventListener('resize', pintar);
+
+  /* refaz a lista, os pontos e os ouvintes quando o conteúdo real chega */
+  document.addEventListener('enove:carrossel-atualizado', () => {
+    cards = [...carr.querySelectorAll('[data-carr-card]')];
+    if (!cards.length) return;
+    ativo = Math.floor(cards.length / 2);
+    if (dots) {
+      dots.innerHTML = '';
+      cards.forEach((c, i) => {
+        const b = document.createElement('button');
+        b.className = 'carr__dot'; b.type = 'button'; b.role = 'tab';
+        b.setAttribute('aria-label', c.querySelector('.carr__nome')?.textContent.trim() || `Item ${i+1}`);
+        b.addEventListener('click', () => ir(i));
+        dots.appendChild(b);
+      });
+    }
+    cards.forEach((c, i) => c.addEventListener('click', e => {
+      if (i !== ativo) { e.preventDefault(); ir(i); }
+    }));
+    if (!suave) cards.forEach(c => c.style.transition = 'none');
+    pintar();
+  });
+
   pintar();
 });
 
