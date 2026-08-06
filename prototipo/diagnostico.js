@@ -27,9 +27,40 @@
   addEventListener('resize', () => anotar(`resize ${innerWidth}x${innerHeight}`));
   if (window.ScrollTrigger) ScrollTrigger.addEventListener('refresh', () => anotar('ScrollTrigger.refresh'));
 
-  let jaAvisou = false;
+  let jaAvisou = false, jaAvisouHero = false;
   const vis = r => r.top < innerHeight && r.bottom > 0;
+
+  /* O hero é um scrub: perto do topo ele tem de estar no começo da
+     animação. Se estiver mostrando o vazado com a página no alto, é porque
+     o ScrollTrigger parou de receber atualizações. */
+  function olharHero() {
+    if (jaAvisouHero || scrollY > 400) return;
+    const chapa = document.querySelector('[data-knock]');
+    if (!chapa) return;
+    const op = +getComputedStyle(chapa).opacity;
+    if (op < 0.1) return;
+    jaAvisouHero = true;
+    const st = window.ScrollTrigger?.getAll?.()
+      .find(t => t.trigger === document.querySelector('[data-hero]'));
+    console.warn(
+      '%c[enove] HERO TRAVADO NO VAZADO — copie tudo abaixo',
+      'background:#FFFF00;color:#000;font-weight:700;padding:2px 6px',
+      {
+        janela: `${innerWidth}x${innerHeight}`,
+        scrollDaPagina: Math.round(scrollY),
+        scrollDoLenis: Math.round(window.__lenis?.scroll ?? -1),
+        lenisParado: window.__lenis?.isStopped ?? 'n/d',
+        opacidadeDoVazado: +op.toFixed(2),
+        heroTrigger: st ? { inicio: Math.round(st.start), fim: Math.round(st.end),
+                            progresso: +st.progress.toFixed(3) } : 'ausente',
+        overflowDoHtml: getComputedStyle(document.documentElement).overflow,
+        tickerAtivo: window.gsap?.ticker?.frame ?? 'n/d',
+        ultimasAcoes: historico
+      });
+  }
+
   (function vigiar() {
+    olharHero();
     if (!jaAvisou) {
       const fita = document.querySelector('.reel');
       const carr = document.querySelector('#top-investimentos');
