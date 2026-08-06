@@ -105,6 +105,16 @@ window.ENOVE_DB = (() => {
         return r[0] ? traduzir(r[0]) : null;
       } catch { return null; }
     },
+    /* Imóveis de uma cidade, para quando ela não tem empreendimento */
+    async porCidade(cidade, limite = 24) {
+      if (!ativo) return null;
+      try {
+        const r = await pegar('imovel?select=' + CAMPOS.replace('cidade:cidade_id(nome)', 'cidade:cidade_id!inner(nome)') +
+          `&situacao=eq.PUBLICADO&cidade_id.nome=eq.${encodeURIComponent(cidade)}` +
+          `&order=destaque.desc,valor.asc&limit=${limite}`);
+        return r.length ? r.map(traduzir) : null;
+      } catch (e) { console.warn('[enove] porCidade falhou:', e.message); return null; }
+    },
     /* Bairros, cidades e condomínios com números reais. O PostgREST não
        agrega, então a contagem é feita aqui — é uma leitura só, e o volume
        (1.286 registros enxutos) cabe bem. */
@@ -136,12 +146,16 @@ window.ENOVE_DB = (() => {
         return { cidades: arruma(cid), bairros: arruma(bai), total: r.length };
       } catch (e) { console.warn('[enove] panorama falhou:', e.message); return null; }
     },
-    async condominios(limite = 8) {
+    async condominios(limite = 8, cidade = null) {
       if (!ativo) return null;
       try {
-        const r = await pegar('condominio?select=id,nome,slug,cidade:cidade_id(nome),' +
+        /* Só 10 das 25 cidades têm empreendimento. O filtro vai no servidor,
+           mas quem clicou numa cidade sem nenhum precisa de outro caminho —
+           ver `abrirCidade` em app.js. */
+        const fCidade = cidade ? `&cidade_id.nome=eq.${encodeURIComponent(cidade)}` : '';
+        const r = await pegar('condominio?select=id,nome,slug,cidade:cidade_id!inner(nome),' +
           'bairro:bairro_id(nome),imoveis:imovel(codigo,valor,dormitorios,area_util,' +
-          'fotos:imovel_foto(url,capa))&publicado=is.true&limit=200');
+          'fotos:imovel_foto(url,capa))&publicado=is.true&limit=200' + fCidade);
         /* só condomínio com unidade à venda entra na vitrine */
         return r.filter(c => (c.imoveis || []).length > 0)
                 .sort((a, b) => b.imoveis.length - a.imoveis.length)

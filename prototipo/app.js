@@ -424,14 +424,82 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // destaques da home
   const dest = document.getElementById('grid-destaques');
+  /* Clicar numa cidade abre os empreendimentos dela. Só 10 das 25 cidades
+     têm algum — nas outras, levar a uma vitrine vazia seria pior que não
+     ser clicável, então cai nos imóveis da cidade. */
+  async function abrirCidade(cidade) {
+    const secao = document.querySelector('#top-investimentos');
+    const pista = document.querySelector('[data-carr-pista]');
+    const titulo = secao?.querySelector('.rally');
+    const lead   = secao?.querySelector('.lead');
+    if (!secao || !pista) return;
+
+    const cs = await ENOVE_DB.condominios(12, cidade);
+    if (cs && cs.length) {
+      pista.innerHTML = cs.map(cartaoCondominio).join('');
+      if (titulo) titulo.textContent = `EMPREENDIMENTOS EM ${cidade.toUpperCase()}.`;
+      if (lead) lead.innerHTML = `${cs.length} ${cs.length === 1 ? 'empreendimento' : 'empreendimentos'} ` +
+        `com unidades disponíveis. <a href="#" data-voltar-todos>Ver todas as cidades</a>`;
+      document.dispatchEvent(new CustomEvent('enove:carrossel-atualizado'));
+      secao.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      lead?.querySelector('[data-voltar-todos]')?.addEventListener('click', e => {
+        e.preventDefault(); recarregarCondominios();
+      });
+      return;
+    }
+
+    /* Não há caminho alternativo: a fita só lista cidade com empreendimento,
+       então este ponto não deveria ser alcançado. */
+    console.warn('[enove] sem empreendimento em', cidade);
+  }
+
+  function cartaoCondominio(c) {
+    const brl = n => n ? 'R$ ' + Math.round(n).toLocaleString('pt-BR') : '—';
+    const us = c.imoveis || [];
+    const menor = us.map(u => Number(u.valor)).filter(v => v > 0).sort((a, b) => a - b)[0];
+    const foto = us.map(u => (u.fotos || []).find(f => f.capa)?.url).find(Boolean) || '';
+    return `
+      <article class="carr__card" data-carr-card>
+        <img src="${foto}" alt="${c.nome}" loading="lazy">
+        <div class="carr__in">
+          <span class="carr__badge">${us.length} ${us.length === 1 ? 'unidade' : 'unidades'}</span>
+          <h3 class="carr__nome">${c.nome.toLowerCase()}</h3>
+          <p class="carr__local">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            ${c.bairro?.nome ? c.bairro.nome + ' · ' : ''}${c.cidade?.nome || ''}
+          </p>
+          <p class="carr__specs">${menor ? 'a partir de ' + brl(menor) : 'valores sob consulta'}</p>
+          <a class="btn btn--primary carr__cta" href="#buscar">Ver unidades
+            <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>`;
+  }
+
+  function recarregarCondominios() {
+    const secao = document.querySelector('#top-investimentos');
+    const pista = document.querySelector('[data-carr-pista]');
+    ENOVE_DB.condominios(8).then(cs => {
+      const pista = document.querySelector('[data-carr-pista]');
+      if (!cs || !cs.length || !pista) return;
+      pista.innerHTML = cs.map(cartaoCondominio).join('');
+      document.dispatchEvent(new CustomEvent('enove:carrossel-atualizado'));
+    });
+  }
+
   /* ---- seções que ainda mostravam exemplos ---------------------------
      Bairros, fita de cidades e carrossel de investimentos passam a sair do
      acervo. Se o banco não responder, o conteúdo de exemplo do HTML fica
      onde está — nenhuma seção esvazia. */
   if (ENOVE_DB.ativo) {
     const brl = n => n ? 'R$ ' + Math.round(n).toLocaleString('pt-BR') : '—';
+    const comEmpreendimento = new Set();
 
-    ENOVE_DB.panorama().then(p => {
+    /* a fita depende de saber quais cidades têm empreendimento, então o
+       painel só monta depois que os condomínios chegam */
+    ENOVE_DB.condominios(500).then(todos => {
+      (todos || []).forEach(c => c.cidade?.nome && comEmpreendimento.add(c.cidade.nome));
+      return ENOVE_DB.panorama();
+    }).then(p => {
       if (!p) return;
 
       const gb = document.querySelector('[data-bairros]');
@@ -452,9 +520,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const fita = document.querySelector('[data-cidades]');
-      if (fita && p.cidades.length) {
-        fita.innerHTML = p.cidades.slice(0, 12).map(c => `
-          <article class="reel__item">
+      /* `comEmpreendimento` é preenchido pela consulta de condomínios, que
+         roda em paralelo. Cidade sem nenhum sai da fita: clicar nela levaria
+         a uma vitrine vazia. */
+      const cidades = p.cidades.filter(c => comEmpreendimento.has(c.nome));
+      if (fita && cidades.length) {
+        fita.innerHTML = cidades.map(c => `
+          <article class="reel__item" data-cidade="${c.nome}" role="button" tabindex="0"
+                   aria-label="Ver empreendimentos em ${c.nome}">
             <div class="reel__ph" data-plx-frame>
               <img data-plx="6" src="${c.foto || ''}" alt="${c.nome}" loading="lazy">
             </div>
@@ -463,9 +536,16 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="reel__meta"><b>${c.n}</b> ${c.n === 1 ? 'imóvel' : 'imóveis'}${c.m2 ? `<br>${brl(c.m2)}/m²` : ''}</div>
             </div>
           </article>`).join('');
-        /* o título dizia "nove cidades" — são 25 no acervo */
+        fita.querySelectorAll('[data-cidade]').forEach(el => {
+          const abrir = () => abrirCidade(el.dataset.cidade);
+          el.addEventListener('click', abrir);
+          el.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); }
+          });
+        });
+        /* o título dizia "nove cidades" — conta as que de fato aparecem */
         const t = document.querySelector('[data-cidades-titulo]');
-        if (t) t.innerHTML = `${p.cidades.length} CIDADES.<br>UM TIME QUE MORA NELAS.`;
+        if (t) t.innerHTML = `${cidades.length} CIDADES.<br>UM TIME QUE MORA NELAS.`;
       }
       observar();
       if (window.ENOVE_MOTION?.recalcular) window.ENOVE_MOTION.recalcular();
