@@ -87,6 +87,19 @@
 
     // o ScrollTrigger passa a ler a posição do Lenis, não a do navegador
     lenis.on('scroll', ScrollTrigger.update);
+
+    /* Rede de segurança: qualquer rolagem que aconteça por fora do Lenis —
+       foco em elemento, âncora, extensão do navegador — deixa a posição real
+       diferente da que ele acredita. Enquanto durar a divergência, o
+       ScrollTrigger desenha os `pin` no lugar errado e as seções aparecem
+       misturadas. Aqui a divergência é detectada e corrigida. */
+    addEventListener('scroll', () => {
+      const real = window.scrollY;
+      if (Math.abs(real - lenis.scroll) > 2) {
+        lenis.scrollTo(real, { immediate: true, force: true });
+        ScrollTrigger.update();
+      }
+    }, { passive: true });
     gsap.ticker.add(t => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
 

@@ -662,6 +662,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (i !== ativo) { e.preventDefault(); ir(i); }
   }));
 
+  /* Clicar num botão o põe em foco, e o navegador ROLA a página para
+     trazê-lo à vista — por fora do Lenis. É o que fazia a página saltar
+     sozinha ao avançar o carrossel, trazendo a fita de cidades para a tela.
+     `preventScroll` mantém o foco (o teclado continua funcionando) sem
+     mexer na rolagem. */
+  carr.querySelectorAll('button').forEach(bt => {
+    bt.addEventListener('mousedown', e => {
+      e.preventDefault();
+      bt.focus({ preventScroll: true });
+    });
+  });
+
   carr.tabIndex = 0;
   carr.addEventListener('keydown', e => {
     if (e.key === 'ArrowLeft')  { e.preventDefault(); ir(ativo - 1); }
