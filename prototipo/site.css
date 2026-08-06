@@ -597,13 +597,26 @@ html.lenis, html.lenis body { height: auto; }
 /* A seção fica presa em tela cheia enquanto a fita corre. Por isso a altura
    é distribuída: cabeçalho no topo, fita ocupando o resto — a foto é medida
    em vh para a legenda nunca ser cortada, em qualquer altura de janela. */
+/* Sem `pin`. Ele prendia a página e rolava a fita na horizontal, e essa
+   combinação com o Lenis, com conteúdo que chega depois e com mudança de
+   janela quebrava de forma recorrente: a fita grudava sobre o carrossel.
+   Foram cinco tentativas de guardar o momento certo de remedir antes de
+   aceitar que o efeito não paga o preço. Agora a fita rola sozinha, na
+   horizontal, como já fazia no celular. */
 .reel {
-  background: var(--enove-black); color: #fff; overflow: hidden;
-  min-height: 100svh; display: flex; flex-direction: column; justify-content: center;
-  padding: 100px 0 var(--sp-6);
+  background: var(--enove-black); color: #fff;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: var(--sp-9) 0 var(--sp-7);
 }
 .reel__head { padding: 0 64px var(--sp-6); max-width: 1280px; margin: 0 auto; width: 100%; }
-.reel__track { display: flex; gap: var(--sp-5); padding: 0 64px; will-change: transform; }
+.reel__track {
+  display: flex; gap: var(--sp-5); padding: 0 64px;
+  overflow-x: auto; scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;                 /* a barra some; o gesto continua */
+}
+.reel__track::-webkit-scrollbar { display: none; }
+.reel__item { scroll-snap-align: center; }
 /* largura fixa (dita o curso horizontal do pin) e altura em vh (garante que
    a legenda caiba na janela) — as duas medidas são independentes de propósito */
 .reel__item { flex: none; width: 400px; }

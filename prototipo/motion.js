@@ -359,25 +359,22 @@
 
 
   /* =====================================================================
-     6. FITA HORIZONTAL PRESA NA TELA
-     No celular vira rolagem horizontal nativa (CSS), sem pin.
+     6. FITA HORIZONTAL DE CIDADES
+     Rola na horizontal por conta própria, em qualquer largura. Sem pin.
      ===================================================================== */
   function fita() {
     const sec = document.querySelector('.reel');
     const trilho = document.querySelector('.reel__track');
     if (!sec || !trilho || !desktop()) return;
 
-    const curso = () => Math.max(0, trilho.scrollWidth - window.innerWidth + 64);
-
-    gsap.to(trilho, {
-      x: () => -curso(), ease: 'none',
-      scrollTrigger: {
-        trigger: sec,
-        start: 'top top',
-        end: () => '+=' + curso(),
-        pin: true, scrub: true, anticipatePin: 1,
-        invalidateOnRefresh: true
-      }
+    /* Antes havia um `pin` aqui, que prendia a seção e traduzia a rolagem
+       vertical em horizontal. Ele era a única seção pinada do site e a
+       origem do embaralhamento com o carrossel. A fita agora rola na
+       horizontal por conta própria (CSS), e o que sobra é só um empurrão
+       suave de entrada — sem prender nada, sem nada para remedir. */
+    gsap.fromTo(trilho, { x: 40 }, {
+      x: 0, ease: 'none',
+      scrollTrigger: { trigger: sec, start: 'top bottom', end: 'top center', scrub: true }
     });
   }
 
@@ -545,33 +542,14 @@
     if (document.fonts) document.fonts.ready.then(refrescar);
     /* No celular, esconder a barra do navegador dispara resize so na ALTURA.
        Remedir por causa disso corromperia o pin no meio da leitura. */
-    /* Mudança de LARGURA refaz o layout inteiro: o percurso da fita depende
-       dela. Não dá para adiar (as medidas velhas dizem que o pin está ativo
-       e o adiamento nunca resolve) nem para medir no lugar (com a seção
-       `fixed`, a posição dela no documento é falsa e o `start` colapsa —
-       6650 virou 559 ao estreitar a janela).
-
-       A saída é medir com a página no TOPO, onde nenhum pin está ativo, e
-       devolver a posição proporcional depois. Redimensionar é raro e
-       deliberado; um pequeno ajuste de rolagem custa menos que a página
-       embaralhada. */
+    /* Mudança de LARGURA refaz o layout. Sem `pin` no site, remedir aqui é
+       trivial: nada está preso, então não há o que despinar nem posição a
+       restaurar. Este bloco já foi bem mais complicado — a complexidade
+       existia só por causa da fita presa, que saiu. */
     addEventListener('resize', () => {
       if (window.innerWidth === larguraAnterior) return;   /* só altura: barra do navegador */
       larguraAnterior = window.innerWidth;
-      const posicao = window.scrollY;
-      const alturaAntes = document.documentElement.scrollHeight;
-      lenis.scrollTo(0, { immediate: true });
-      requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
-        pendente = false;
-        requestAnimationFrame(() => {
-          const alturaDepois = document.documentElement.scrollHeight;
-          const proporcional = alturaAntes > 0
-            ? Math.round(posicao * (alturaDepois / alturaAntes)) : posicao;
-          lenis.scrollTo(proporcional, { immediate: true });
-          ScrollTrigger.update();
-        });
-      });
+      refrescar();
     });
 
     /* Trocar o conteúdo de exemplo pelo do banco muda a altura da página, e
