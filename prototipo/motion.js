@@ -528,5 +528,15 @@
       larguraAnterior = window.innerWidth;
       refrescar();
     });
+
+    /* Trocar o conteúdo de exemplo pelo do banco muda a altura da página, e
+       as posições dos `pin` ficam defasadas — a fita passa a se sobrepor ao
+       carrossel. Quem injeta conteúdo chama isto depois. Passa pelo mesmo
+       guarda: perto do topo remede na hora, no meio da página fica agendado.
+
+       Um `requestAnimationFrame` duplo dá ao navegador a chance de aplicar
+       o layout novo antes da medição; sem ele, remediria o estado antigo. */
+    window.ENOVE_MOTION.recalcular = () =>
+      requestAnimationFrame(() => requestAnimationFrame(refrescar));
   });
 })();

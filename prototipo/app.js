@@ -441,6 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (lead) lead.innerHTML = `${cs.length} ${cs.length === 1 ? 'empreendimento' : 'empreendimentos'} ` +
         `com unidades disponíveis. <a href="#" data-voltar-todos>Ver todas as cidades</a>`;
       document.dispatchEvent(new CustomEvent('enove:carrossel-atualizado'));
+      window.ENOVE_MOTION?.recalcular?.();
       secao.scrollIntoView({ behavior: 'smooth', block: 'start' });
       lead?.querySelector('[data-voltar-todos]')?.addEventListener('click', e => {
         e.preventDefault(); recarregarCondominios();
@@ -484,6 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!cs || !cs.length || !pista) return;
       pista.innerHTML = cs.map(cartaoCondominio).join('');
       document.dispatchEvent(new CustomEvent('enove:carrossel-atualizado'));
+      window.ENOVE_MOTION?.recalcular?.();
     });
   }
 
@@ -560,6 +562,7 @@ document.addEventListener('DOMContentLoaded', () => {
          a seção de cima em vez de abrir a página. */
       pista.innerHTML = cs.map(cartaoCondominio).join('');
       document.dispatchEvent(new CustomEvent('enove:carrossel-atualizado'));
+      window.ENOVE_MOTION?.recalcular?.();
     });
   }
 
