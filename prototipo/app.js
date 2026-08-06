@@ -217,7 +217,7 @@ function cardHTML(r, comMotivo) {
   const tagCls = im.select ? 'card__tag card__tag--select'
                : im.tag === 'Baixou preço' ? 'card__tag card__tag--ink' : 'card__tag';
   return `
-  <a class="card rise" href="imovel.html">
+  <a class="card rise" href="imovel.html?cod=${encodeURIComponent(im.cod)}">
     <div class="card__photo">
       <img src="${img(im.foto, 800)}" alt="${im.tipo} no bairro ${im.bairro}" loading="lazy">
       ${im.tag ? `<span class="${tagCls}">${im.tag}</span>` : ''}
@@ -458,8 +458,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const us = c.imoveis || [];
     const menor = us.map(u => Number(u.valor)).filter(v => v > 0).sort((a, b) => a - b)[0];
     const foto = us.map(u => (u.fotos || []).find(f => f.capa)?.url).find(Boolean) || '';
+    const href = c.slug ? `condominio.html?e=${encodeURIComponent(c.slug)}` : '#';
     return `
-      <article class="carr__card" data-carr-card>
+      <article class="carr__card" data-carr-card data-href="${href}">
         <img src="${foto}" alt="${c.nome}" loading="lazy">
         <div class="carr__in">
           <span class="carr__badge">${us.length} ${us.length === 1 ? 'unidade' : 'unidades'}</span>
@@ -469,7 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ${c.bairro?.nome ? c.bairro.nome + ' · ' : ''}${c.cidade?.nome || ''}
           </p>
           <p class="carr__specs">${menor ? 'a partir de ' + brl(menor) : 'valores sob consulta'}</p>
-          <a class="btn btn--primary carr__cta" href="#buscar">Ver unidades
+          <a class="btn btn--primary carr__cta" href="${href}">Ver unidades
             <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </article>`;
@@ -706,7 +707,11 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
     cards.forEach((c, i) => c.addEventListener('click', e => {
-      if (i !== ativo) { e.preventDefault(); ir(i); }
+      if (i !== ativo) { e.preventDefault(); ir(i); return; }
+      /* no cartão do meio o clique abre o empreendimento; nos vizinhos ele
+         só traz para o centro, senão navegar viraria acidente */
+      if (!e.target.closest('a') && c.dataset.href && c.dataset.href !== '#')
+        location.href = c.dataset.href;
     }));
     if (!suave) cards.forEach(c => c.style.transition = 'none');
     pintar();

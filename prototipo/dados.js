@@ -105,6 +105,25 @@ window.ENOVE_DB = (() => {
         return r[0] ? traduzir(r[0]) : null;
       } catch { return null; }
     },
+    /* Um empreendimento com todas as unidades — alimenta condominio.html */
+    async condominio(slug) {
+      if (!ativo) return null;
+      try {
+        const r = await pegar('condominio?select=id,nome,slug,chamada,descricao,' +
+          'construtora,ano_entrega,situacao_obra,total_unidades,torres,andares,lat,lng,' +
+          'cidade:cidade_id(nome),bairro:bairro_id(nome),' +
+          'imoveis:imovel(codigo,tipo,titulo,valor,dormitorios,suites,banheiros,vagas,' +
+          'area_util,area_total,situacao,fotos:imovel_foto(url,ordem,capa))' +
+          `&slug=eq.${encodeURIComponent(slug)}&limit=1`);
+        if (!r[0]) return null;
+        const c = r[0];
+        c.unidades = (c.imoveis || [])
+          .filter(u => u.situacao === 'PUBLICADO')
+          .map(u => traduzir({ ...u, cidade: c.cidade, bairro: c.bairro }))
+          .sort((a, b) => (a.preco || 1e12) - (b.preco || 1e12));
+        return c;
+      } catch (e) { console.warn('[enove] condomínio falhou:', e.message); return null; }
+    },
     /* Imóveis de uma cidade, para quando ela não tem empreendimento */
     async porCidade(cidade, limite = 24) {
       if (!ativo) return null;
