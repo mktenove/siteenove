@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bairro · Enove Imobiliária</title>
+<link rel="icon" href="assets/logos/enove-mark.svg">
+<link rel="preload" as="font" type="font/woff2" crossorigin
+      href="fonts/PlayfairDisplay-ExtraBold.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin
+      href="fonts/PlayfairDisplay-Bold.woff2">
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<header class="hdr is-stuck">
+  <div class="wrap hdr__in">
+    <a class="hdr__logo" href="index.html" aria-label="enove imobiliária, página inicial">
+      <img src="assets/logos/enove-yellow.png" alt="enove imobiliária">
+    </a>
+    <nav class="hdr__nav">
+      <a href="index.html#buscar">Comprar</a>
+      <a href="index.html#bairros">Bairros</a>
+      <a href="index.html#bairros">Empreendimentos</a>
+      <a href="index.html#avaliar">Vender meu imóvel</a>
+    </nav>
+    <div class="hdr__acts">
+      <span class="hdr__tel">Plantão <b>(51) 99766-8999</b></span>
+      <a class="btn btn--primary btn--sm" href="#imoveis">Ver imóveis</a>
+    </div>
+  </div>
+</header>
+
+<main class="pdp">
+  <!-- carregado por JS a partir de ?e=slug -->
+  <header class="pdph" data-bai-hero>
+    <img class="pdph__foto" data-bai-foto src="" alt="">
+    <div class="wrap pdph__in">
+      <div class="pdph__tags" data-bai-tags></div>
+      <h1 class="pdph__nome" data-bai-nome>carregando…</h1>
+      <p class="pdph__end" data-bai-local></p>
+    </div>
+  </header>
+
+  <div class="pdpfatos">
+    <div class="wrap pdpfatos__in" data-bai-fatos></div>
+  </div>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="prose" data-bai-sobre></div>
+    </div>
+  </section>
+
+  <section class="section" id="imoveis">
+    <div class="wrap">
+      <h2 class="rally" style="font-size:var(--t-h2);margin:0 0 8px" data-bai-titulo-unidades>UNIDADES DISPONÍVEIS</h2>
+      <p class="lead" style="margin:0 0 32px" data-bai-sub-unidades></p>
+      <div class="grid grid--cards" id="grid-imoveis"></div>
+    </div>
+  </section>
+
+  <div class="pdpbar is-visivel" data-pdpbar>
+    <div class="wrap pdpbar__in">
+      <div class="pdpbar__val">
+        <b class="num" data-bai-menor>—</b>
+        <span data-bai-resumo></span>
+      </div>
+      <div class="pdpbar__acts">
+        <a class="btn btn--ghost btn--sm" href="index.html#bairros">Outros bairros</a>
+        <a class="btn btn--primary btn--sm" href="#imoveis">
+          Ver imóveis
+          <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="config.js"></script>
+<script src="dados.js"></script>
+<script src="app.js"></script>
+<script src="bairro.js"></script>
+</body>
+</html>

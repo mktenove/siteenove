@@ -506,7 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const gb = document.querySelector('[data-bairros]');
       if (gb && p.bairros.length) {
         gb.innerHTML = p.bairros.slice(0, 6).map(b => `
-          <a class="hood rise" href="#buscar">
+          <a class="hood rise" href="bairro.html?b=${encodeURIComponent(b.nome)}&c=${encodeURIComponent(b.cidade)}">
             <img data-plx="7" src="${b.foto || ''}" alt="Bairro ${b.nome}" loading="lazy">
             <div class="hood__in">
               <div class="hood__name">${b.nome.toLowerCase()}</div>

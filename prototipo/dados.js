@@ -105,6 +105,30 @@ window.ENOVE_DB = (() => {
         return r[0] ? traduzir(r[0]) : null;
       } catch { return null; }
     },
+    /* Um bairro com os imóveis dele — alimenta bairro.html */
+    async bairro(nome, cidade) {
+      if (!ativo) return null;
+      try {
+        const r = await pegar('imovel?select=' +
+          CAMPOS.replace('bairro:bairro_id(nome)', 'bairro:bairro_id!inner(nome)')
+                .replace('cidade:cidade_id(nome)', 'cidade:cidade_id!inner(nome)') +
+          `&situacao=eq.PUBLICADO&bairro_id.nome=eq.${encodeURIComponent(nome)}` +
+          `&cidade_id.nome=eq.${encodeURIComponent(cidade)}` +
+          '&order=destaque.desc,valor.asc&limit=200');
+        if (!r.length) return null;
+        const ims = r.map(traduzir);
+        const m2 = ims.map(i => (i.preco && i.area) ? i.preco / i.area : null).filter(Boolean);
+        const precos = ims.map(i => i.preco).filter(v => v > 0);
+        return {
+          nome, cidade, imoveis: ims,
+          m2: m2.length ? Math.round(m2.reduce((s, v) => s + v, 0) / m2.length) : null,
+          menor: precos.length ? Math.min(...precos) : null,
+          maior: precos.length ? Math.max(...precos) : null,
+          /* quantos de cada tipo — dá a cara do bairro melhor que a média */
+          tipos: ims.reduce((a, i) => (a[i.tipo] = (a[i.tipo] || 0) + 1, a), {})
+        };
+      } catch (e) { console.warn('[enove] bairro falhou:', e.message); return null; }
+    },
     /* Um empreendimento com todas as unidades — alimenta condominio.html */
     async condominio(slug) {
       if (!ativo) return null;
