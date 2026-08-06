@@ -525,12 +525,21 @@
     ScrollTrigger.config({ autoRefreshEvents: 'DOMContentLoaded' });
 
     let pendente = false, larguraAnterior = window.innerWidth;
-    const noTopo = () => window.scrollY < 200;
+
+    /* O critério NÃO é "estar perto do topo" — era, e criou um defeito pior:
+       quem começava a rolar antes do conteúdo do banco chegar ficava com as
+       posições medidas na página curta, e a fita grudava em cima do
+       carrossel (pin em 2194 numa página de 15114).
+
+       O que realmente não pode acontecer é remedir com uma seção PINADA no
+       momento, porque aí ela despina embaixo do visitante. Fora disso,
+       remedir é seguro em qualquer ponto da página. */
+    const pinAtivo = () => ScrollTrigger.getAll().some(t => t.pin && t.isActive);
     const refrescar = () => {
-      if (noTopo()) { ScrollTrigger.refresh(); pendente = false; }
-      else pendente = true;          /* fica agendado para a volta ao topo */
+      if (!pinAtivo()) { ScrollTrigger.refresh(); pendente = false; }
+      else pendente = true;          /* tenta de novo ao sair do pin */
     };
-    addEventListener('scroll', () => { if (pendente && noTopo()) refrescar(); },
+    addEventListener('scroll', () => { if (pendente) refrescar(); },
                      { passive: true });
     addEventListener('load', refrescar);
     if (document.fonts) document.fonts.ready.then(refrescar);
