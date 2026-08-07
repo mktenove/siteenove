@@ -316,6 +316,7 @@ function recado() {
 async function avaliar() {
   const d = recado();
   const aviso = document.getElementById('v-aviso');
+  const botao = document.getElementById('v-go');
 
   if (!d.area || d.area < 20) {
     aviso.textContent = 'Informe a área construída.';
@@ -328,10 +329,11 @@ async function avaliar() {
     return;
   }
   aviso.classList.remove('is-erro');
-  aviso.textContent = 'Abrindo o WhatsApp do plantão...';
+  botao.disabled = true;
+  aviso.textContent = 'Enviando...';
 
-  /* Grava ANTES de abrir o WhatsApp: se a pessoa desistir na tela do
-     aplicativo, a Enove já tem o contato. */
+  /* O lead vai primeiro e sozinho: se o WhatsApp falhar, a Enove ainda fica
+     com o contato de quem quis vender. */
   const CFG = window.ENOVE_CONFIG || {};
   if (CFG.url && CFG.chave) {
     try {
@@ -345,9 +347,48 @@ async function avaliar() {
     } catch (e) { console.warn('[enove] lead da avaliação não gravou:', e.message); }
   }
 
+  /* O envio de verdade acontece no servidor (api/plantao.js), porque o
+     token do WhatsApp não pode viver no navegador. Enquanto ele não estiver
+     configurado, a rota responde 501 e a gente cai no wa.me — que não envia,
+     só abre a conversa escrita. */
+  let entregue = false;
+  try {
+    const r = await fetch('/api/plantao', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome: d.nome, telefone: d.fone, tipo: d.tipo,
+                             area: d.area, quartos: d.quartos, bairro: d.bairro })
+    });
+    entregue = r.ok;
+  } catch (e) { /* rota ausente em ambiente estático */ }
+
+  if (entregue) {
+    concluir(d.nome);
+    return;
+  }
+  botao.disabled = false;
+  aviso.textContent = 'Abrindo o WhatsApp para você confirmar o envio...';
   window.open('https://wa.me/' + PLANTAO + '?text=' + encodeURIComponent(d.texto),
               '_blank', 'noopener');
-  aviso.textContent = 'Pronto — se o WhatsApp não abrir, ligue (51) 99766-8999.';
+}
+
+/* Enviado de verdade: o formulário sai da frente e vira confirmação. Deixar
+   os campos preenchidos na tela faz a pessoa duvidar se enviou e mandar de
+   novo — dois pedidos iguais chegando ao plantão. */
+function concluir(nome) {
+  const form = document.querySelector('.vform');
+  if (!form) return;
+  form.innerHTML = `
+    <div class="vok">
+      <svg class="vok__ico" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 6 9 17l-5-5"/>
+      </svg>
+      <div class="vok__tit">Enviado, ${nome.split(' ')[0]}.</div>
+      <p class="vok__txt">
+        O plantão recebeu os dados do seu imóvel e vai te chamar no WhatsApp.
+        Se preferir adiantar, ligue <b>(51) 99766-8999</b>.
+      </p>
+    </div>`;
 }
 
 /* =========================================================================

@@ -1392,3 +1392,18 @@ img.plx {
              stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 .vlead__nota { margin-top: 12px; font-size: var(--t-micro); color: var(--fg-3); line-height: 1.5; }
 .vlead__nota.is-erro { color: #C1121F; font-weight: 600; }
+
+/* ---------- confirmação do formulário --------------------------------- */
+.vok { text-align: center; padding: var(--sp-5) 0; }
+.vok__ico {
+  width: 46px; height: 46px; margin: 0 auto var(--sp-4); display: block;
+  fill: none; stroke: var(--enove-black); stroke-width: 2.2;
+  stroke-linecap: round; stroke-linejoin: round;
+  background: var(--enove-yellow); border-radius: 50%; padding: 11px;
+  animation: vokEntra 380ms var(--ease-out) both;
+}
+@keyframes vokEntra { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
+.vok__tit { font-family: var(--font-display); font-weight: 800; font-size: 1.6rem;
+            letter-spacing: -.02em; margin-bottom: 8px; }
+.vok__txt { font-size: var(--t-body-s); color: var(--fg-2); max-width: 34ch; margin: 0 auto; }
+#v-go[disabled] { opacity: .55; cursor: wait; }
