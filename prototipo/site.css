@@ -1391,3 +1391,12 @@ img.plx {
   .chat__topo  { padding-top: calc(11px + env(safe-area-inset-top)); }
   .chat__rodape { padding-bottom: calc(9px + env(safe-area-inset-bottom)); }
 }
+
+/* ---------- captação dentro da avaliação ------------------------------ */
+.vlead { margin-top: var(--sp-4); padding-top: var(--sp-4);
+         border-top: 1px solid var(--border-1); display: grid; gap: var(--sp-3); }
+.vlead .btn { margin-top: 4px; }
+.vlead .btn .ico { width: 18px; height: 18px; fill: none; stroke: currentColor;
+                   stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.vlead__nota { font-size: var(--t-micro); color: var(--fg-3); line-height: 1.5; }
+.vlead__nota.is-erro { color: #C1121F; font-weight: 600; }

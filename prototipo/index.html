@@ -453,21 +453,22 @@
         <div class="eyebrow">Para quem vende</div>
         <h2 class="rally" style="margin:12px 0 20px">QUANTO VALE<br>O SEU IMÓVEL HOJE?</h2>
         <p class="lead" style="margin-bottom:24px">
-          Você responde quatro coisas e recebe a faixa de valor na hora — antes de falar
-          com qualquer corretor. Sem ligação, sem enrolação.
+          Você responde quatro coisas, vê a faixa de valor na hora e fala com o
+          corretor do plantão no WhatsApp, com tudo já preenchido.
         </p>
         <p class="body-s" style="max-width:46ch">
-          A conta usa o preço por metro quadrado que a Enove pratica em cada bairro
-          de Estância Velha. Se quiser, um corretor confirma pessoalmente em até 24 horas.
+          A faixa sai da média de R$/m&sup2; dos im&oacute;veis que a Enove tem publicados
+          naquele bairro. &Eacute; um ponto de partida — quem define o valor &eacute; o corretor,
+          olhando o im&oacute;vel.
         </p>
       </div>
 
       <div class="vform rise">
         <div class="field">
           <label for="v-bairro">Bairro</label>
+          <!-- preenchido por carregarM2() com os bairros que têm acervo -->
           <select id="v-bairro">
-            <option>Centro</option><option selected>Lira</option><option>União</option>
-            <option>Lago Azul</option><option>Buriti Garden</option><option>Outro</option>
+            <option value="">Carregando bairros...</option>
           </select>
         </div>
         <div class="field--row">
@@ -485,7 +486,7 @@
           <input id="v-area" type="number" value="150" min="20" step="1">
         </div>
         <button id="v-go" class="btn btn--ink btn--block">
-          Calcular agora
+          Ver a faixa e falar com o plantão
           <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
         <div class="vresult" id="v-out" hidden></div>

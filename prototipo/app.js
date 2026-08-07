@@ -283,48 +283,142 @@ async function renderBusca(txt) {
 /* =========================================================================
    2. AVALIAÇÃO INSTANTÂNEA (captação de imóveis)
    ========================================================================= */
-const M2_BAIRRO = {   // R$/m² ilustrativos — em produção, do histórico da Enove
-  'Centro':       4900,
-  'Lira':         3900,
-  'União':        3750,
-  'Lago Azul':    3450,
-  'Buriti Garden':4200,
-  'Outro':        3600,
-};
+/* O preço por m² vem do acervo publicado: soma valor/área de cada imóvel do
+   bairro e tira a média. A tabela fixa que existia aqui era inventada — o
+   texto da seção promete "o preço que a Enove pratica em cada bairro", e
+   mostrar um número de fantasia para quem vai vender é pior que não mostrar
+   nenhum. Sem banco, a seção pula a estimativa e vai direto ao corretor. */
+const M2 = { por: null, bairros: [] };
+const PLANTAO = '5551997668999';
+
+async function carregarM2() {
+  if (!window.ENOVE_DB?.ativo) return;
+  const p = await ENOVE_DB.panorama();
+  if (!p) return;
+  /* Bairro com menos de cinco imóveis dá média instável: um sobrado caro
+     move o m² do bairro inteiro. Fica fora da lista. */
+  const uteis = p.bairros.filter(b => b.m2 && b.n >= 5).slice(0, 14);
+  if (!uteis.length) return;
+  M2.por = Object.fromEntries(uteis.map(b => [b.nome, b.m2]));
+  M2.bairros = uteis;
+
+  const sel = document.getElementById('v-bairro');
+  if (!sel) return;
+  sel.innerHTML = uteis.map(b =>
+    `<option value="${b.nome}">${b.nome} · ${b.cidade}</option>`).join('') +
+    '<option value="">Outro bairro</option>';
+}
+
+function dadosDoForm() {
+  return {
+    bairro: document.getElementById('v-bairro').value,
+    tipo:   document.getElementById('v-tipo').value,
+    area:   parseFloat(document.getElementById('v-area').value),
+    quartos: parseInt(document.getElementById('v-quartos').value, 10) || 0
+  };
+}
+
+function resumo(d, faixa) {
+  return `Quero avaliar meu imóvel: ${d.tipo}, ${d.area} m², ` +
+         `${d.quartos} quartos${d.bairro ? ', bairro ' + d.bairro : ''}.` +
+         (faixa ? ` O site estimou ${faixa}.` : '');
+}
 
 function avaliar() {
-  const bairro = document.getElementById('v-bairro').value;
-  const tipo   = document.getElementById('v-tipo').value;
-  const area   = parseFloat(document.getElementById('v-area').value);
-  const qtos   = parseInt(document.getElementById('v-quartos').value, 10) || 0;
-  const out    = document.getElementById('v-out');
+  const d = dadosDoForm();
+  const out = document.getElementById('v-out');
 
-  if (!area || area < 20) {
-    out.innerHTML = '<div class="vresult__note">Informe a área construída para calcularmos.</div>';
+  if (!d.area || d.area < 20) {
+    out.innerHTML = '<div class="vresult__note">Informe a área construída para continuarmos.</div>';
     out.hidden = false;
     return;
   }
-  let base = M2_BAIRRO[bairro] * area;
-  if (tipo === 'apartamento') base *= 1.06;
-  if (tipo === 'terreno')     base *= 0.42;
-  if (qtos >= 3)              base *= 1.04;
 
-  const min = base * 0.92, max = base * 1.08;
-  out.innerHTML = `
-    <div class="eyebrow">Faixa estimada de venda</div>
-    <div class="vresult__val">${brl0(min)} — ${brl0(max)}</div>
-    <div class="vresult__note">
-      Base: ${brl0(M2_BAIRRO[bairro])}/m² praticado em ${bairro} · ${area} m².
-      Estimativa automática, não substitui a avaliação presencial.
-      Um corretor confirma o valor com você em até 24 h.
-    </div>
-    <a class="btn btn--primary btn--block" href="#" style="margin-top:16px" onclick="event.preventDefault()">
-      Quero a avaliação completa e gratuita
-      <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>`;
+  const m2 = M2.por && M2.por[d.bairro];
+  let faixa = null, cabecalho;
+
+  if (m2) {
+    let base = m2 * d.area;
+    if (d.tipo === 'apartamento') base *= 1.06;
+    if (d.tipo === 'terreno')     base *= 0.42;
+    if (d.quartos >= 3)           base *= 1.04;
+    faixa = `${brl0(base * 0.92)} — ${brl0(base * 1.08)}`;
+    cabecalho = `
+      <div class="eyebrow">Faixa estimada de venda</div>
+      <div class="vresult__val">${faixa}</div>
+      <div class="vresult__note">
+        Base: ${brl0(m2)}/m², média dos imóveis que a Enove tem publicados em
+        ${d.bairro} · ${d.area} m². É uma conta automática — quem define o
+        valor é o corretor, olhando o imóvel.
+      </div>`;
+  } else {
+    cabecalho = `
+      <div class="eyebrow">Sem estimativa automática aqui</div>
+      <div class="vresult__note" style="margin-top:6px">
+        Ainda não temos imóveis publicados suficientes nesse bairro para uma
+        média confiável. Um corretor do plantão avalia e te responde.
+      </div>`;
+  }
+
+  /* O que a seção entrega de verdade é o corretor. A estimativa é o motivo
+     de a pessoa preencher; o contato é o que sobra para a Enove. */
+  out.innerHTML = cabecalho + `
+    <div class="vlead">
+      <div class="field">
+        <label for="v-nome">Seu nome</label>
+        <input id="v-nome" type="text" autocomplete="name" placeholder="Como podemos te chamar">
+      </div>
+      <div class="field">
+        <label for="v-fone">Seu WhatsApp</label>
+        <input id="v-fone" type="tel" autocomplete="tel" placeholder="(51) 99999-9999">
+      </div>
+      <button class="btn btn--primary btn--block" id="v-enviar">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.3A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+        Falar com o plantão
+      </button>
+      <div class="vlead__nota" id="v-aviso">
+        Abre a conversa no WhatsApp com esses dados já preenchidos.
+      </div>
+    </div>`;
   out.hidden = false;
+  document.getElementById('v-enviar').addEventListener('click', () => enviarPlantao(faixa));
 }
 
+const TEL_OK = /(\(?\d{2}\)?\s?)?9?\d{4}[-\s]?\d{4}/;
+
+async function enviarPlantao(faixa) {
+  const nome  = (document.getElementById('v-nome').value || '').trim();
+  const fone  = (document.getElementById('v-fone').value || '').trim();
+  const aviso = document.getElementById('v-aviso');
+  const d     = dadosDoForm();
+
+  if (!nome || !TEL_OK.test(fone)) {
+    aviso.textContent = 'Preencha nome e um WhatsApp com DDD para o corretor te retornar.';
+    aviso.classList.add('is-erro');
+    return;
+  }
+  aviso.classList.remove('is-erro');
+  aviso.textContent = 'Abrindo o WhatsApp do plantão...';
+
+  /* O lead é gravado ANTES de abrir o WhatsApp: se a pessoa desistir na
+     tela do aplicativo, a Enove já tem o contato. */
+  const CFG = window.ENOVE_CONFIG || {};
+  if (CFG.url && CFG.chave) {
+    try {
+      await fetch(CFG.url + '/rest/v1/lead', {
+        method: 'POST',
+        headers: { apikey: CFG.chave, Authorization: 'Bearer ' + CFG.chave,
+                   'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify({ nome, telefone: fone, origem: 'avaliacao',
+                               mensagem: resumo(d, faixa) })
+      });
+    } catch (e) { console.warn('[enove] lead da avaliação não gravou:', e.message); }
+  }
+
+  const txt = `Oi! Sou ${nome} (${fone}). ${resumo(d, faixa)}`;
+  window.open('https://wa.me/' + PLANTAO + '?text=' + encodeURIComponent(txt), '_blank', 'noopener');
+  aviso.textContent = 'Pronto — se o WhatsApp não abrir, ligue (51) 99766-8999.';
+}
 
 /* =========================================================================
    4. UI
@@ -398,7 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // avaliação
   const vgo = document.getElementById('v-go');
-  if (vgo) vgo.addEventListener('click', avaliar);
+  if (vgo) { vgo.addEventListener('click', avaliar); carregarM2(); }
 
 
   function cartaoCondominio(c) {
