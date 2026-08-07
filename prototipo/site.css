@@ -37,7 +37,7 @@ a { text-decoration: none; color: inherit; }
 .dark .eyebrow { color: var(--enove-yellow); }
 .graphite { background: var(--enove-graphite); color: var(--fg-on-dark); }
 
-:is(.graphite, .ftr, .dark, .select-band, .reel) :is(p, li, .body, .body-s, .lead) {
+:is(.graphite, .ftr, .dark, .select-band) :is(p, li, .body, .body-s, .lead) {
   color: inherit;
 }
 
@@ -601,64 +601,6 @@ html.lenis, html.lenis body { height: auto; }
 /* A seção fica presa em tela cheia enquanto a fita corre. Por isso a altura
    é distribuída: cabeçalho no topo, fita ocupando o resto — a foto é medida
    em vh para a legenda nunca ser cortada, em qualquer altura de janela. */
-/* Sem `pin`. Ele prendia a página e rolava a fita na horizontal, e essa
-   combinação com o Lenis, com conteúdo que chega depois e com mudança de
-   janela quebrava de forma recorrente: a fita grudava sobre o carrossel.
-   Foram cinco tentativas de guardar o momento certo de remedir antes de
-   aceitar que o efeito não paga o preço. Agora a fita rola sozinha, na
-   horizontal, como já fazia no celular. */
-.reel {
-  background: var(--enove-black); color: #fff;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: var(--sp-9) 0 var(--sp-7);
-}
-.reel__head { padding: 0 64px var(--sp-6); max-width: 1280px; margin: 0 auto; width: 100%; }
-.reel__track {
-  display: flex; gap: var(--sp-5); padding: 0 64px;
-  overflow-x: auto; scroll-snap-type: x proximity;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;                 /* a barra some; o gesto continua */
-}
-.reel__track::-webkit-scrollbar { display: none; }
-.reel__item { scroll-snap-align: center; }
-/* largura fixa (dita o curso horizontal do pin) e altura em vh (garante que
-   a legenda caiba na janela) — as duas medidas são independentes de propósito */
-.reel__item { flex: none; width: 400px; }
-.reel__ph { position: relative; height: clamp(280px, 46vh, 520px); border-radius: var(--r-lg);
-            overflow: hidden; background: var(--enove-graphite); }
-.reel__ph img { width: 100%; height: 100%; object-fit: cover; }
-.reel__cap { display: flex; justify-content: space-between; gap: var(--sp-4);
-             margin-top: var(--sp-4); align-items: baseline; }
-.reel__name { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem;
-              text-transform: lowercase; letter-spacing: -.03em; }
-.reel__meta { font-size: var(--t-caption); color: rgba(255,255,255,.6); text-align: right; }
-.reel__hint { font-size: var(--t-micro); text-transform: uppercase;
-              letter-spacing: var(--tr-wider); color: rgba(255,255,255,.4);
-              display: flex; align-items: center; gap: 10px; }
-
-/* ---------- bairros --------------------------------------------------- */
-.hood {
-  position: relative; border-radius: var(--r-lg); overflow: hidden; min-height: 340px;
-  display: flex; align-items: flex-end; color: #fff;
-  transition: transform var(--dur-3) var(--ease-out);
-}
-.hood:hover { transform: translateY(-4px); }
-.hood img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.hood::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,0,.25) 55%, rgba(0,0,0,.1) 100%);
-  transition: opacity var(--dur-3) var(--ease-out);
-}
-.hood:hover::after { opacity: 1; }
-.hood::after { opacity: .92; }
-/* z-index obrigatorio: o ::after do card e gerado como ultimo filho e, com
-   ambos posicionados em z-index auto, a ordem de pintura e a da arvore — o
-   gradiente ficava POR CIMA do texto e derrubava o branco de 255 para 176. */
-.hood__in { position: relative; z-index: 1; padding: var(--sp-5); width: 100%; }
-.hood__name { font-family: var(--font-display); font-weight: 800; font-size: 1.75rem;
-              text-transform: lowercase; letter-spacing: -.03em; line-height: 1; }
-.hood__desc { font-size: var(--t-body-s); color: rgba(255,255,255,.8); margin: 10px 0 14px; line-height: 1.5; }
-.hood__facts { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
 .fact {
   display: inline-flex; align-items: center; gap: 6px; font-size: var(--t-micro);
   background: rgba(255,255,255,.14); border-radius: var(--r-pill); padding: 5px 11px;
@@ -855,7 +797,7 @@ html.lenis, html.lenis body { height: auto; }
 /* Imagens com parallax: mais altas que a moldura, para haver curso de
    deslocamento sem abrir vão em nenhum dos extremos. O motion.js só
    translada em yPercent dentro dessa folga.
-   Seletor `img.plx` para vencer o `inset: 0` de .hood img / .launch img. */
+   Seletor `img.plx` para vencer o `inset: 0` de .launch img. */
 img.plx {
   position: absolute !important;
   top: -14% !important; left: 0; right: auto; bottom: auto;
@@ -931,10 +873,8 @@ img.plx {
   .ftr__grid { gap: var(--sp-6); }
 }
 @media (max-width: 1080px) {
-  .manifesto__in, .reel__head { padding-left: 32px; padding-right: 32px; }
-  .reel__track { padding-left: 32px; padding-right: 32px; }
+  .manifesto__in { padding-left: 32px; padding-right: 32px; }
   .steps { grid-template-columns: 1fr; gap: var(--sp-5); }
-  .reel__item { width: 340px; }
 }
 @media (max-width: 720px) {
   .wrap { padding: 0 24px; }
@@ -984,7 +924,7 @@ img.plx {
                                 mask-image: url(assets/hero/knock-mask-mobile.svg); }
   .overlap { margin-top: -40px; border-radius: var(--r-lg) var(--r-lg) 0 0; }
   .manifesto { padding: var(--sp-8) 0; }
-  .manifesto__in, .reel__head, .reel__track { padding-left: 24px; padding-right: 24px; }
+  .manifesto__in { padding-left: 24px; padding-right: 24px; }
   /* no celular a fita volta a ser rolagem horizontal nativa, sem pin */
   /* no celular o cartao encolhe para os vizinhos ainda espiarem pela borda */
   .carr { height: 500px; }
@@ -995,12 +935,6 @@ img.plx {
   .carr__nav--prox { right: 6px; }
   .topinv__head .lead { font-size: var(--t-body-s); }
 
-  .reel { min-height: auto; padding: var(--sp-8) 0; }
-  .reel__ph { height: 58vw; }
-  .reel__track { overflow-x: auto; scroll-snap-type: x mandatory;
-                 -webkit-overflow-scrolling: touch; }
-  .reel__item { width: 78vw; scroll-snap-align: center; }
-  .reel__hint { display: none; }
   .hdr__nav, .hdr__tel { display: none; }
   .burger { display: block; margin-left: auto; }
   .hdr__acts { gap: var(--sp-2); }

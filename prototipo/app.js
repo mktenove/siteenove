@@ -400,35 +400,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const vgo = document.getElementById('v-go');
   if (vgo) vgo.addEventListener('click', avaliar);
 
-  /* Clicar numa cidade abre os empreendimentos dela. Só 10 das 25 cidades
-     têm algum — nas outras, levar a uma vitrine vazia seria pior que não
-     ser clicável, então cai nos imóveis da cidade. */
-  async function abrirCidade(cidade) {
-    const secao = document.querySelector('#top-investimentos');
-    const pista = document.querySelector('[data-carr-pista]');
-    const titulo = secao?.querySelector('.rally');
-    const lead   = secao?.querySelector('.lead');
-    if (!secao || !pista) return;
-
-    const cs = await ENOVE_DB.condominios(12, cidade);
-    if (cs && cs.length) {
-      pista.innerHTML = cs.map(cartaoCondominio).join('');
-      if (titulo) titulo.textContent = `EMPREENDIMENTOS EM ${cidade.toUpperCase()}.`;
-      if (lead) lead.innerHTML = `${cs.length} ${cs.length === 1 ? 'empreendimento' : 'empreendimentos'} ` +
-        `com unidades disponíveis. <a href="#" data-voltar-todos>Ver todas as cidades</a>`;
-      document.dispatchEvent(new CustomEvent('enove:carrossel-atualizado'));
-      window.ENOVE_MOTION?.recalcular?.();
-      rolarAte(secao);
-      lead?.querySelector('[data-voltar-todos]')?.addEventListener('click', e => {
-        e.preventDefault(); recarregarCondominios();
-      });
-      return;
-    }
-
-    /* Não há caminho alternativo: a fita só lista cidade com empreendimento,
-       então este ponto não deveria ser alcançado. */
-    console.warn('[enove] sem empreendimento em', cidade);
-  }
 
   function cartaoCondominio(c) {
     const brl = n => n ? 'R$ ' + Math.round(n).toLocaleString('pt-BR') : '—';
@@ -471,68 +442,6 @@ document.addEventListener('DOMContentLoaded', () => {
      onde está — nenhuma seção esvazia. */
   if (ENOVE_DB.ativo) {
     const brl = n => n ? 'R$ ' + Math.round(n).toLocaleString('pt-BR') : '—';
-    const comEmpreendimento = new Set();
-
-    /* As duas consultas correm JUNTAS. Encadeadas, os bairros só apareciam
-       depois dos condomínios — e nesse intervalo os cards de espera ficavam
-       na tela. Só a FITA precisa saber quais cidades têm empreendimento;
-       os bairros não dependem disso. */
-    Promise.all([
-      ENOVE_DB.condominios(500).then(todos => {
-        (todos || []).forEach(c => c.cidade?.nome && comEmpreendimento.add(c.cidade.nome));
-      }),
-      ENOVE_DB.panorama()
-    ]).then(([, p]) => {
-      if (!p) return;
-
-      const gb = document.querySelector('[data-bairros]');
-      if (gb && p.bairros.length) {
-        gb.innerHTML = p.bairros.slice(0, 3).map(b => `
-          <a class="hood rise" href="bairro.html?b=${encodeURIComponent(b.nome)}&c=${encodeURIComponent(b.cidade)}">
-            <img data-plx="7" src="${b.foto || ''}" alt="Bairro ${b.nome}" loading="lazy">
-            <div class="hood__in">
-              <div class="hood__name">${b.nome.toLowerCase()}</div>
-              <p class="hood__desc">${b.n} ${b.n === 1 ? 'imóvel disponível' : 'imóveis disponíveis'} em ${b.cidade}.</p>
-              <div class="hood__facts">
-                <span class="fact"><b>${b.n}</b> ${b.n === 1 ? 'imóvel' : 'imóveis'}</span>
-                ${b.m2 ? `<span class="fact"><b>${brl(b.m2)}</b>/m²</span>` : ''}
-                <span class="fact"><b>${b.cidade}</b></span>
-              </div>
-            </div>
-          </a>`).join('');
-      }
-
-      const fita = document.querySelector('[data-cidades]');
-      /* `comEmpreendimento` é preenchido pela consulta de condomínios, que
-         roda em paralelo. Cidade sem nenhum sai da fita: clicar nela levaria
-         a uma vitrine vazia. */
-      const cidades = p.cidades.filter(c => comEmpreendimento.has(c.nome)).slice(0, 6);
-      if (fita && cidades.length) {
-        fita.innerHTML = cidades.map(c => `
-          <article class="reel__item" data-cidade="${c.nome}" role="button" tabindex="0"
-                   aria-label="Ver empreendimentos em ${c.nome}">
-            <div class="reel__ph" data-plx-frame>
-              <img data-plx="6" src="${c.foto || ''}" alt="${c.nome}" loading="lazy">
-            </div>
-            <div class="reel__cap">
-              <div class="reel__name">${c.nome.toLowerCase()}</div>
-              <div class="reel__meta"><b>${c.n}</b> ${c.n === 1 ? 'imóvel' : 'imóveis'}${c.m2 ? `<br>${brl(c.m2)}/m²` : ''}</div>
-            </div>
-          </article>`).join('');
-        fita.querySelectorAll('[data-cidade]').forEach(el => {
-          const abrir = () => abrirCidade(el.dataset.cidade);
-          el.addEventListener('click', abrir);
-          el.addEventListener('keydown', e => {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); }
-          });
-        });
-        /* o título não conta mais cidades: a Enove deixou de se posicionar
-           pelo tamanho da operação local */
-      }
-      observar();
-      if (window.ENOVE_MOTION?.recalcular) window.ENOVE_MOTION.recalcular();
-    });
-
     /* Lançamentos do Enove Select: os dois maiores empreendimentos, com o
        botão levando à página de cada um. Antes eram cartões fixos com
        href="#", que não iam a lugar nenhum. */

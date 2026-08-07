@@ -3,7 +3,7 @@
    ---------------------------------------------------------------------------
    Referência de sensação: findrealestate.com — scroll com inércia, hero
    composto em camadas de profundidade, declaração em linhas grandes que
-   acendem conforme sobem, fita horizontal presa na tela.
+   acendem conforme sobem.
 
    Calibrada pelo manual Enove: easing confiante sem bounce, durações
    120/200/320/520 ms, reveals em fade + subida curta, sem zoom agressivo.
@@ -106,8 +106,10 @@
     // âncoras internas passam pelo Lenis para manter a inércia
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
-        const alvo = document.querySelector(a.getAttribute('href'));
-        if (!alvo || a.getAttribute('href') === '#') return;
+        const href = a.getAttribute('href');
+        if (href === '#') return;
+        const alvo = document.querySelector(href);
+        if (!alvo) return;
         e.preventDefault();
         lenis.scrollTo(alvo, { offset: -90, duration: 1.15 });
       });
@@ -362,21 +364,6 @@
      6. FITA HORIZONTAL DE CIDADES
      Rola na horizontal por conta própria, em qualquer largura. Sem pin.
      ===================================================================== */
-  function fita() {
-    const sec = document.querySelector('.reel');
-    const trilho = document.querySelector('.reel__track');
-    if (!sec || !trilho || !desktop()) return;
-
-    /* Antes havia um `pin` aqui, que prendia a seção e traduzia a rolagem
-       vertical em horizontal. Ele era a única seção pinada do site e a
-       origem do embaralhamento com o carrossel. A fita agora rola na
-       horizontal por conta própria (CSS), e o que sobra é só um empurrão
-       suave de entrada — sem prender nada, sem nada para remedir. */
-    gsap.fromTo(trilho, { x: 40 }, {
-      x: 0, ease: 'none',
-      scrollTrigger: { trigger: sec, start: 'top bottom', end: 'top center', scrub: true }
-    });
-  }
 
   /* =====================================================================
      7. NÚMEROS, HEADER, PROGRESSO, ESPELHOS, BAIRROS
@@ -427,21 +414,6 @@
     });
   }
 
-  function bairros() {
-    if (!desktop()) return;
-    // yPercent, não y: o reveal usa `y` nesses mesmos cards e o GSAP compõe
-    // as duas propriedades no mesmo transform sem uma anular a outra.
-    gsap.utils.toArray('#bairros .hood').forEach((c, i) => {
-      const d = i % 2 === 0 ? 5 : 9;
-      gsap.fromTo(c, { yPercent: d }, {
-        yPercent: -d, ease: 'none',
-        scrollTrigger: {
-          trigger: '#bairros', start: 'top bottom', end: 'bottom top',
-          scrub: true, invalidateOnRefresh: true
-        }
-      });
-    });
-  }
 
   /* =====================================================================
      8. PÁGINA DO IMÓVEL
@@ -501,19 +473,17 @@
     reveal();
     titulos();
     hero();
-    fita();
     contadores();
     header();
     progresso();
     espelhos();
-    bairros();
     pdp();
     redeDeSeguranca();
 
     /* Um refresh REMEDE tudo e re-cria os pins. Caindo com o visitante ja
        dentro de uma secao pinada, o `start` dela nao se desloca um pouco:
        COLAPSA. Medido com as fontes chegando tarde — start 6046 virou -145,
-       a fita despinou e a pagina saltou 1063 px.
+       a seção despinou e a pagina saltou 1063 px.
 
        Nao basta guardar as chamadas daqui: o ScrollTrigger tem eventos
        proprios de auto-refresh (`load`, `resize`) que nao passam por este
@@ -525,7 +495,7 @@
 
     /* O critério NÃO é "estar perto do topo" — era, e criou um defeito pior:
        quem começava a rolar antes do conteúdo do banco chegar ficava com as
-       posições medidas na página curta, e a fita grudava em cima do
+       posições medidas na página curta, e a seção pinada grudava em cima do
        carrossel (pin em 2194 numa página de 15114).
 
        O que realmente não pode acontecer é remedir com uma seção PINADA no
@@ -545,17 +515,17 @@
     /* Mudança de LARGURA refaz o layout. Sem `pin` no site, remedir aqui é
        trivial: nada está preso, então não há o que despinar nem posição a
        restaurar. Este bloco já foi bem mais complicado — a complexidade
-       existia só por causa da fita presa, que saiu. */
+       existia só por causa da fita de cidades, que saiu do site. */
     addEventListener('resize', () => {
       if (window.innerWidth === larguraAnterior) return;   /* só altura: barra do navegador */
       larguraAnterior = window.innerWidth;
       refrescar();
     });
 
-    /* Trocar o conteúdo de exemplo pelo do banco muda a altura da página, e
-       as posições dos `pin` ficam defasadas — a fita passa a se sobrepor ao
-       carrossel. Quem injeta conteúdo chama isto depois. Passa pelo mesmo
-       guarda: perto do topo remede na hora, no meio da página fica agendado.
+    /* Trocar o conteúdo de exemplo pelo do banco muda a altura da página e
+       desloca tudo que foi medido. Quem injeta conteúdo chama isto depois.
+       Passa pelo mesmo guarda: sem pin ativo remede na hora, com pin ativo
+       fica agendado.
 
        Um `requestAnimationFrame` duplo dá ao navegador a chance de aplicar
        o layout novo antes da medição; sem ele, remediria o estado antigo. */

@@ -27,7 +27,7 @@
   addEventListener('resize', () => anotar(`resize ${innerWidth}x${innerHeight}`));
   if (window.ScrollTrigger) ScrollTrigger.addEventListener('refresh', () => anotar('ScrollTrigger.refresh'));
 
-  let jaAvisou = false, jaAvisouHero = false;
+  let jaAvisouHero = false;
   const vis = r => r.top < innerHeight && r.bottom > 0;
 
   /* O hero é um scrub: perto do topo ele tem de estar no começo da
@@ -61,32 +61,6 @@
 
   (function vigiar() {
     olharHero();
-    if (!jaAvisou) {
-      const fita = document.querySelector('.reel');
-      const carr = document.querySelector('#top-investimentos');
-      if (fita && carr) {
-        const a = fita.getBoundingClientRect(), c = carr.getBoundingClientRect();
-        if (vis(a) && vis(c)) {
-          jaAvisou = true;
-          const st = window.ScrollTrigger?.getAll?.().find(x => x.pin);
-          console.warn(
-            '%c[enove] EMBARALHAMENTO FLAGRADO — copie tudo abaixo',
-            'background:#FFFF00;color:#000;font-weight:700;padding:2px 6px',
-            {
-              janela: `${innerWidth}x${innerHeight}`,
-              scrollDaPagina: Math.round(scrollY),
-              scrollDoLenis: Math.round(window.__lenis?.scroll ?? -1),
-              fita: { posicao: getComputedStyle(fita).position,
-                      topo: Math.round(a.top), base: Math.round(a.bottom) },
-              carrossel: { topo: Math.round(c.top), base: Math.round(c.bottom) },
-              pin: st ? { inicio: Math.round(st.start), fim: Math.round(st.end),
-                          ativo: st.isActive } : 'sem pin',
-              alturaDoDocumento: document.documentElement.scrollHeight,
-              ultimasAcoes: historico
-            });
-        }
-      }
-    }
     requestAnimationFrame(vigiar);
   })();
 })();
