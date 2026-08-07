@@ -21,7 +21,16 @@
 :root { --font-num: 'Poppins', 'Helvetica Neue', Arial, sans-serif; }
 
 *, *::before, *::after { box-sizing: border-box; }
+/* `smooth` só como reserva para quem está sem JS. Com o Lenis no ar ele
+   TEM de sair: a rolagem que o ScrollTrigger faz para se medir vira
+   animada, ele lê a posição antiga e calcula todo `start` deslocado pela
+   rolagem atual — start 0 virava -9502 numa página em 9502. O hero então
+   desenhava o estágio final para sempre, mesmo de volta ao topo. Era o
+   travamento intermitente: bastava um refresh com a página rolada.
+   O guarda que já existia (.lenis.lenis-smooth) nunca pegou — o Lenis
+   1.1.18 põe só a classe `lenis`. */
 html { scroll-behavior: smooth; }
+html.lenis { scroll-behavior: auto; }
 body { margin: 0; overflow-x: hidden; }
 img { display: block; max-width: 100%; }
 button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }

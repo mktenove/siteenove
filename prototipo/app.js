@@ -389,6 +389,9 @@ function concluir(nome) {
         Se preferir adiantar, ligue <b>(51) 99766-8999</b>.
       </p>
     </div>`;
+  /* A confirmação é bem mais baixa que o formulário: a página encurta e
+     tudo que foi medido abaixo daqui sai do lugar. Quem muda a altura avisa. */
+  window.ENOVE_MOTION?.recalcular?.();
 }
 
 /* =========================================================================
