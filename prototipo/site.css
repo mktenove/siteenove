@@ -37,6 +37,10 @@ a { text-decoration: none; color: inherit; }
 .dark .eyebrow { color: var(--enove-yellow); }
 .graphite { background: var(--enove-graphite); color: var(--fg-on-dark); }
 
+:is(.graphite, .ftr, .dark, .select-band, .reel) :is(p, li, .body, .body-s, .lead) {
+  color: inherit;
+}
+
 
 /* ---------- tipografia auxiliar --------------------------------------- */
 .display-hero {
@@ -740,6 +744,7 @@ html.lenis, html.lenis body { height: auto; }
 .value { border-top: 2px solid var(--enove-yellow); padding-top: var(--sp-4); }
 .value h3 { text-transform: uppercase; font-family: var(--font-heading); font-weight: 800;
             font-size: var(--t-h4); letter-spacing: var(--tr-tight); margin: 0 0 8px; }
+.value p  { color: rgba(255,255,255,.72); }
 
 /* ---------- footer ---------------------------------------------------- */
 .ftr { background: var(--enove-black); color: #fff; padding: var(--sp-9) 0 var(--sp-5); }
