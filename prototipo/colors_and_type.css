@@ -285,6 +285,6 @@ p, .body    { font-family: var(--font-body); font-size: var(--t-body-l); line-he
 }
 
 a { color: var(--fg-1); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-a:hover { color: var(--enove-graphite); }
+a:hover:not([class]) { color: var(--enove-graphite); }
 
 ::selection { background: var(--enove-yellow); color: var(--enove-black); }
