@@ -453,20 +453,19 @@
         <div class="eyebrow">Para quem vende</div>
         <h2 class="rally" style="margin:12px 0 20px">QUANTO VALE<br>O SEU IMÓVEL HOJE?</h2>
         <p class="lead" style="margin-bottom:24px">
-          Você responde quatro coisas, vê a faixa de valor na hora e fala com o
-          corretor do plantão no WhatsApp, com tudo já preenchido.
+          Conte o b&aacute;sico sobre o im&oacute;vel e fale com o corretor do plant&atilde;o
+          no WhatsApp — a conversa abre com tudo j&aacute; preenchido.
         </p>
         <p class="body-s" style="max-width:46ch">
-          A faixa sai da média de R$/m&sup2; dos im&oacute;veis que a Enove tem publicados
-          naquele bairro. &Eacute; um ponto de partida — quem define o valor &eacute; o corretor,
-          olhando o im&oacute;vel.
+          Quem avalia &eacute; gente, n&atilde;o calculadora: o corretor olha o im&oacute;vel,
+          compara com o que a Enove vendeu na regi&atilde;o e te d&aacute; um valor de verdade.
         </p>
       </div>
 
       <div class="vform rise">
         <div class="field">
           <label for="v-bairro">Bairro</label>
-          <!-- preenchido por carregarM2() com os bairros que têm acervo -->
+          <!-- preenchido por carregarBairros() com os bairros do banco -->
           <select id="v-bairro">
             <option value="">Carregando bairros...</option>
           </select>
@@ -474,22 +473,40 @@
         <div class="field--row">
           <div class="field">
             <label for="v-tipo">Tipo</label>
-            <select id="v-tipo"><option value="casa">Casa</option><option value="apartamento">Apartamento</option><option value="terreno">Terreno</option></select>
+            <select id="v-tipo">
+              <option value="casa">Casa</option>
+              <option value="apartamento">Apartamento</option>
+              <option value="terreno">Terreno</option>
+            </select>
           </div>
           <div class="field">
             <label for="v-quartos">Quartos</label>
-            <select id="v-quartos"><option>1</option><option>2</option><option selected>3</option><option>4</option></select>
+            <select id="v-quartos">
+              <option>1</option><option>2</option><option selected>3</option><option>4+</option>
+            </select>
           </div>
         </div>
         <div class="field">
-          <label for="v-area">Área construída (m²)</label>
+          <label for="v-area">&Aacute;rea constru&iacute;da (m&sup2;)</label>
           <input id="v-area" type="number" value="150" min="20" step="1">
         </div>
+        <div class="field--row">
+          <div class="field">
+            <label for="v-nome">Seu nome</label>
+            <input id="v-nome" type="text" autocomplete="name" placeholder="Como te chamar">
+          </div>
+          <div class="field">
+            <label for="v-fone">Seu WhatsApp</label>
+            <input id="v-fone" type="tel" autocomplete="tel" placeholder="(51) 99999-9999">
+          </div>
+        </div>
         <button id="v-go" class="btn btn--ink btn--block">
-          Ver a faixa e falar com o plantão
-          <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.6 7.3L3 20.5l1.8-5.3A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+          Pedir a simula&ccedil;&atilde;o no WhatsApp
         </button>
-        <div class="vresult" id="v-out" hidden></div>
+        <div class="vlead__nota" id="v-aviso">
+          Abre a conversa com o plant&atilde;o com esses dados j&aacute; preenchidos.
+        </div>
       </div>
     </div>
   </div>

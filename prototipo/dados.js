@@ -165,6 +165,36 @@ window.ENOVE_DB = (() => {
     /* Bairros, cidades e condomínios com números reais. O PostgREST não
        agrega, então a contagem é feita aqui — é uma leitura só, e o volume
        (1.286 registros enxutos) cabe bem. */
+    /* Só os nomes, para o seletor da avaliação. O `panorama` também traz
+       bairro, mas puxando 2.000 imóveis — caro demais para preencher um
+       campo de formulário. */
+    async bairros() {
+      if (!ativo) return null;
+      try {
+        const r = await pegar('bairro?select=nome,cidade:cidade_id(nome)&limit=300');
+        /* O Flip trouxe o mesmo bairro em duas caixas — "Centro" e "CENTRO"
+           em Estância Velha, mais três em Novo Hamburgo. Num seletor eles
+           apareciam como opções diferentes. Fica a versão melhor escrita:
+           tudo em maiúsculas quase sempre é o registro descuidado. */
+        const vistos = new Map();
+        for (const b of r) {
+          const nome = b.nome.replace(/\s+/g, ' ').trim();
+          const cidade = b.cidade?.nome || '';
+          if (!nome || !cidade) continue;
+          const k = nome.toLowerCase() + '|' + cidade;
+          const atual = vistos.get(k);
+          if (!atual || (atual.nome === atual.nome.toUpperCase() &&
+                         nome !== nome.toUpperCase())) {
+            vistos.set(k, { nome, cidade });
+          }
+        }
+        return [...vistos.values()]
+                .sort((a, b) =>
+                  (b.cidade === 'Estância Velha') - (a.cidade === 'Estância Velha') ||
+                  a.cidade.localeCompare(b.cidade) ||
+                  a.nome.localeCompare(b.nome));
+      } catch (e) { console.warn('[enove] bairros falhou:', e.message); return null; }
+    },
     async panorama() {
       if (!ativo) return null;
       try {

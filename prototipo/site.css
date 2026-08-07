@@ -666,11 +666,6 @@ html.lenis, html.lenis body { height: auto; }
   border-color: var(--enove-black); box-shadow: 0 0 0 3px var(--enove-yellow-soft);
 }
 .field--row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
-.vresult { border-top: 1px solid var(--border-1); margin-top: var(--sp-5); padding-top: var(--sp-5); }
-.vresult__val { font-family: var(--font-num); font-weight: 800; font-size: 2rem;
-                letter-spacing: -.03em; color: var(--fg-1); line-height: 1.1; }
-.vresult__note { font-size: var(--t-caption); color: var(--fg-3); margin-top: 6px; }
-
 /* ---------- time ------------------------------------------------------ */
 .person { text-align: left; }
 .person__ph { aspect-ratio: 3/4; border-radius: var(--r-md); overflow: hidden;
@@ -1392,11 +1387,8 @@ img.plx {
   .chat__rodape { padding-bottom: calc(9px + env(safe-area-inset-bottom)); }
 }
 
-/* ---------- captação dentro da avaliação ------------------------------ */
-.vlead { margin-top: var(--sp-4); padding-top: var(--sp-4);
-         border-top: 1px solid var(--border-1); display: grid; gap: var(--sp-3); }
-.vlead .btn { margin-top: 4px; }
-.vlead .btn .ico { width: 18px; height: 18px; fill: none; stroke: currentColor;
-                   stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
-.vlead__nota { font-size: var(--t-micro); color: var(--fg-3); line-height: 1.5; }
+/* ---------- aviso sob o botão da avaliação ---------------------------- */
+#v-go .ico { width: 18px; height: 18px; fill: none; stroke: currentColor;
+             stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.vlead__nota { margin-top: 12px; font-size: var(--t-micro); color: var(--fg-3); line-height: 1.5; }
 .vlead__nota.is-erro { color: #C1121F; font-weight: 600; }
