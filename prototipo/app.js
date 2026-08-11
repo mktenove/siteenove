@@ -445,16 +445,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         input.value = 'imóveis no ' + r;
         renderBusca(input.value);
-        rolarAte(document.getElementById('buscar'));
       });
     });
 
     // placeholder rotativo — mostra o alcance da busca sem ocupar tela
     const exemplos = [
-      'casa de 3 quartos até 600 mil com pátio pro cachorro',
-      'apartamento no centro, perto de mercado, pra sair do aluguel',
-      'terreno em condomínio fechado pra construir',
-      'casa com suíte e churrasqueira perto de escola',
+      'casa de 3 quartos com pátio',
+      'apartamento no centro',
+      'terreno em condomínio',
+      'casa com suíte perto de escola',
     ];
     let k = 0;
     setInterval(() => {

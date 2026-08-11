@@ -376,22 +376,11 @@ html.lenis, html.lenis body { height: auto; }
 .hero__cta { display: inline-flex; }
 
 /* ---------- seção da busca conversacional (bloco preto após o hero) --- */
-/* Clara: a nuvem que vem do hero se dissolve no branco desta secao. Preta,
-   a nuvem morreria numa linha reta. */
-.finder { background: var(--enove-white); color: var(--enove-black); }
-.finder.overlap { border-radius: 0; overflow: visible; }
-.finder > .wrap { position: relative; z-index: 3; }
-.finder .rally { color: var(--enove-black); }
-.finder .lead { color: var(--enove-graphite); }
-.finder .ask__hint { color: var(--enove-graphite); text-shadow: none; }
-.finder .ask__box { border: 1px solid rgba(0,0,0,.10); }
-.finder .chip {
-  border-color: rgba(0,0,0,.18); color: var(--enove-graphite); background: #fff;
-}
-.finder .chip:hover {
-  border-color: var(--enove-black); color: var(--enove-black);
-  background: var(--enove-yellow);        /* amarelo so com preto, como manda o manual */
-}
+/* A seção logo abaixo do hero recebe a nuvem de transição: o gradiente
+   dela termina em --enove-white, então essa seção precisa ser branca. Hoje
+   é a de regiões (--bg-1, o mesmo #FEFEFE). */
+.regioes.overlap { border-radius: 0; overflow: visible; }
+.regioes > .wrap { position: relative; z-index: 3; }
 
 /* A nuvem de transicao. aspect-ratio na proporcao nativa do smoke.webp
    (768x248): sem isso a imagem estica e vira borrao, como ja aconteceu nas
@@ -411,13 +400,6 @@ html.lenis, html.lenis body { height: auto; }
       var(--enove-white)    74%);
   pointer-events: none;
 }
-.finder__head { max-width: 62ch; margin-bottom: var(--sp-6); }
-.finder__stats { display: flex; gap: var(--sp-7); margin-top: var(--sp-8); flex-wrap: wrap; }
-.finder__stat b {
-  display: block; font-family: var(--font-num); font-weight: 800;
-  font-size: 1.75rem; letter-spacing: -.02em; color: var(--enove-black); line-height: 1.1;
-}
-.finder__stat span { font-size: var(--t-caption); color: var(--enove-graphite); }
 
 /* ---------- busca conversacional -------------------------------------- */
 .ask { max-width: 780px; }
@@ -432,8 +414,6 @@ html.lenis, html.lenis body { height: auto; }
   font-size: 1rem; color: var(--enove-black); min-width: 0;
 }
 .ask__input::placeholder { color: var(--enove-gray-mid); }
-.ask__hint { margin-top: var(--sp-3); font-size: var(--t-caption); color: rgba(255,255,255,.72);
-             text-shadow: 0 1px 3px rgba(0,0,0,.5); }
 .chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-4); }
 .chip {
   padding: 8px 15px; border-radius: var(--r-pill); font-size: var(--t-caption);
@@ -950,7 +930,6 @@ img.plx {
   .gal__cell:first-child { border-radius: 0 0 0 var(--r-md); }
   .gal__cell:last-child { border-radius: 0 0 var(--r-md) 0; }
   .ask__box { padding: 6px 6px 6px 16px; }
-  .finder__stats { gap: var(--sp-5); }
   .ask__box .btn span { display: none; }
 }
 
@@ -1416,3 +1395,41 @@ img.plx {
             letter-spacing: -.02em; margin-bottom: 8px; }
 .vok__txt { font-size: var(--t-body-s); color: var(--fg-2); max-width: 34ch; margin: 0 auto; }
 #v-go[disabled] { opacity: .55; cursor: wait; }
+
+/* ---------- a busca dentro do hero ------------------------------------ */
+/* Ela vivia numa seção de fundo claro. No hero, o fundo é o céu: o campo
+   precisa se sustentar sozinho, sem depender de contraste com a página. */
+.ask--hero { margin: var(--sp-5) auto 0; max-width: 720px; }
+.ask--hero .ask__box {
+  box-shadow: 0 18px 48px -14px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.08);
+}
+.ask--hero .chips { justify-content: center; margin-top: var(--sp-4); }
+/* sobre o céu, a pílula de vidro lê melhor que a de borda fina */
+.ask--hero .chip {
+  background: rgba(255,255,255,.72); border-color: rgba(255,255,255,.9);
+  color: var(--enove-graphite); backdrop-filter: blur(6px);
+}
+.ask--hero .chip:hover {
+  background: var(--enove-yellow); border-color: var(--enove-yellow);
+  color: var(--enove-black);
+}
+
+/* placeholder que não cabe termina em reticências, não cortado no meio de
+   uma palavra — cortado, lê como defeito em vez de exemplo */
+.ask__input { text-overflow: ellipsis; }
+
+@media (max-width: 720px) {
+  /* a quebra escrita no HTML é para a tela larga. No celular ela soma com a
+     quebra natural e o título vira quatro linhas. */
+  .hero__title br { display: none; }
+  .ask--hero { margin-top: var(--sp-4); }
+  .ask--hero .ask__box { padding: 6px 6px 6px 16px; }
+  .ask--hero .ask__input { font-size: .95rem; padding: 12px 0; }
+  /* no celular o rótulo do botão come a largura do campo */
+  .ask--hero .ask__box .btn span { display: none; }
+  .ask--hero .ask__box .btn { padding: 12px; border-radius: 50%; }
+  .ask--hero .chips { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;
+                      scrollbar-width: none; }
+  .ask--hero .chips::-webkit-scrollbar { display: none; }
+  .ask--hero .chip { flex: none; }
+}

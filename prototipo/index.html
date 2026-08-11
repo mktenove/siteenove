@@ -45,7 +45,7 @@
 <!-- Dois estagios. A: a cena com o predio emergindo das nuvens.
      B: a chapa clara com o wordmark VAZADO, revelando o predio dentro das
      letras. Detalhe do empilhamento e da mascara em site.css. -->
-<section class="hero" data-hero>
+<section class="hero" id="buscar" data-hero>
   <div class="hero__stage">
 
     <!-- z 0 -->
@@ -95,14 +95,26 @@
 
     <!-- z 40 · estagio A: a missao da marca, que sai de cena no estagio B -->
     <div class="hero__center" data-stagea>
-      <h1 class="hero__title" data-title>conectando pessoas a sonhos.</h1>
-      <p class="hero__tagline" data-tagline>
-        Do Vale do Sinos ao litoral. Diga o que voc&ecirc; procura.
-      </p>
-      <a class="btn btn--primary hero__cta" data-cta href="#buscar">
-        Encontrar meu im&oacute;vel
-        <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
+      <h1 class="hero__title" data-title>a sua casa n&atilde;o est&aacute; <br>numa lista de filtros.</h1>
+      <!-- A busca era a primeira se&ccedil;&atilde;o depois do hero. Subiu para c&aacute;: quem
+           chega escreve na primeira tela, sem rolar nem clicar em nada. -->
+      <div class="ask ask--hero" data-tagline>
+        <div class="ask__box">
+          <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="ask-input" class="ask__input" type="text"
+                 placeholder="casa de 3 quartos com p&aacute;tio"
+                 aria-label="Descreva o im&oacute;vel que voc&ecirc; procura">
+          <button id="ask-go" class="btn btn--primary">
+            <span>Buscar</span>
+            <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <div class="chips" data-cta>
+          <button class="chip" data-ask="casa com p&aacute;tio pro cachorro at&eacute; 800 mil">p&aacute;tio pro cachorro</button>
+          <button class="chip" data-ask="apartamento no centro perto de mercado pra sair do aluguel">sair do aluguel</button>
+          <button class="chip" data-ask="terreno em condom&iacute;nio fechado pra construir">terreno pra construir</button>
+        </div>
+      </div>
     </div>
 
     <!-- estas duas passam POR CIMA do texto e do knockout -->
@@ -123,52 +135,12 @@
   </div>
 </section>
 
-<!-- ==================== BUSCA CONVERSACIONAL ====================== -->
-<!-- Estava no hero antes. Saiu de la para o hero ficar cinematografico,
-     mas continua sendo a primeira coisa depois dele: e o diferencial n1. -->
-<section class="section finder overlap" id="buscar">
-  <!-- a secao nao comeca com uma borda: comeca com uma nuvem que sobe por
-       cima do hero e se dissolve no branco, como na referencia -->
-  <div class="cloudtop" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="finder__head rise">
-      <div class="eyebrow">Busca sem filtro</div>
-      <h2 class="rally" style="margin:12px 0 16px">A SUA PR&Oacute;XIMA CASA N&Atilde;O EST&Aacute;<br>NUMA LISTA DE FILTROS.</h2>
-      <p class="lead">
-        Escreva o que voc&ecirc; procura do seu jeito, com as suas palavras.
-        A gente entende &mdash; inclusive o que nenhum formul&aacute;rio pergunta.
-      </p>
-    </div>
-
-    <div class="ask">
-      <div class="ask__box">
-        <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="ask-input" class="ask__input" type="text"
-               placeholder="casa de 3 quartos at&eacute; 600 mil com p&aacute;tio pro cachorro"
-               aria-label="Descreva o im&oacute;vel que voc&ecirc; procura">
-        <button id="ask-go" class="btn btn--primary">
-          <span>Buscar</span>
-          <svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </button>
-      </div>
-      <div class="chips">
-        <button class="chip" data-ask="casa com p&aacute;tio pro cachorro at&eacute; 800 mil">p&aacute;tio pro cachorro</button>
-        <button class="chip" data-ask="apartamento no centro perto de mercado pra sair do aluguel">sair do aluguel</button>
-        <button class="chip" data-ask="casa de 3 quartos com su&iacute;te e churrasqueira perto de escola">perto de escola</button>
-        <button class="chip" data-ask="terreno em condom&iacute;nio fechado pra construir">terreno pra construir</button>
-        <button class="chip" data-ask="apartamento com lazer completo piscina e academia">lazer completo</button>
-      </div>
-      <p class="ask__hint">Sem filtro, sem cadastro. &Eacute; s&oacute; escrever.</p>
-    </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- ======================== REGIÕES ============================= -->
 <!-- Define o alcance logo depois do hero: antes de mostrar imóvel, mostra
      ONDE. A terceira região está marcada como pendente — ver README. -->
-<section class="section regioes" id="regioes">
+<section class="section regioes overlap" id="regioes">
+  <!-- a nuvem que dissolve o hero era da busca, que subiu para dentro dele -->
+  <div class="cloudtop" aria-hidden="true"></div>
   <div class="wrap">
     <div class="regioes__head rise">
       <div class="eyebrow">Onde a Enove atua</div>
